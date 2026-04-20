@@ -1,0 +1,102 @@
+# Embral — .gitignore
+# Godot 4 project on Linux
+
+# ═══════════════════════════════════════════
+# NEVER COMMIT — HARD RULES
+# ═══════════════════════════════════════════
+
+# Secrets (Law 1 — NEVER in repo)
+.env
+.env.local
+*.env
+secrets.yaml
+secrets.json
+*_secrets.*
+keepass*
+*.kdbx
+
+# Real IPs or tokens that may have slipped in
+# (pre-commit hook also catches these)
+
+# ═══════════════════════════════════════════
+# GODOT GENERATED — DO NOT COMMIT
+# ═══════════════════════════════════════════
+
+# Godot imported files (auto-regenerated)
+.godot/imported/
+.godot/editor/
+.godot/global_script_class_cache.cfg
+
+# Godot export templates
+*.export_preset
+export_presets.cfg
+
+# ═══════════════════════════════════════════
+# PLAYER SAVE DATA — NEVER IN REPO
+# ═══════════════════════════════════════════
+user://
+*.tres
+# Note: user:// is outside repo by default in Godot
+# but just in case any save files end up here:
+save/
+saves/
+user_data/
+
+# ═══════════════════════════════════════════
+# NODE / NPM — NEVER COMMIT
+# ═══════════════════════════════════════════
+node_modules/
+package-lock.json
+yarn.lock
+
+# ═══════════════════════════════════════════
+# PYTHON
+# ═══════════════════════════════════════════
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.uv/
+
+# ═══════════════════════════════════════════
+# OS FILES
+# ═══════════════════════════════════════════
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# ═══════════════════════════════════════════
+# EDITOR FILES
+# ═══════════════════════════════════════════
+.vscode/settings.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ═══════════════════════════════════════════
+# AIDER / AI TOOL CACHES
+# ═══════════════════════════════════════════
+.aider*
+.aider.tags.cache.v*/
+
+# ═══════════════════════════════════════════
+# LARGE BINARY ASSETS — USE GIT LFS INSTEAD
+# ═══════════════════════════════════════════
+# Uncomment these if using Git LFS:
+# *.glb
+# *.fbx
+# *.mp3
+# *.wav
+# *.ogg
+# *.mp4
+
+# ═══════════════════════════════════════════
+# LEGACY / QUARANTINE DIRS — NEVER IN THIS REPO
+# ═══════════════════════════════════════════
+legacy/
+legacy_quarantine*/
+imports/
+/plans/

@@ -1,0 +1,375 @@
+# EMBRAL — Manifest v1.0
+# RULE: Register here BEFORE creating any file.
+# RULE: Every script, scene, data file, and asset gets an entry.
+# RULE: If it's not here, it doesn't belong in the repo.
+# Last updated: 2026-04-19
+
+project:
+  name: Embral
+  version: 0.1.0-foundation
+  engine: godot-4.x
+  license: MIT
+  repo: https://github.com/[OWNER]/embral
+  single_device: true
+  no_backend_ai: true
+  no_rag: true
+
+# ═══════════════════════════════════════════
+# AUTOLOADS — Singletons registered in project.godot
+# ═══════════════════════════════════════════
+autoloads:
+  event_bus:
+    path: scripts/autoloads/event_bus.gd
+    purpose: Cross-system signal bus. ALL inter-system events go through here.
+    status: planned
+
+  hardware_manager:
+    path: scripts/autoloads/hardware_manager.gd
+    purpose: Detects all hardware at startup. Results cached. Never re-polled.
+    detects: [keyboard_mouse, ps5_dualsense, wii_hardware, ha_green,
+              esp32, arduino, raspberry_pi]
+    status: planned
+
+  ha_bridge:
+    path: scripts/autoloads/ha_bridge.gd
+    purpose: ONLY file that communicates with Home Assistant. Circuit breaker built in.
+    status: planned
+
+  quest_manager:
+    path: scripts/autoloads/quest_manager.gd
+    purpose: Loads quest JSON, tracks completion, fires rewards.
+    status: planned
+
+  config_loader:
+    path: scripts/autoloads/config_loader.gd
+    purpose: Loads user://config.json. Player settings and preferences.
+    status: planned
+
+# ═══════════════════════════════════════════
+# PLAYER SYSTEM
+# ═══════════════════════════════════════════
+player_system:
+  player_profile:
+    path: scripts/models/player_profile.gd
+    purpose: Data class. Player stats, XP, level, gold, quest completion.
+    status: planned
+
+  party_manager:
+    path: scripts/player/party_manager.gd
+    purpose: Manages traveling party (player + companion + wisps). Max 6 slots.
+    status: planned
+
+  player_controller:
+    path: scripts/player/player_controller.gd
+    purpose: Input handling for player character. Reads from hardware_manager.
+    status: planned
+
+# ═══════════════════════════════════════════
+# CREATURE SYSTEM
+# ═══════════════════════════════════════════
+creature_system:
+
+  wisp_data:
+    path: scripts/models/wisp_data.gd
+    purpose: Data class for a single Wisp instance.
+    status: planned
+
+  pet_data:
+    path: scripts/models/pet_data.gd
+    purpose: Data class for a single Pet instance.
+    status: planned
+
+  companion_data:
+    path: scripts/models/companion_data.gd
+    purpose: Data class for a Companion (second avatar).
+    status: planned
+
+  wisp_types:
+    ember:   {element: fire,     realm: ember_hollow, visual_color: "1.0, 0.4, 0.1"}
+    ripple:  {element: water,    realm: tidemark,     visual_color: "0.2, 0.5, 1.0"}
+    breeze:  {element: wind,     realm: forge_run,    visual_color: "0.7, 0.9, 1.0"}
+    mossy:   {element: earth,    realm: rootstead,    visual_color: "0.3, 0.6, 0.2"}
+    volt:    {element: electric, realm: the_spire,    visual_color: "1.0, 0.95, 0.2"}
+    lumis:   {element: light,    realm: the_drift,    visual_color: "1.0, 1.0, 0.8"}
+    shade:   {element: dark,     realm: dungeon_only, visual_color: "0.3, 0.2, 0.4"}
+
+# ═══════════════════════════════════════════
+# QUEST SYSTEM
+# ═══════════════════════════════════════════
+quest_system:
+  quest_data:
+    path: scripts/models/quest_data.gd
+    purpose: Data class for quest state (not content — content is JSON).
+    status: planned
+
+  quest_loader:
+    path: scripts/quest/quest_loader.gd
+    purpose: Reads data/quests/ JSON files. Parses into QuestData objects.
+    status: planned
+
+  quest_runner:
+    path: scripts/quest/quest_runner.gd
+    purpose: Executes quest steps, fires events, manages quest state machine.
+    status: planned
+
+  quest_reward:
+    path: scripts/quest/quest_reward.gd
+    purpose: Handles XP grants, gold grants, item/wisp/pet unlocks.
+    status: planned
+
+# ═══════════════════════════════════════════
+# DUNGEON SYSTEM
+# ═══════════════════════════════════════════
+dungeon_system:
+  dungeon_manager:
+    path: scripts/dungeon/dungeon_manager.gd
+    purpose: 2D dungeon scene controller. Separate from 3D overworld.
+    status: planned
+
+  wisp_battle:
+    path: scripts/dungeon/wisp_battle.gd
+    purpose: Turn-based Wisp Crystal battle system.
+    status: planned
+
+  crystal_system:
+    path: scripts/dungeon/crystal_system.gd
+    purpose: Crystal types, type effectiveness calculations.
+    status: planned
+
+# ═══════════════════════════════════════════
+# NPC SYSTEM
+# ═══════════════════════════════════════════
+npc_system:
+  base_npc:
+    path: scripts/npcs/base_npc.gd
+    purpose: All NPCs extend this.
+    status: planned
+
+  base_teacher_npc:
+    path: scripts/npcs/base_teacher_npc.gd
+    purpose: All teacher NPCs extend this. Quest dispatch, fallback dialogue.
+    status: planned
+
+  companion_npc:
+    path: scripts/npcs/companion_npc.gd
+    purpose: Companion (second avatar) base class.
+    status: planned
+
+  dialogue_addon: dialogic-2
+  dialogue_addon_source: https://github.com/dialogic-godot/dialogic
+
+  # Teacher NPCs — registered as confirmed. Scripts created when realm is built.
+  teachers:
+    hearthveil:
+      ignavarr:
+        path: scripts/npcs/teachers/ignavarr.gd
+        role: main_narrator_mayor
+        realm: hearthveil
+        status: planned
+
+    ember_hollow:
+      # subcategories: emotion_id, empathy, self_regulation, conflict_resolution,
+      # kindness, emotional_expression, sensory_awareness, sensory_toolkit,
+      # friendship, boundaries, mindfulness, big_feelings
+      # NPCs: to be named — 4 starter, 8 unlock over time
+      placeholder_count: 12
+      status: design_phase
+
+    tidemark:
+      # subcategories: letter_recognition, phonics, phonological_awareness,
+      # sight_words, reading_comprehension, vocabulary, storytelling,
+      # listening, expressive_language, spelling, handwriting, social_language
+      placeholder_count: 12
+      status: design_phase
+
+    forge_run:
+      # subcategories: gross_motor_balance, gross_motor_throwing,
+      # gross_motor_climbing, fine_motor_pencil, fine_motor_cutting,
+      # fine_motor_building, body_awareness, exercise_habits, yoga,
+      # sports_teamwork, dance, bilateral_coordination
+      placeholder_count: 12
+      status: design_phase
+
+    rootstead:
+      # subcategories: personal_hygiene, dressing, nutrition, cooking,
+      # chores, safety, money, time_management, organization,
+      # community_helpers, navigation, pet_and_plant_care, multi_step_directions
+      placeholder_count: 13
+      status: design_phase
+
+    the_spire:
+      # subcategories: scientific_method, plants_botany, animals_biology,
+      # weather_earth, physics, number_sense, addition_subtraction,
+      # patterns_sequences, shapes_geometry, time_calendar,
+      # multiplication_division, geography, technology, environmental_science,
+      # logic_cause_effect
+      placeholder_count: 15
+      status: design_phase
+
+    the_drift:
+      # subcategories: visual_art, painting_color, music_rhythm, singing,
+      # storytelling_comics, building_construction, drama_roleplay, dance,
+      # crafting, invention, growth_mindset, flexible_thinking
+      placeholder_count: 12
+      status: design_phase
+
+# ═══════════════════════════════════════════
+# HARDWARE SYSTEM
+# ═══════════════════════════════════════════
+hardware_system:
+  hardware_manager:
+    path: scripts/hardware/hardware_manager.gd
+    note: THIS IS ALSO AN AUTOLOAD — registered above. One file, two roles.
+
+  ps5_input:
+    path: scripts/hardware/ps5_input.gd
+    purpose: DualSense haptic feedback, motion, LED bar, adaptive triggers.
+    detection: Input.get_connected_joypads() + name contains "dualsense"
+    status: planned
+
+  wii_input:
+    path: scripts/hardware/wii_input.gd
+    purpose: xwiimote integration. Wiimote, Nunchuck, Balance Board, IR Camera.
+    detection: scan /proc/bus/input/devices for "Nintendo Wii"
+    status: planned
+
+  esp32_client:
+    path: scripts/hardware/esp32_client.gd
+    purpose: HTTP or serial interface for ESP32 gadgets.
+    detection: configurable endpoint ping at startup
+    status: planned
+
+  arduino_client:
+    path: scripts/hardware/arduino_client.gd
+    purpose: Serial interface for Arduino gadgets.
+    detection: serial port scan at startup
+    status: planned
+
+  pi_client:
+    path: scripts/hardware/pi_client.gd
+    purpose: SSH or HTTP interface for Raspberry Pi integrations.
+    detection: configurable endpoint ping at startup
+    status: planned
+
+# ═══════════════════════════════════════════
+# SCENES
+# ═══════════════════════════════════════════
+scenes:
+  main_menu:
+    path: scenes/ui/main_menu.tscn
+    contains: [settings, profile_select, parent_dashboard_entry]
+    status: planned
+
+  profile_select:
+    path: scenes/ui/profile_select.tscn
+    contains: [new_game, continue, profile_list]
+    status: planned
+
+  parent_dashboard:
+    path: scenes/ui/parent_dashboard.tscn
+    access: PIN_gated
+    contains: [xp_history, quest_completion, npc_mastery_levels,
+               emotional_checkins, strength_weakness_map,
+               teaching_style_effectiveness]
+    status: planned
+
+  hearthveil:
+    path: scenes/overworld/hearthveil/hearthveil.tscn
+    type: 3D_overworld
+    status: planned
+
+  dungeons:
+    mirror_maze:
+      path: scenes/dungeons/mirror_maze.tscn
+      realm: ember_hollow
+      type: 2D_platformer
+      status: planned
+    word_caverns:
+      path: scenes/dungeons/word_caverns.tscn
+      realm: tidemark
+      type: 2D_platformer
+      status: planned
+    obstacle_forge:
+      path: scenes/dungeons/obstacle_forge.tscn
+      realm: forge_run
+      type: 2D_platformer
+      status: planned
+    daily_tower:
+      path: scenes/dungeons/daily_tower.tscn
+      realm: rootstead
+      type: 2D_platformer
+      status: planned
+    gear_gauntlet:
+      path: scenes/dungeons/gear_gauntlet.tscn
+      realm: the_spire
+      type: 2D_platformer
+      status: planned
+    curiosity_cave:
+      path: scenes/dungeons/curiosity_cave.tscn
+      realm: the_drift
+      type: 2D_platformer
+      status: planned
+
+# ═══════════════════════════════════════════
+# SAVE SYSTEM
+# ═══════════════════════════════════════════
+save_system:
+  files:
+    player_save:    user://save/player_profile.json
+    world_state:    user://save/world_state.json
+    pet_roster:     user://save/pet_roster.json
+    wisp_roster:    user://save/wisp_roster.json
+    party:          user://save/party.json
+    npc_mastery:    user://save/npc_mastery.json
+    parent_data:    user://save/parent_dashboard.json
+    config:         user://config.json
+  cloud_sync: false
+  analytics: false
+  external_backup: false
+
+# ═══════════════════════════════════════════
+# PARENT DASHBOARD DATA TRACKING
+# ═══════════════════════════════════════════
+parent_dashboard:
+  tracks:
+    - quest_completion_per_npc
+    - xp_earned_per_realm
+    - npc_mastery_level_per_npc
+    - average_score_per_subcategory
+    - time_spent_per_realm
+    - emotional_checkin_history
+    - retry_count_per_quest         # identifies difficulty/frustration
+    - response_latency_per_step     # thinking vs guessing indicator
+    - cross_subcategory_strengths   # where skills appear in multiple realms
+    - teaching_style_response       # which quest types get highest scores
+
+  emotional_checkin:
+    trigger: game_startup_always
+    trigger_periodic: every_30_minutes_of_play
+    modes:
+      - face_selector         # happy/neutral/sad/angry/scared faces
+      - color_picker          # what color matches how you feel
+      - number_scale          # 1-5 scale with face anchors
+      - weather_picker        # sunny/cloudy/rainy/stormy (Body Weather Station)
+    player_chooses_mode: true
+    stored_in: user://save/parent_dashboard.json
+
+# ═══════════════════════════════════════════
+# PLAYER LEVEL MILESTONES
+# ═══════════════════════════════════════════
+level_milestones:
+  1:    tutorial_complete_hearthveil_open
+  5:    wisps_unlocked
+  10:   companions_unlocked
+  25:   ground_mounts_unlocked, companion_home_slot_plus_1
+  50:   companion_home_slot_plus_1, new_features_TBD
+  75:   companion_home_slot_plus_1, new_features_TBD
+  100:  ascension_milestone, flying_mounts_unlocked
+  every_25_after_100: companion_home_slot_plus_1
+
+npc_dungeon_unlock: 3_npcs_discovered_per_realm
+
+companion_home_capacity:
+  base: 1
+  per_25_levels: +1
+  formula: "1 + floor(player_level / 25)"
