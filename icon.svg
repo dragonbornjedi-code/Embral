@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Embral placeholder icon — ember/flame shape -->
+  <rect width="128" height="128" rx="24" fill="#1a0a00"/>
+  <!-- Flame body -->
+  <path d="M64 108 C40 108 24 88 24 68 C24 52 36 40 48 32 C44 48 52 52 56 44 C60 36 58 20 64 12 C70 20 76 36 72 44 C76 52 84 48 80 32 C92 40 104 52 104 68 C104 88 88 108 64 108Z" fill="#FF6B1A"/>
+  <!-- Inner flame -->
+  <path d="M64 95 C50 95 40 82 40 70 C40 60 48 52 56 48 C54 58 60 62 62 56 C64 50 62 40 64 34 C66 40 68 50 66 56 C68 62 74 58 72 48 C80 52 88 60 88 70 C88 82 78 95 64 95Z" fill="#FFB347"/>
+  <!-- Core -->
+  <ellipse cx="64" cy="76" rx="14" ry="16" fill="#FFE066"/>
+</svg>
