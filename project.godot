@@ -14,7 +14,7 @@ config/name="Embral"
 config/description="Open-source educational RPG for children ages 4-8"
 config/version="0.1.0"
 config/tags=PackedStringArray("educational", "rpg", "children", "godot4")
-run/main_scene="res://scenes/ui/main_menu.tscn"
+run/main_scene="res://scenes/boot.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://assets/textures/icon.svg"
 
