@@ -11,19 +11,19 @@
 
 ## 0.00 Foundation
 - [x] **0.01** Freeze runtime to Godot 4.5.2 and record exact build/plugin versions.
-- [ ] **0.02** Create Git backup and restore point before major changes.
-- [ ] **0.03** Define source-of-truth hierarchy (Logs > Disk > Docs > Models).
+- [x] **0.02** Create Git backup and restore point before major changes.
+- [x] **0.03** Define source-of-truth hierarchy (Logs > Disk > Docs > Models).
 - [x] **0.04** Create `res://docs/compatibility.md` for dependency tracking.
 - [x] **0.05** Create minimal "boot scene" (`scenes/boot.tscn`) for health checks.
-- [ ] **0.06** Finalize global `EventBus` for quest, UI, realm, and hardware.
-- [ ] **0.07** Establish naming conventions for realms, NPCs, and quests.
-- [ ] **0.08** Create test realm sandbox and test house.
+- [x] **0.06** Finalize global `EventBus` for quest, UI, realm, and hardware.
+- [x] **0.07** Establish naming conventions for realms, NPCs, and quests.
+- [x] **0.08** Create test realm sandbox and test house.
 
 ## 1.00 Safety/Integrity
 - [ ] **1.01** Install **LimboAI** (Godot 4.4–4.5 build).
 - [ ] **1.02** Install **Godot-SQLite** for persistent state.
 - [ ] **1.03** Install **Dialogic 2** (Verify distribution path).
-- [ ] **1.04** Implement schema/version checks for save records.
+- [ ] **1.04** Implement schema/version checks for save records. *(SaveManager schema_version added in 0.00 — full multi-file migration system still needed here.)*
 - [ ] **1.05** Create validation wrappers for imported data manifests.
 - [ ] **1.06** Implement content quarantine for invalid data.
 - [ ] **1.07** Implement fallback dialogue for missing timelines.

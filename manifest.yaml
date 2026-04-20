@@ -15,6 +15,30 @@ project:
   no_rag: true
 
 # ═══════════════════════════════════════════
+# DOCS — Reference documents (no scripts in docs/)
+# ═══════════════════════════════════════════
+docs:
+  roadmap:
+    path: docs/roadmap.md
+    purpose: Living development roadmap, phase 0.00–5.00.
+    status: active
+
+  compatibility:
+    path: docs/compatibility.md
+    purpose: Dependency and compatibility matrix. Pinned versions.
+    status: active
+
+  source_of_truth:
+    path: docs/source_of_truth.md
+    purpose: Defines the authoritative hierarchy for runtime state vs. files vs. docs vs. model assumptions.
+    status: active
+
+  naming_conventions:
+    path: docs/naming_conventions.md
+    purpose: Canonical naming rules for realms, NPCs, quests, files, and variables.
+    status: active
+
+# ═══════════════════════════════════════════
 # AUTOLOADS — Singletons registered in project.godot
 # ═══════════════════════════════════════════
 autoloads:
@@ -282,6 +306,12 @@ scenes:
     path: scenes/overworld/hearthveil/hearthveil.tscn
     type: 3D_overworld
     status: planned
+
+  test_sandbox:
+    path: scenes/overworld/hearthveil/test_sandbox.tscn
+    type: 3D_overworld
+    purpose: Minimal playable sandbox for Phase 0.08 verification. No content. Boot-only.
+    status: stub
 
   dungeons:
     mirror_maze:
