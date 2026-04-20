@@ -9,7 +9,7 @@ project:
   version: 0.1.0-foundation
   engine: godot-4.x
   license: MIT
-  repo: https://github.com/[OWNER]/embral
+  repo: https://github.com/dragonbornjedi-code/embral
   single_device: true
   no_backend_ai: true
   no_rag: true
