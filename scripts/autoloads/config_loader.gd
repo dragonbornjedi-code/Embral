@@ -66,6 +66,7 @@ func get_secret(key: String) -> String:
 func _default_config() -> Dictionary:
 	return {
 		"ha_url": "",
+		"ha_safe_mode": false,
 		"display_name": "Explorer",
 		"parent_pin": "",
 		"checkin_mode": "face_selector",

@@ -27,6 +27,15 @@ QuestManager="*res://scripts/autoloads/quest_manager.gd"
 ConfigLoader="*res://scripts/autoloads/config_loader.gd"
 SaveManager="*res://scripts/autoloads/save_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+SqliteDB="*res://scripts/autoloads/sqlite_stub.gd"
+DialogicStub="*res://scripts/autoloads/dialogic_stub.gd"
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+
+[dialogic]
+
+directories/dch_directory={}
+directories/dtl_directory={}
+layout/style_directory={}
 
 [display]
 
@@ -36,7 +45,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
+enabled=["res://addons/godot_ai/plugin.cfg", "res://addons/dialogic/plugin.cfg"]
 
 [input]
 

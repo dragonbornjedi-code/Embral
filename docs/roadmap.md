@@ -3,7 +3,7 @@
 > **Living Document:** This roadmap tracks the sequential progress of Embral's development. Each step must be completed, tested, and verified before proceeding to the next.
 
 ## Status Summary
-- **Current Phase:** 0.00 Foundation
+- **Current Phase:** 1.00 Safety/Integrity — IN PROGRESS
 - **Godot Version:** 4.5.2
 - **Last Sync:** 2026-04-20
 
@@ -20,14 +20,15 @@
 - [x] **0.08** Create test realm sandbox and test house.
 
 ## 1.00 Safety/Integrity
-- [ ] **1.01** Install **LimboAI** (Godot 4.4–4.5 build).
-- [ ] **1.02** Install **Godot-SQLite** for persistent state.
-- [ ] **1.03** Install **Dialogic 2** (Verify distribution path).
-- [ ] **1.04** Implement schema/version checks for save records. *(SaveManager schema_version added in 0.00 — full multi-file migration system still needed here.)*
-- [ ] **1.05** Create validation wrappers for imported data manifests.
-- [ ] **1.06** Implement content quarantine for invalid data.
-- [ ] **1.07** Implement fallback dialogue for missing timelines.
-- [ ] **1.08** Add "Safe Mode" circuit breaker for smart-home integration.
+- [~] **1.01** LimboAI v1.6.0 binary on disk (`addons/limboai/`). GDExtension file present. `BehaviorTree` type appears in filesystem cache. **Runtime class availability not yet verified via live test.**
+- [ ] **1.02** Godot-SQLite — **NOT INSTALLED.** `SqliteDB` stub active (returns null, logs warning). Real install explicitly deferred — not a phase 1 completion item.
+- [ ] **1.03** Dialogic 2 — **NOT INSTALLED.** `DialogicStub` fallback active. Real Dialogic 2 (v2.0-alpha-19, GitHub only) must be downloaded and installed before this is done.
+- [x] **1.04** Schema/version checks in `SaveManager` (v1) and `QuestManager` NPC mastery (v1). Legacy v0 migrates. Future versions quarantined.
+- [x] **1.05** Quest JSON validation: all 8 required fields checked on load. Missing fields logged and rejected.
+- [x] **1.06** Content quarantine: invalid quest files logged with reason, not loaded.
+- [x] **1.07** Fallback dialogue: `DialogicStub` returns fallback line when Dialogic missing or file absent.
+- [x] **1.08** Safe Mode: `HABridge._safe_mode` reads `ha_safe_mode` from config. All HA methods guarded.
+- [x] **boot fix** `boot.gd` and `boot.tscn` root changed from `Node2D` to `Node`. Verified on disk and boot test clean.
 
 ## 2.00 Reliability/Performance
 - [ ] **2.01** Integrate **Phantom Camera** for 3D state transitions.

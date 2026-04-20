@@ -39,8 +39,42 @@ docs:
     status: active
 
 # ═══════════════════════════════════════════
-# AUTOLOADS — Singletons registered in project.godot
+# PLUGINS / ADDONS
 # ═══════════════════════════════════════════
+plugins:
+  godot_ai:
+    path: addons/godot_ai/plugin.cfg
+    version: "0.2.0"
+    type: editor_plugin
+    status: active
+
+  limboai:
+    path: addons/limboai/bin/limboai.gdextension
+    version: "1.6.0"
+    type: gdextension
+    compatibility: "godot>=4.2"
+    purpose: NPC behavior trees and hierarchical state machines.
+    status: on_disk_pending_restart
+    note: >
+      GDExtension auto-discovered on editor start. Binary verified as valid
+      ELF x86_64. Requires editor restart to activate. No plugin.cfg needed.
+
+  godot_sqlite:
+    path: addons/godot-sqlite/bin/godot-sqlite.gdextension
+    version: TBD
+    type: gdextension
+    purpose: Persistent SQL storage for quest state and parental tracking.
+    status: not_installed
+    stub: scripts/autoloads/sqlite_stub.gd
+    note: Deferred to Phase 2+. Stub circuit-breaker active.
+
+  dialogic:
+    path: addons/dialogic/plugin.cfg
+    version: TBD
+    type: editor_plugin
+    purpose: Dialogue timelines for NPC conversations.
+    status: not_installed
+    note: Deferred to 1.03 verification. Stub fallback in data/dialogue/.
 autoloads:
   event_bus:
     path: scripts/autoloads/event_bus.gd
@@ -72,7 +106,26 @@ autoloads:
   save_manager:
     path: scripts/autoloads/save_manager.gd
     purpose: Manages game state persistence (Quest, NPC, Player stats).
-    status: created
+    status: active
+    schema_version: 1
+
+  sqlite_stub:
+    path: scripts/autoloads/sqlite_stub.gd
+    purpose: >
+      Circuit-breaker stub for Godot-SQLite. Returns null/false for all calls
+      when the real SQLite GDExtension is not installed. Allows code to call
+      SqliteDB.query() safely without crashing. Replace with real addon when
+      complex queries are needed (Phase 2+).
+    status: stub
+
+  dialogic_stub:
+    path: scripts/autoloads/dialogic_stub.gd
+    purpose: >
+      Circuit-breaker stub for Dialogic 2. When Dialogic is not installed,
+      reads fallback dialogue from data/dialogue/{npc_id}_fallback.json.
+      Exposes the same minimal API surface so NPC scripts don't need to
+      branch on Dialogic availability.
+    status: stub
 
 # ═══════════════════════════════════════════
 # PLAYER SYSTEM
@@ -184,8 +237,13 @@ npc_system:
     purpose: Companion (second avatar) base class.
     status: planned
 
-  dialogue_addon: dialogic-2
-  dialogue_addon_source: https://github.com/dialogic-godot/dialogic
+  dialogue_fallbacks:
+    path: data/dialogue/{npc_id}_fallback.json
+    purpose: >
+      Fallback dialogue lines used when Dialogic is not installed or a
+      timeline is missing. Loaded by dialogic_stub.gd. Format:
+      {"npc_id": "...", "lines": ["...", "..."], "no_quest_line": "..."}
+    status: format_defined
 
   # Teacher NPCs — registered as confirmed. Scripts created when realm is built.
   teachers:

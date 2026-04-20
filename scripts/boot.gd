@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 ## Boot — Initial project health check and loading sequence.
 ## Verifies that all critical autoloads are present and functioning.
 

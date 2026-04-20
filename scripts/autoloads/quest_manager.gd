@@ -5,6 +5,7 @@ extends Node
 
 const QUEST_BASE_PATH := "res://data/quests/"
 const NPC_MASTERY_SAVE := "user://save/npc_mastery.json"
+const NPC_MASTERY_SCHEMA_VERSION := 1
 
 var _quests: Dictionary = {}          # quest_id → quest data
 var _active_quest: String = ""
@@ -36,20 +37,49 @@ func load_realm_quests(realm_id: String) -> void:
 	dir.list_dir_end()
 
 
+## Required fields per AGENTS.md Law 8
+const QUEST_REQUIRED_FIELDS := [
+	"quest_id", "research_basis", "developmental_target",
+	"age_range", "steps", "scaffolding", "npc_giver", "completion_reward"
+]
+
+
 func _load_quest_file(full_path: String) -> void:
 	var file := FileAccess.open(full_path, FileAccess.READ)
 	if file == null:
+		push_error("[QuestManager] Cannot open quest file: %s" % full_path)
 		return
-	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	var text := file.get_as_text()
 	file.close()
+	var parsed: Variant = JSON.parse_string(text)
 	if parsed == null or not parsed is Dictionary:
-		push_error("[QuestManager] Invalid quest JSON: %s" % full_path)
+		push_error("[QuestManager] Invalid JSON in quest file: %s" % full_path)
+		_quarantine_quest_file(full_path, "invalid_json")
+		return
+	# Validate required fields
+	var missing := []
+	for field in QUEST_REQUIRED_FIELDS:
+		if not parsed.has(field):
+			missing.append(field)
+	if not missing.is_empty():
+		push_error("[QuestManager] Quest missing required fields %s in: %s" % [missing, full_path])
+		_quarantine_quest_file(full_path, "missing_fields_%s" % "_".join(missing))
 		return
 	var quest_id: String = parsed.get("quest_id", "")
 	if quest_id == "":
-		push_error("[QuestManager] Quest missing quest_id: %s" % full_path)
+		push_error("[QuestManager] Quest has empty quest_id: %s" % full_path)
+		_quarantine_quest_file(full_path, "empty_quest_id")
+		return
+	if _quests.has(quest_id):
+		push_warning("[QuestManager] Duplicate quest_id '%s' in %s — skipping." % [quest_id, full_path])
 		return
 	_quests[quest_id] = parsed
+
+
+func _quarantine_quest_file(full_path: String, reason: String) -> void:
+	## Log the rejection. Do NOT load the file. Do NOT crash.
+	## In a future phase this could move the file to a quarantine directory.
+	push_warning("[QuestManager] QUARANTINE: %s — reason: %s" % [full_path, reason])
 
 
 ## Get quest data by ID
@@ -166,8 +196,20 @@ func _load_npc_mastery() -> void:
 		return
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
-	if parsed is Dictionary:
+	if not parsed is Dictionary:
+		push_error("[QuestManager] NPC mastery file is invalid JSON. Resetting.")
+		return
+	var version: int = int(parsed.get("schema_version", 0))
+	if version == 0:
+		# Pre-versioning data — treat the whole dict as mastery data (legacy format)
+		push_warning("[QuestManager] NPC mastery has no schema_version. Migrating to v%d." % NPC_MASTERY_SCHEMA_VERSION)
 		_npc_mastery = parsed
+		_save_npc_mastery()
+		return
+	if version > NPC_MASTERY_SCHEMA_VERSION:
+		push_error("[QuestManager] NPC mastery schema_version %d > supported %d. Resetting." % [version, NPC_MASTERY_SCHEMA_VERSION])
+		return
+	_npc_mastery = parsed.get("data", {})
 
 
 func _save_npc_mastery() -> void:
@@ -177,5 +219,9 @@ func _save_npc_mastery() -> void:
 	var file := FileAccess.open(NPC_MASTERY_SAVE, FileAccess.WRITE)
 	if file == null:
 		return
-	file.store_string(JSON.stringify(_npc_mastery, "\t"))
+	var payload := {
+		"schema_version": NPC_MASTERY_SCHEMA_VERSION,
+		"data": _npc_mastery
+	}
+	file.store_string(JSON.stringify(payload, "\t"))
 	file.close()
