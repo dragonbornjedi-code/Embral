@@ -1,418 +1,673 @@
 {
-  "version": "2.0.0",
-  "description": "Embral reward system — ages 4-8, neurodivergent-first, family-centered educational RPG",
+  "version": "3.0.0",
+  "project": "Embral",
+  "description": "Reward system built from scratch for Embral. Ages 4-8. Neurodivergent-first. Family-centered.",
+  "last_updated": "2026-04-19",
 
-  "design_principles": [
-    "No punishment for failure — rewards effort and try-again, not perfection",
-    "No real-money purchases — everything earned through play, learning, and family time",
-    "Local-only multiplayer — competition is WITH family, never against strangers online",
-    "Streaks never break — sick days and missed days never erase progress",
-    "Family bonding is mechanically rewarded — showing up together IS the game",
-    "Hardware expands depth — base game complete without any extra hardware"
+  "design_laws": [
+    "Effort is always rewarded. Perfection is never required.",
+    "No real-money purchases of any kind.",
+    "Competition is local and optional — never against strangers.",
+    "Absence is never punished. Sick days and missed days erase nothing.",
+    "Family time is mechanically irreplaceable — no shortcut replaces it.",
+    "Hardware adds depth. Hardware never locks content.",
+    "Every reward reinforces a developmental domain, not arbitrary grind."
   ],
 
   "currencies": {
     "gold": {
       "id": "gold",
       "name": "Gold",
-      "description": "Earned from quests, exploration, and daily activities. Spent on cosmetics and house items.",
       "icon": "gold_coin",
-      "uses": ["shop_cosmetics", "house_decorations", "pet_toys", "npc_home_requests"]
+      "description": "Earned through quests, exploration, and daily play. Spent on cosmetics, house items, pet accessories, and NPC home requests.",
+      "earn_sources": [
+        "quest_completion",
+        "dungeon_battles",
+        "daily_login",
+        "nightly_review_bonus",
+        "mini_game_participation",
+        "pet_happiness_visits"
+      ],
+      "spend_sources": [
+        "cosmetic_shop",
+        "house_decorations",
+        "pet_accessories",
+        "npc_home_request_materials",
+        "family_raid_shop"
+      ],
+      "cannot_purchase_with_real_money": true
     },
+
     "elemental_essence": {
       "id": "essence",
       "name": "Elemental Essence",
-      "description": "Rare drops from dungeons and boss encounters. Used to evolve Wisps.",
       "icon": "essence_orb",
-      "types": {
-        "fire_essence":     {"realm": "ember_hollow",  "wisp": "Ember"},
-        "water_essence":    {"realm": "tidemark",      "wisp": "Ripple"},
-        "wind_essence":     {"realm": "forge_run",     "wisp": "Breeze"},
-        "earth_essence":    {"realm": "rootstead",     "wisp": "Mossy"},
-        "electric_essence": {"realm": "the_spire",     "wisp": "Volt"},
-        "light_essence":    {"realm": "the_drift",     "wisp": "Lumis"},
-        "dark_essence":     {"realm": "dungeon_only",  "wisp": "Shade"}
+      "description": "Rare material dropped in dungeons and from Embral's Trials. Used to evolve Wisps and craft special items.",
+      "variants": {
+        "fire_essence":     { "wisp": "Ember",  "realm": "ember_hollow",  "color": "#FF6B1A" },
+        "water_essence":    { "wisp": "Ripple", "realm": "tidemark",      "color": "#2E86C1" },
+        "wind_essence":     { "wisp": "Breeze", "realm": "forge_run",     "color": "#AED6F1" },
+        "earth_essence":    { "wisp": "Mossy",  "realm": "rootstead",     "color": "#28B463" },
+        "electric_essence": { "wisp": "Volt",   "realm": "the_spire",     "color": "#F4D03F" },
+        "light_essence":    { "wisp": "Lumis",  "realm": "the_drift",     "color": "#FDFEFE" },
+        "dark_essence":     { "wisp": "Shade",  "realm": "dungeon_only",  "color": "#6C3483" }
       },
-      "uses": ["wisp_evolution", "special_crafting", "npc_home_upgrades"]
+      "earn_sources": [
+        "dungeon_battles",
+        "dungeon_boss_defeat",
+        "embral_trial_completion",
+        "wisp_release"
+      ],
+      "spend_sources": [
+        "wisp_evolution",
+        "special_item_crafting",
+        "npc_home_upgrades"
+      ]
     },
+
     "play_points": {
       "id": "play_points",
       "name": "Play Points",
-      "description": "Earned from local mini-games. Ezra vs companion or family members (up to 4 players). Spent at the Play Shop for exclusive items.",
       "icon": "star_token",
-      "earned_from": [
-        "mini_game_participation",
-        "mini_game_win_vs_companion",
-        "family_multiplayer_session",
-        "academic_mini_game_completion"
-      ],
-      "notes": "Participation always earns some. Winning earns more. Never zero for trying.",
-      "uses": ["play_shop_exclusives"]
+      "description": "Earned from local mini-games. Ezra can play against his companion (AI) or with up to 3 family members. Spent at the Play Shop for exclusive items.",
+      "earn_rates": {
+        "participation_any_game": 3,
+        "win_vs_companion_ai": 5,
+        "win_vs_human_player": 6,
+        "academic_mini_game_completion": 8,
+        "notes": "Participation always earns something. Winning earns more. No one goes home empty."
+      },
+      "spend_sources": ["play_shop_exclusives"],
+      "cannot_purchase_with_real_money": true
     },
+
     "raid_points": {
       "id": "raid_points",
       "name": "Raid Points",
-      "description": "Earned from nightly review sessions with a parent. Collecting 3 in one week unlocks the Weekend Family Raid.",
       "icon": "raid_flame",
-      "how_earned": "See nightly_review system below.",
+      "description": "Earned exclusively through nightly review sessions with a parent. 3 in one week unlocks the Weekend Family Raid.",
       "weekly_cap": 7,
-      "threshold_for_raid": 3,
-      "uses": ["unlock_weekend_family_raid"],
-      "cannot_be_bought": true
+      "family_raid_threshold": 3,
+      "weekly_reset_day": "Monday",
+      "cannot_purchase_with_real_money": true,
+      "cannot_earn_without_parent": true,
+      "spend_sources": ["unlock_weekend_family_raid"]
+    }
+  },
+
+  "player_progression": {
+    "level_formula": {
+      "xp_needed": "100 * (level ^ 1.4)",
+      "description": "XP needed scales with level. Early levels fast to reward the tutorial. Later levels take longer to create satisfaction arcs."
+    },
+    "level_milestones": {
+      "1":   { "unlock": "Tutorial complete — Hearthveil open, Ignavarr accessible" },
+      "5":   { "unlock": "Wisps unlocked — first Wisp gifted by Ignavarr" },
+      "10":  { "unlock": "Companions unlocked — Companion Registry in Hearthveil opens" },
+      "25":  { "unlock": "Ground mounts unlocked. Companion home capacity +1." },
+      "50":  { "unlock": "New content layer across all realms. Companion home capacity +1." },
+      "75":  { "unlock": "New content layer across all realms. Companion home capacity +1." },
+      "100": { "unlock": "Ascension triggered. See ascension section." },
+      "every_25_after_100": { "unlock": "Companion home capacity +1." }
+    },
+    "companion_home_capacity": {
+      "formula": "1 + floor(player_level / 25)",
+      "level_1_capacity": 1,
+      "level_25_capacity": 2,
+      "level_50_capacity": 3,
+      "level_100_capacity": 5
+    },
+    "xp_sources": {
+      "quest_complete":              { "xp": 25, "notes": "Any realm, any NPC" },
+      "npc_first_discovery":         { "xp": 50, "notes": "One-time per NPC" },
+      "dungeon_first_clear":         { "xp": 100, "notes": "One-time per dungeon" },
+      "dungeon_repeat_clear":        { "xp": 30 },
+      "embral_trial_first_win":      { "xp": 150, "notes": "One-time per realm trial" },
+      "embral_trial_repeat_win":     { "xp": 40 },
+      "family_raid_complete":        { "xp": 200 },
+      "wisp_first_capture":          { "xp": 40, "notes": "One-time per species" },
+      "pet_happiness_maxed":         { "xp": 20, "notes": "When any pet reaches max happiness" },
+      "mini_game_complete":          { "xp": 15 },
+      "emotional_checkin":           { "xp": 10 },
+      "npc_home_request_fulfilled":  { "xp": 60 },
+      "npc_mastery_level_up":        { "xp": 80 }
+    }
+  },
+
+  "npc_mastery": {
+    "description": "Every teacher NPC has a personal mastery level for each player. Tracks learning progress independently per NPC. Unlocks harder quest tiers as child demonstrates mastery.",
+    "max_level": 5,
+    "how_it_works": "Quest completion records a score (0.0 to 1.0). Average of the last 5 scores is calculated. If average is 0.8 or above, mastery level increases by 1.",
+    "score_components": {
+      "step_completed_independently": 0.2,
+      "step_completed_with_scaffold": 0.1,
+      "quest_completed":              0.3,
+      "no_hints_used_full_run":       0.2
+    },
+    "level_benefits": {
+      "1": "Base quests available. NPC greets normally.",
+      "2": "Harder quest variants appear. NPC acknowledges Ezra's growth.",
+      "3": "NPC shares personal lore and backstory. Bonus dialogue unlocks.",
+      "4": "Advanced quest tier unlocks. NPC relationship feels deep and personal.",
+      "5": "Mastery reward granted. Unique item or pet exclusive to this NPC. NPC calls Ezra by a special title."
+    },
+    "mastery_reward_types": [
+      "Unique pet species only available from this NPC at mastery 5",
+      "Special house decoration tied to this NPC's visual theme",
+      "Companion outfit exclusive to this NPC's realm",
+      "Permanent +10% XP multiplier for this NPC's quest category"
+    ]
+  },
+
+  "quest_rewards": {
+    "base_gold_by_realm": {
+      "hearthveil":    10,
+      "ember_hollow":  15,
+      "tidemark":      15,
+      "forge_run":     18,
+      "rootstead":     15,
+      "the_spire":     20,
+      "the_drift":     15
+    },
+    "base_xp_by_realm": {
+      "hearthveil":    25,
+      "ember_hollow":  30,
+      "tidemark":      30,
+      "forge_run":     35,
+      "rootstead":     30,
+      "the_spire":     40,
+      "the_drift":     30
+    },
+    "xp_multipliers": {
+      "no_hints_used":          1.25,
+      "npc_mastery_level_2":    1.10,
+      "npc_mastery_level_3":    1.20,
+      "npc_mastery_level_4":    1.30,
+      "npc_mastery_level_5":    1.50,
+      "first_time_completion":  2.00,
+      "notes": "Multipliers stack. First-time + mastery 5 + no hints = 3.75x. Feels earned, not inflated."
+    },
+    "special_quest_drops": {
+      "npc_request_complete":   "House decoration or cosmetic unique to that NPC",
+      "dungeon_first_clear":    "Wisp egg matching realm element",
+      "embral_trial_first_win": "Rare essence x5 + trial cosmetic"
     }
   },
 
   "nightly_review": {
-    "description": "Josh and Ezra review the day (or week) together. Short, structured, bonding-focused. Not a test.",
-    "trigger": "Parent opens the Review portal from Hearthveil. Evening or bedtime.",
-    "format": {
-      "check_in_questions": [
-        "What was one thing you felt proud of today?",
-        "Was there anything that felt hard or tricky?",
-        "Did you help someone or did someone help you?",
-        "What's one thing you want to try or learn tomorrow?"
+    "description": "Josh and Ezra review the day together through the game's Review Portal in Hearthveil. Ignavarr hosts. Short, calm, bonding-first. Not a quiz.",
+    "access": "Parent opens Review Portal from Hearthveil. Evening or bedtime recommended.",
+    "duration": "5-10 minutes. Sustainable nightly.",
+    "questions": [
+      "What was one thing that felt good today?",
+      "Was there anything that felt hard or tricky?",
+      "Did you help someone, or did someone help you?",
+      "What's one thing you want to try or learn tomorrow?"
+    ],
+    "question_format": "Visual icons accompany each question. Ezra can tap an image, speak, or have parent read aloud. No wrong answers. Parent guides.",
+    "raid_point_system": {
+      "max_per_session": 1,
+      "how_awarded": "Parent taps the Raid Point orb when a meaningful moment happens. Parent judgment only. Never automated.",
+      "qualifying_moments": [
+        "Ezra named a feeling without being prompted",
+        "Ezra described a moment of trying again after something was hard",
+        "Ezra mentioned helping someone or an act of kindness",
+        "Ezra expressed curiosity or asked a question about the world",
+        "Ezra acknowledged something difficult without shutting down",
+        "A genuine moment of connection or shared laughter happened"
       ],
-      "notes": "Questions are shown visually with simple icons. Ezra can tap an answer or speak one. No wrong answers. Parent guides the conversation.",
-      "duration": "5-10 minutes. Short enough to be sustainable nightly."
-    },
-    "raid_point_thresholds": {
-      "description": "Ezra earns a Raid Point when the nightly review hits a meaningful moment. These are qualitative, parent-judged, not automated.",
-      "thresholds": [
-        "Ezra articulated a feeling without prompting",
-        "Ezra identified a moment of persistence or trying again",
-        "Ezra mentioned helping someone or being kind",
-        "Ezra expressed curiosity about something new",
-        "Ezra acknowledged something hard without shutting down",
-        "Parent and Ezra shared a genuine laugh or moment of connection"
-      ],
-      "parent_action": "Parent taps the Raid Point orb when a threshold moment happens. It's a judgment call — there's no automated tracking of these.",
-      "raid_point_per_session": "Max 1 raid point per nightly review session.",
-      "weekly_reset": "Monday. Raid points reset whether or not the Family Raid was triggered."
+      "philosophy": "These moments cannot be gamed or rushed. They happen or they don't. The system trusts the parent."
     },
     "weekly_review": {
-      "description": "Optional longer version on Sunday night covering the whole week.",
-      "bonus": "Weekly review session awards 2 Raid Points if completed, regardless of threshold moments.",
-      "format": "Same questions but Ezra looks back at the week's quests and achievements in-game together with parent."
+      "description": "Optional longer session on Sunday. Ezra and parent look back at the whole week's quests, achievements, and moments together in-game.",
+      "bonus": "Automatically awards 2 Raid Points on completion. No threshold moment needed.",
+      "format": "Same four questions but expanded. Ignavarr shows the week's highlights as a short storybook."
+    },
+    "rewards": {
+      "gold": 30,
+      "xp":   10,
+      "notes": "Small reward for doing the review. Same every time. Ezra knows it's coming."
     }
   },
 
   "weekend_family_raid": {
-    "description": "Triggered when Ezra earns 3+ Raid Points in a week. Saturday or Sunday — family chooses when.",
-    "philosophy": "The Raid is a real-world shared activity framed as an epic game event. Ignavarr narrates it.",
-    "unlock_notification": "Friday evening: Ignavarr sends a message — 'A great challenge stirs. Return this weekend to face it together.'",
-    "what_it_is": "A special co-op family quest that is different every week. Drawn from a rotating pool of activity types. Always involves at least one parent participating alongside Ezra.",
-    "raid_types": {
+    "description": "Unlocked when Ezra earns 3+ Raid Points in a week. Triggered Saturday or Sunday — family chooses when.",
+    "unlock_notification": "Friday evening: Ignavarr delivers a message — 'A great challenge stirs in the realm. Return this weekend to face it together.'",
+    "core_rule": "At least one parent must participate alongside Ezra. This is a together activity, not a solo challenge.",
+    "raid_pool": {
       "knowledge_raid": {
         "name": "The Scholar's Challenge",
-        "format": "Trivia or learning game. Parent and Ezra on the same team vs Ignavarr's questions.",
-        "example": "Ignavarr asks 10 questions mixing what Ezra learned this week with fun family trivia.",
-        "educational_tie": "Reinforces the week's quest themes through review disguised as challenge."
+        "description": "Trivia and learning game. Parent and Ezra on the same team. Ignavarr asks questions mixing the week's quests with fun family topics.",
+        "educational_tie": "Spaced repetition — revisits the week's learning domains in a celebration context"
       },
       "physical_raid": {
         "name": "The Forge Trial",
-        "format": "Physical activity challenge. Balance board, movement, or obstacle course.",
-        "example": "Complete a real-world obstacle course together. Wii board tracks balance. PS5 tracks motion.",
-        "hardware_fallback": "If no hardware: simple floor-is-lava or dance challenge. Same fun.",
-        "educational_tie": "Gross motor, coordination, cooperation."
+        "description": "Physical activity challenge. Build an obstacle course together. Complete it together.",
+        "hardware_active": "Wii balance board tracks balance sections. PS5 motion tracks throwing/catching sections.",
+        "hardware_fallback": "Floor-is-lava, freeze dance, or any physical family game. Same reward.",
+        "educational_tie": "Gross motor integration, coordination, parent-child co-regulation through movement"
       },
       "creative_raid": {
         "name": "The Drift Gauntlet",
-        "format": "Creative challenge. Drawing, building, storytelling, music.",
-        "example": "Build the tallest tower from household items. Or draw a scene from Ezra's favorite quest this week.",
-        "educational_tie": "Fine motor, creativity, narrative recall."
+        "description": "Creative challenge. Draw, build, or create something together matching Ignavarr's prompt.",
+        "educational_tie": "Fine motor, creative expression, collaborative imagination"
       },
       "card_game_raid": {
         "name": "The Vault Duel",
-        "format": "A real physical card game played together. Can use Embral-themed printable cards.",
-        "example": "Simple matching game, Go Fish with Embral creature cards, or a custom Wisp card battle.",
-        "educational_tie": "Number recognition, pattern matching, turn-taking, strategic thinking."
+        "description": "Play a real physical card game together. Can use printable Embral-themed cards or any household card game.",
+        "educational_tie": "Number recognition, pattern matching, turn-taking, strategic thinking, graceful losing"
       },
       "cooking_raid": {
         "name": "The Rootstead Feast",
-        "format": "Cook or prepare something together as a family.",
-        "example": "Make a healthy snack. Ezra measures, pours, mixes. Parent supervises.",
-        "educational_tie": "Life skills, math (measuring), nutrition, following directions."
+        "description": "Prepare or cook something together as a family. Ezra measures, pours, mixes. Parent supervises and participates.",
+        "educational_tie": "Life skills, measurement and math, nutrition awareness, multi-step sequencing"
       },
       "story_raid": {
         "name": "The Tidemark Epic",
-        "format": "Collaborative storytelling. Parent and Ezra build a story together with Ignavarr as narrator.",
-        "example": "Ignavarr starts a story. Ezra and parent take turns adding sentences. Ends with an illustrated page Ezra can keep.",
-        "educational_tie": "Narrative structure, vocabulary, creativity, listening."
+        "description": "Collaborative story. Ignavarr gives the opening line. Ezra and parent alternate sentences. Ends with an illustrated page for the Trophy Room.",
+        "educational_tie": "Narrative structure, vocabulary, listening, expressive language"
       },
       "nature_raid": {
         "name": "The Spire Expedition",
-        "format": "Outdoor observation challenge. Only works with good weather — indoor fallback always available.",
-        "example": "Find 5 different types of plants, 3 insects, count birds. Document in an adventure journal.",
-        "educational_tie": "Science, observation, counting, nature literacy."
+        "description": "Outdoor observation challenge. Find, count, and document natural things. Documented in an in-game adventure journal.",
+        "weather_fallback": "Indoor version: observe things through a window, use nature books, or watch a nature documentary together.",
+        "educational_tie": "Scientific observation, counting, nature literacy, curiosity"
       },
       "failure_acceptance_raid": {
         "name": "The Drift's Falling Challenge",
-        "format": "A deliberately hard challenge designed to be failed and tried again. Multiple attempts encouraged.",
-        "example": "Build the tallest block tower possible. It WILL fall. Try again. Who can rebuild fastest after a fall?",
-        "educational_tie": "Growth mindset, persistence, flexible thinking, frustration tolerance.",
-        "notes": "This one is special — the FALL is the point. Ignavarr has special dialogue for when it falls: 'MAGNIFICENT failure! Do it again!'"
+        "description": "A challenge intentionally designed to fail. Multiple collapses are expected and celebrated. The fail is the lesson.",
+        "example": "Build the tallest tower possible from household items. It WILL fall. Race to rebuild. Ignavarr celebrates every collapse: 'MAGNIFICENT! Do it again!'",
+        "educational_tie": "Growth mindset, persistence, frustration tolerance, flexible thinking",
+        "special_mechanic": "Ignavarr has unique voice lines ONLY triggered by the tower falling. The collapse literally unlocks new content. Failure is mechanically rewarded."
       }
     },
-    "boss_mechanic": {
-      "description": "At the climax of the Family Raid, Ignavarr presents the Raid Boss encounter.",
-      "format": "A final challenge tied to the raid type. Completing it = defeat the boss.",
-      "examples": [
-        "Answer the 3 hardest review questions correctly",
-        "Complete the obstacle course one more time after failing",
-        "Finish the story with a satisfying ending",
-        "Cook the recipe without stopping"
-      ],
-      "failure_handling": "Boss can be attempted unlimited times. No penalty for failing. 'We try again together.'"
+    "boss_encounter": {
+      "description": "At the climax of the Family Raid, Ignavarr presents the final challenge. Completing it defeats the Raid Boss.",
+      "format": "One final task tied to the raid type. Completing it together = victory.",
+      "attempts": "Unlimited. No penalty for trying again.",
+      "failure_dialogue": "Ignavarr: 'That was incredible. You almost had it. One more time?' Tone is always warm, never disappointed."
     },
-    "raid_rewards": {
+    "rewards": {
       "on_completion": {
         "gold": 500,
-        "essence": {"quantity": 10, "type": "random"},
+        "xp":   200,
         "family_raid_shop_access": true,
-        "family_raid_shop_duration": "Until next Monday — shop closes if not used"
-      },
-      "family_raid_shop": {
-        "description": "Exclusive shop only accessible after completing a Family Raid. Items rotate. Cannot be accessed any other way.",
-        "items": [
-          {"name": "Ignavarr's Ember",       "type": "house_decoration", "description": "A tiny flame that floats in Ezra's room in-game"},
-          {"name": "Family Crest Banner",     "type": "house_decoration", "description": "Customizable banner for Player's House. Grows as more raids are won."},
-          {"name": "Raid Wisp Egg",           "type": "wisp_egg",         "description": "Random rare Wisp egg. Cannot be found any other way."},
-          {"name": "Bond Ribbon",             "type": "wisp_item",        "description": "Evolves a companion with max bond. Rare."},
-          {"name": "Memory Crystal",          "type": "collectible",      "description": "Records a raid achievement. Adds to the Trophy Room in Player's House."},
-          {"name": "Companion Outfit Unlock", "type": "cosmetic",         "description": "Exclusive outfit only from raid shop."},
-          {"name": "Realm Landmark Unlock",   "type": "world",            "description": "Unlocks a hidden area in one realm — changes each raid."}
-        ],
-        "rotation": "3 items available per raid. Different each time. Some items are rarer than others.",
-        "currency_used": "gold (earned during raid session)",
-        "raid_exclusive_marker": "All items have a small Family Crest icon showing they came from a Family Raid"
+        "family_raid_shop_open_until": "Following Monday morning",
+        "memory_crystal": true
       }
     }
   },
 
+  "family_raid_shop": {
+    "description": "Exclusive shop. Only accessible after completing a Weekend Family Raid. Items cannot be obtained any other way. Rotates each raid.",
+    "items_available_per_raid": 3,
+    "rotation": "Random draw from pool. Some items are rarer than others.",
+    "currency": "Gold earned during the raid session",
+    "items": [
+      {
+        "id": "ignavarr_ember_lantern",
+        "name": "Ignavarr's Ember Lantern",
+        "type": "house_decoration",
+        "description": "A small floating flame that drifts through Ezra's room in-game. Only Ignavarr can give these.",
+        "rarity": "rare"
+      },
+      {
+        "id": "family_crest_banner",
+        "name": "Family Crest Banner",
+        "type": "house_decoration",
+        "description": "A customizable banner for Player's House. Grows more ornate with each raid won.",
+        "rarity": "uncommon",
+        "persistent_upgrade": true
+      },
+      {
+        "id": "raid_wisp_egg",
+        "name": "Raid Wisp Egg",
+        "type": "wisp_egg",
+        "description": "A rare Wisp species only born from Family Raids. Cannot be found in dungeons.",
+        "rarity": "rare"
+      },
+      {
+        "id": "memory_crystal_frame",
+        "name": "Memory Crystal Frame",
+        "type": "trophy_room_item",
+        "description": "Displays in the Player's House Trophy Room. Each one records a raid completed.",
+        "rarity": "uncommon"
+      },
+      {
+        "id": "companion_exclusive_outfit",
+        "name": "Raid Hero's Outfit",
+        "type": "companion_cosmetic",
+        "description": "Exclusive outfit for companion. Marked with a small Family Crest badge.",
+        "rarity": "uncommon"
+      },
+      {
+        "id": "realm_hidden_path",
+        "name": "Realm Path Scroll",
+        "type": "world_unlock",
+        "description": "Unlocks a hidden scenic path in one realm. Changes each raid. Not a quest area — just a beautiful secret place.",
+        "rarity": "rare"
+      },
+      {
+        "id": "bond_ribbon",
+        "name": "Bond Ribbon",
+        "type": "wisp_item",
+        "description": "Can evolve a Wisp with maximum bond regardless of essence requirement. Rare.",
+        "rarity": "legendary"
+      }
+    ],
+    "exclusive_marker": "All items display a small Family Crest icon showing they came from a Family Raid"
+  },
+
   "mini_games": {
-    "description": "Local multiplayer mini-games. Ezra vs Companion (AI-controlled) or up to 4 local human players.",
-    "philosophy": "Mini-games are optional, always fun, and double as educational reinforcement when tied to quests.",
-    "player_modes": {
-      "solo_vs_companion": "Ezra plays against their AI companion",
-      "two_player":        "Ezra + one family member, same screen",
-      "three_player":      "Ezra + two others",
-      "four_player":       "Ezra + three others"
+    "description": "Local multiplayer games. Ezra vs AI companion (default) or up to 4 human family players on the same screen.",
+    "player_slots": [1, 2, 3, 4],
+    "hardware_support": {
+      "base":          "Keyboard, mouse, or any standard gamepad",
+      "ps5_dualsense": "Haptic feedback on key moments, LED pulses with player color",
+      "wii_wiimote":   "Motion controls for physical mini-games",
+      "wii_nunchuck":  "Movement input for physical mini-games"
     },
-    "hardware_expansions": {
-      "base":     "Keyboard/mouse or gamepad",
-      "ps5":      "DualSense haptic feedback during mini-games",
-      "wii":      "Wiimote motion for physical mini-games"
-    },
-    "educational_tie": {
-      "academic_mini_games": "Some mini-games are tied to active quests — completing them counts as quest progress",
-      "active_mini_games":   "Physical mini-games (Wii) count toward Forge Run realm progress"
+    "academic_integration": {
+      "description": "Some mini-games are flagged as academically tied to active quests. Completing them counts toward quest progress — play and learn are the same action.",
+      "non_academic_games": "Still earn Play Points and are always available. Pure fun is valid."
     },
     "play_points_earned": {
-      "participation":        3,
-      "win_vs_companion_ai":  5,
-      "win_vs_human":         6,
-      "academic_completion":  8,
-      "notes": "Participation minimum ensures no one goes home empty-handed"
+      "any_participation":         3,
+      "win_vs_companion_ai":       5,
+      "win_vs_human_family":       6,
+      "academic_game_completion":  8
     },
-    "sample_mini_games": [
+    "catalogue": [
       {
         "id": "wisp_match",
         "name": "Wisp Match",
-        "description": "Memory matching game with Wisp cards. Educational: pattern recognition, memory.",
+        "description": "Memory card-matching game using Wisp portraits. Find pairs before the other player.",
         "players": "1-4",
         "hardware": "base",
-        "academic_tie": "the_spire — pattern recognition"
+        "academic_realm": "the_spire",
+        "academic_skill": "Pattern recognition and memory"
       },
       {
         "id": "word_catch",
         "name": "Word Catch",
-        "description": "Words fall from the sky. Catch the ones that rhyme with the target word.",
+        "description": "Words rain from the sky. Catch only the words that rhyme with the target word.",
         "players": "1-2",
         "hardware": "base",
-        "academic_tie": "tidemark — phonics and rhyming"
-      },
-      {
-        "id": "balance_duel",
-        "name": "Balance Duel",
-        "description": "Both players balance on Wii board. Whoever holds balance longest wins.",
-        "players": "1-2 (alternating turns)",
-        "hardware": "wii_balance_board",
-        "academic_tie": "forge_run — gross motor balance",
-        "hardware_fallback": "Floor balance challenge — stand on one foot"
-      },
-      {
-        "id": "emotion_sort",
-        "name": "Emotion Sort",
-        "description": "Faces appear. Sort them into feeling buckets before time runs out.",
-        "players": "1-4",
-        "hardware": "base",
-        "academic_tie": "ember_hollow — emotion identification"
+        "academic_realm": "tidemark",
+        "academic_skill": "Phonics and rhyming"
       },
       {
         "id": "number_race",
         "name": "Number Race",
-        "description": "First to correctly tap the number that answers the equation wins the round.",
+        "description": "An equation appears. First player to tap the correct answer wins the round.",
         "players": "1-4",
         "hardware": "base",
-        "academic_tie": "the_spire — addition and subtraction"
+        "academic_realm": "the_spire",
+        "academic_skill": "Addition and subtraction"
+      },
+      {
+        "id": "emotion_sort",
+        "name": "Feeling Sort",
+        "description": "Character faces appear showing different emotions. Sort them into the correct feeling jars.",
+        "players": "1-4",
+        "hardware": "base",
+        "academic_realm": "ember_hollow",
+        "academic_skill": "Emotion identification and naming"
+      },
+      {
+        "id": "balance_challenge",
+        "name": "The Balance Trial",
+        "description": "Hold still on the Wii balance board. Whoever stays most centered longest wins.",
+        "players": "1-2 (alternating)",
+        "hardware": "wii_balance_board",
+        "hardware_fallback": "Stand on one foot. Parent times it. Beats it? Win.",
+        "academic_realm": "forge_run",
+        "academic_skill": "Gross motor balance and body awareness"
+      },
+      {
+        "id": "letter_bounce",
+        "name": "Letter Bounce",
+        "description": "Letters bounce around the screen. Collect the letters to spell the word shown at the top.",
+        "players": "1-2",
+        "hardware": "base",
+        "academic_realm": "tidemark",
+        "academic_skill": "Letter recognition and spelling"
       }
     ]
   },
 
-  "gym_battles": {
-    "description": "One per realm. Major milestone encounters. Primarily hardware-powered for physical engagement. Base fallback always available.",
-    "unlock": "Complete all 3 starter NPCs in a realm",
-    "philosophy": "Gym battles are the physical celebration of mastering a realm. They should feel epic.",
+  "embral_trials": {
+    "description": "One per realm. Major milestone encounters. Hardware-first design with complete base fallback. Ignavarr narrates each as a legendary event.",
+    "unlock_condition": "Complete all 3 starter NPCs in the realm",
+    "philosophy": "Embral's Trials are the physical and mental celebration of realm mastery. They should feel like an event, not just a battle.",
     "hardware_integration": {
-      "wii_balance_board": "Balance-based challenges — lean to dodge, hold steady to charge power",
-      "wii_wiimote":       "Swing/point mechanics — aim attacks, swipe to dodge",
-      "wii_nunchuck":      "Movement — walk character through gym arena",
-      "wii_ir_camera":     "Precision aiming for ranged encounters",
-      "ps5_dualsense":     "Haptic feedback for hits and blocks, motion for dodge rolls",
-      "base_fallback":     "Keyboard/mouse turn-based version of same encounter — same content, different input"
+      "wii_balance_board": "Lean-based mechanics — hold stance, dodge by leaning, charge by holding center",
+      "wii_wiimote":       "Swing and point mechanics — aim actions, swipe to block, gesture abilities",
+      "wii_nunchuck":      "Character movement through arena",
+      "wii_ir_camera":     "Precision targeting for puzzle-based trial sections",
+      "ps5_dualsense":     "Haptic impact feedback, adaptive trigger weight for effort mechanics, LED realm color",
+      "base_fallback":     "Turn-based keyboard version — same educational content, same rewards, same story"
     },
-    "gym_bosses": {
-      "ember_hollow_gym": {
+    "trials": {
+      "ember_hollow_trial": {
         "name": "The Heart Trial",
+        "realm": "ember_hollow",
         "boss": "The Mirror Guardian",
-        "mechanic": "Identify and match emotions correctly to weaken boss. Physical: balance board sways reflect emotional state.",
-        "educational_tie": "Emotion regulation and identification under pressure"
+        "description": "A being made of reflected emotions. To weaken it, Ezra must correctly identify the emotions it projects.",
+        "mechanic_base":     "Multiple choice emotion identification. Wrong answers strengthen the Guardian. Correct answers weaken it.",
+        "mechanic_wii":      "Balance board sways reflect the Guardian's emotional instability. Hold center = Guardian weakens faster.",
+        "mechanic_ps5":      "Haptic pulses match the Guardian's heartbeat. Feel when it's about to attack.",
+        "educational_tie":   "Emotion regulation and identification under gentle pressure"
       },
-      "tidemark_gym": {
+      "tidemark_trial": {
         "name": "The Word Surge",
+        "realm": "tidemark",
         "boss": "The Tide Sovereign",
-        "mechanic": "Spell words correctly to build a bridge. Physical: Wiimote swings to 'throw' letter blocks.",
-        "educational_tie": "Spelling and phonics under timed challenge"
+        "description": "A creature of living language. Build a path across the water by spelling words correctly.",
+        "mechanic_base":     "Spell words using on-screen keyboard. Each correct word builds a bridge section.",
+        "mechanic_wii":      "Wiimote swings place letter blocks on the bridge. Aim with IR camera for bonus sections.",
+        "mechanic_ps5":      "Haptic confirms each correct letter placed.",
+        "educational_tie":   "Spelling and phonics applied under time and challenge"
       },
-      "forge_run_gym": {
+      "forge_run_trial": {
         "name": "The Forge Gauntlet",
+        "realm": "forge_run",
         "boss": "The Iron Champion",
-        "mechanic": "Full physical obstacle — balance board + wiimote + nunchuck combined. Base: precision platformer section.",
-        "educational_tie": "Gross motor integration, coordination, spatial awareness",
-        "notes": "This is THE hardware showcase gym. Most physical gym in the game."
+        "description": "A full physical encounter. The most hardware-active trial in the game.",
+        "mechanic_base":     "Precision platformer section with timing-based challenges.",
+        "mechanic_wii":      "Balance board + wiimote + nunchuck combined. Balance to hold ground. Swing to strike. Move to dodge.",
+        "mechanic_ps5":      "Motion dodge rolls. Adaptive trigger weight for blocking. Haptic on every impact.",
+        "notes":             "This is the hardware showcase trial. If only one trial uses all hardware simultaneously, it is this one.",
+        "educational_tie":   "Gross motor integration, coordination, spatial awareness, persistence through failure"
       },
-      "rootstead_gym": {
+      "rootstead_trial": {
         "name": "The Life Lodge Trial",
+        "realm": "rootstead",
         "boss": "The Elder Keeper",
-        "mechanic": "Complete a multi-step life skill sequence correctly and quickly. Physical: gesture-based actions.",
-        "educational_tie": "Life skills sequencing and independence"
+        "description": "The Elder tests whether Ezra has truly learned to care for the Lodge. Complete a multi-step life skill sequence correctly.",
+        "mechanic_base":     "Order-of-operations puzzle. Place the steps in the correct sequence.",
+        "mechanic_wii":      "Gesture-based actions match each life skill step. Wipe, fold, pour, measure.",
+        "mechanic_ps5":      "Haptic confirms correct sequence steps. Vibrates distinctly on errors.",
+        "educational_tie":   "Life skills sequencing, independence, following multi-step directions"
       },
-      "the_spire_gym": {
+      "the_spire_trial": {
         "name": "The Vault Challenge",
+        "realm": "the_spire",
         "boss": "The Thought Titan",
-        "mechanic": "Solve logic/math puzzles while the boss applies pressure. Timed. Physical: PS5 haptic pulses on correct answers.",
-        "educational_tie": "Math and logic under mild challenge"
+        "description": "A being of pure logic. It presents math and science challenges that grow harder as Ezra succeeds.",
+        "mechanic_base":     "Math and logic puzzles with visual scaffolding. Difficulty adapts based on NPC mastery level.",
+        "mechanic_ps5":      "Haptic pulses on correct answers. Adaptive triggers add weight to 'thinking' moments.",
+        "educational_tie":   "Math, logic, cause-and-effect, problem solving under adaptive challenge"
       },
-      "the_drift_gym": {
+      "the_drift_trial": {
         "name": "The Creation Crucible",
+        "realm": "the_drift",
         "boss": "The Muse",
-        "mechanic": "Creative challenge — draw or build something matching a prompt before timer runs. Physical: motion drawing with wiimote.",
-        "educational_tie": "Creative expression, fine motor, imagination"
+        "description": "The Muse challenges Ezra to create something matching a feeling or theme — before the timer runs.",
+        "mechanic_base":     "Drawing or selection-based creative challenge. Choose elements that match the theme.",
+        "mechanic_wii":      "Motion drawing with Wiimote. Draw in the air to create.",
+        "educational_tie":   "Creative expression, fine motor, emotional vocabulary through art"
       }
     },
-    "gym_rewards": {
-      "first_clear": {
-        "gold": 300,
-        "essence": {"quantity": 5, "type": "realm_element"},
-        "gym_badge": true,
-        "badge_display": "Shown in Player's House trophy room",
-        "special_item": "Unique item per gym — cosmetic or wisp accessory"
+    "trial_rewards": {
+      "first_win": {
+        "xp":             150,
+        "gold":           300,
+        "essence":        { "type": "realm_element", "quantity": 5 },
+        "realm_seal":     true,
+        "realm_seal_display": "Shown in Player's House Trophy Room. One per realm.",
+        "unique_item":    "Cosmetic or wisp accessory unique to this trial"
       },
-      "repeat_clear": {
-        "gold": 80,
-        "essence": {"quantity": 2, "type": "realm_element"}
+      "repeat_win": {
+        "xp":     40,
+        "gold":   80,
+        "essence":{ "type": "realm_element", "quantity": 2 }
       }
     }
   },
 
-  "dungeon_bosses": {
-    "end_of_dungeon_boss": {
-      "description": "Every dungeon ends with a boss encounter. Harder than regular Wisp battles. Multi-phase.",
+  "dungeon_encounters": {
+    "standard_wisp_battle": {
+      "gold":    { "min": 8, "max": 25 },
+      "essence": { "chance": 0.15, "type": "dungeon_realm_element", "quantity": [1, 2] },
+      "wisp_capture_chance": 0.3
+    },
+    "mini_boss": {
+      "description": "Stronger Wisp or elemental creature. Appears 1-2 times per dungeon run at random positions.",
+      "gold":    { "min": 40, "max": 80 },
+      "essence": { "chance": 0.35, "quantity": [1, 3] },
+      "special_drop_chance": 0.1
+    },
+    "dungeon_boss": {
+      "description": "End-of-dungeon boss. Multi-phase. Phase 1 is battle. Phase 2 adds a puzzle layer.",
       "phases": 2,
-      "mechanic": "Phase 1: Standard battle. Phase 2: Environmental change adds a puzzle layer.",
-      "rewards": {
-        "gold": {"min": 100, "max": 200},
-        "essence": {"quantity": [3,6], "type": "dungeon_realm"},
-        "first_clear_bonus": "Wisp egg + unique dungeon cosmetic"
-      }
-    },
-    "mini_bosses": {
-      "description": "Pop-up encounters throughout the dungeon. Stronger than standard Wisps, weaker than end boss.",
-      "spawn_rate": "1-2 per dungeon run, random locations",
-      "rewards": {
-        "gold": {"min": 40, "max": 80},
-        "essence": {"chance": 0.35, "quantity": [1,3]}
+      "first_clear_rewards": {
+        "xp":       100,
+        "gold":     150,
+        "wisp_egg": true,
+        "essence":  { "type": "dungeon_realm_element", "quantity": [3, 6] },
+        "unique_cosmetic": "One cosmetic tied to this dungeon's visual theme"
+      },
+      "repeat_clear_rewards": {
+        "xp":     30,
+        "gold":   60,
+        "essence":{ "chance": 0.4, "quantity": [1, 3] }
       }
     }
   },
 
-  "xp_system": {
-    "player_xp": {
-      "level_formula": "base_xp_needed = 100 * (level ^ 1.4)",
-      "milestones": {
-        "1":   "Tutorial complete — Hearthveil open",
-        "5":   "Wisps unlocked",
-        "10":  "Companions unlocked",
-        "25":  "Ground mounts unlocked — companion home slot +1",
-        "50":  "New content layer — companion home slot +1",
-        "75":  "New content layer — companion home slot +1",
-        "100": "Ascension — flying mounts unlocked, new Ignavarr story chapter"
-      },
-      "sources": {
-        "quest_complete":           25,
-        "npc_discovered":           50,
-        "dungeon_first_clear":      100,
-        "dungeon_repeat_clear":     30,
-        "gym_battle_first_win":     150,
-        "gym_battle_repeat_win":    40,
-        "family_raid_complete":     200,
-        "wisp_captured":            40,
-        "mini_game_complete":       15,
-        "emotional_checkin":        10,
-        "npc_home_request_met":     60,
-        "npc_mastery_level_up":     80
+  "pet_system": {
+    "description": "Pets live exclusively at Player's House. They have a mini-game interaction area. They give passive bonuses to the main game based on their happiness level.",
+    "travel":   "Pets never travel with the player. They stay home.",
+    "battle":   "Pets never battle. That is the Wisp system.",
+    "max_pets_at_home": 20,
+    "happiness": {
+      "max": 100,
+      "minimum_floor": 20,
+      "decay": "Loses 1 point per in-game day if not visited. Never drops below 20.",
+      "earn_sources": {
+        "visit_and_interact": 5,
+        "feed":               8,
+        "play_minigame":      10,
+        "give_toy":           15
       }
     },
-    "npc_mastery": {
-      "how_it_works": "Score recorded per quest (0.0-1.0). Average of last 5 above 0.8 = mastery level up.",
-      "max_level": 5,
-      "level_benefits": {
-        "2": "Harder quest variants unlock",
-        "3": "NPC shares personal lore and bonus dialogue",
-        "4": "Advanced quest tier unlocks",
-        "5": "Mastery reward — unique item or pet tied to that NPC"
-      }
+    "passive_bonuses": {
+      "20_to_39":  "No bonus active",
+      "40_to_59":  "+2% gold on all quests",
+      "60_to_79":  "+5% gold and +3% XP on all quests",
+      "80_to_100": "+8% gold, +5% XP, and +3% chance of rare item find in dungeons"
+    },
+    "mini_game_activities": ["feed", "play_fetch", "groom", "read_together", "nap_together"],
+    "visiting_reward": {
+      "gold": 10,
+      "xp": 5,
+      "notes": "Small daily reward for visiting and interacting with pets. Encourages the bond."
     }
+  },
+
+  "wisp_evolution": {
+    "description": "Wisps grow through three visual tiers. Evolution requires reaching level 30 and spending matching essence.",
+    "tiers": {
+      "tier_1": { "level": "1-29",  "size": "small",  "glow": "dim",     "abilities": 1 },
+      "tier_2": { "level": "30-49", "size": "medium", "glow": "bright",  "abilities": 2, "requires_first_evolution": true },
+      "tier_3": { "level": "50",    "size": "large",  "glow": "radiant", "abilities": 2, "requires_second_evolution": true, "overworld_passive": true }
+    },
+    "evolution_requirements": {
+      "min_level":     30,
+      "essence_cost":  10,
+      "essence_type":  "must_match_wisp_element"
+    },
+    "tier_3_overworld_passive": "Tier 3 Wisp leaves a subtle element trail while following player in overworld. Cosmetic only."
   },
 
   "play_shop": {
-    "description": "Exclusive items only available with Play Points from mini-games.",
+    "description": "Items only available with Play Points. Earned through mini-games. Cannot be bought.",
     "sample_items": [
-      {"name": "Wisp Arena Banner",     "cost": 50,  "type": "house_decoration"},
-      {"name": "Champion Pose Emote",   "cost": 80,  "type": "player_cosmetic"},
-      {"name": "Rival Companion Outfit","cost": 120, "type": "companion_cosmetic"},
-      {"name": "Mini-game Trophy",      "cost": 40,  "type": "trophy_room_item"},
-      {"name": "Special Wisp Trail",    "cost": 100, "type": "wisp_cosmetic"}
+      { "name": "Wisp Arena Banner",      "cost": 50,  "type": "house_decoration" },
+      { "name": "Champion Pose Emote",    "cost": 80,  "type": "player_cosmetic" },
+      { "name": "Rival Outfit",           "cost": 120, "type": "companion_cosmetic" },
+      { "name": "Mini-Game Trophy",       "cost": 40,  "type": "trophy_room_item" },
+      { "name": "Elemental Trail Effect", "cost": 100, "type": "wisp_cosmetic" }
+    ]
+  },
+
+  "cosmetic_shop": {
+    "description": "Purchased with Gold only. No real money. No power items. Cosmetic only.",
+    "categories": [
+      "player_avatar_outfits",
+      "player_avatar_accessories",
+      "companion_outfits",
+      "house_furniture",
+      "house_wall_art",
+      "house_rugs_and_flooring",
+      "pet_toys",
+      "pet_beds",
+      "wisp_trail_effects"
     ]
   },
 
   "daily_login": {
-    "philosophy": "Rewards showing up. No streaks that break. Sick days never punished.",
-    "day_1": {"gold": 50},
-    "day_2": {"gold": 75},
-    "day_3": {"gold": 100, "essence": {"type": "random", "quantity": 2}},
-    "day_4": {"gold": 125},
-    "day_5": {"gold": 150},
-    "day_6": {"gold": 175},
-    "day_7": {"gold": 250, "wisp_treat": 1},
-    "reset": "Resets to day 1 after day 7. No streak-breaking. No penalty for gaps."
+    "philosophy": "Rewards showing up. Never punishes absence. No streak mechanics that break.",
+    "schedule": {
+      "day_1": { "gold": 50 },
+      "day_2": { "gold": 75 },
+      "day_3": { "gold": 100, "essence": { "type": "random", "quantity": 2 } },
+      "day_4": { "gold": 125 },
+      "day_5": { "gold": 150 },
+      "day_6": { "gold": 175 },
+      "day_7": { "gold": 250, "wisp_treat_quantity": 1, "wisp_treat_effect": "Grants 50 XP to any Wisp" }
+    },
+    "after_day_7": "Resets to day 1. No penalty for gaps in play. The schedule picks up from where Ezra left off if absent."
   },
 
-  "no_these_things": {
-    "no_season_passes":     "No paid battle passes. No FOMO mechanics.",
-    "no_master_ball":       "No catch-rate bypasses — earning a capture is part of the game.",
-    "no_online_pvp":        "No competition against strangers. Local family only.",
-    "no_real_money":        "Cannot purchase gold, essence, or any advantage with real money.",
-    "no_streak_punishment": "Missing days never destroys progress."
+  "emotional_checkin_reward": {
+    "xp":   10,
+    "gold":  5,
+    "critical_design_note": "Reward is IDENTICAL regardless of what mood Ezra reports. There is no incentive to report a happy mood to get a bigger reward. This is essential — the check-in must feel safe and honest."
+  },
+
+  "ascension": {
+    "description": "Triggered at level 100. Not a reset. A full content expansion.",
+    "what_is_kept": "Everything. All pets, Wisps, companions, gold, house items, NPC relationships, mastery levels, trophy room.",
+    "what_changes": {
+      "world": "All realms gain new visual layers — deeper areas, new biome sections visible that were previously locked.",
+      "quests": "New NPC quest tiers available across all realms. Harder content but same scaffolding support.",
+      "npc_dialogue": "All NPCs have new dialogue trees acknowledging Ezra's ascension. They remember his journey.",
+      "ignavarr": "New story chapter from Ignavarr unlocks. The narrative advances meaningfully.",
+      "flying_mounts": "Flying mounts unlocked. New way to navigate the overworld.",
+      "visual": "Player character gains a subtle ascension aura effect — cosmetic, not pay-to-show."
+    },
+    "subsequent_ascensions": "Every 100 levels after first ascension adds another content expansion. No defined cap. The game grows with the child."
+  },
+
+  "what_embral_does_not_have": {
+    "no_season_passes":       "No paid battle passes. No FOMO. No time-limited exclusive content behind a paywall.",
+    "no_catch_all_items":     "No item that automatically captures any Wisp. Earning a capture is part of the experience.",
+    "no_online_pvp":          "No competition against unknown players. Local family multiplayer only.",
+    "no_real_money_power":    "Gold, essence, and Play Points cannot be purchased. All earned through play.",
+    "no_streak_punishment":   "Missing days never destroys progress. The game waits for Ezra.",
+    "no_generated_quests":    "No AI generates quest content at runtime. Every quest is hand-authored with research basis.",
+    "no_negative_feedback_loop": "No mechanic that makes doing poorly feel like losing something. Try again is always free."
   }
 }
