@@ -1,6 +1,10 @@
 ; Engine configuration file.
-; Embral — Educational RPG for children ages 4-8
-; https://github.com/dragonbornjedi-code/Embral
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
@@ -11,7 +15,7 @@ config/description="Open-source educational RPG for children ages 4-8"
 config/version="0.1.0"
 config/tags=PackedStringArray("educational", "rpg", "children", "godot4")
 run/main_scene="res://scenes/ui/main_menu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://assets/textures/icon.svg"
 
 [autoload]
@@ -21,13 +25,18 @@ HardwareManager="*res://scripts/autoloads/hardware_manager.gd"
 HABridge="*res://scripts/autoloads/ha_bridge.gd"
 QuestManager="*res://scripts/autoloads/quest_manager.gd"
 ConfigLoader="*res://scripts/autoloads/config_loader.gd"
+SaveManager="*res://scripts/autoloads/save_manager.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/resizable=true
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [input]
 

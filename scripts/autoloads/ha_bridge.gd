@@ -70,9 +70,10 @@ func _post(endpoint: String, data: Dictionary) -> Variant:
 		http.queue_free()
 		_register_failure()
 		return null
-	var result := await http.request_completed
+	var result: Array = await http.request_completed
 	http.queue_free()
 	var status: int = result[1]
+
 	if status >= 400:
 		_register_failure()
 		return null

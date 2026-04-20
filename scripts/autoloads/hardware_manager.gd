@@ -102,7 +102,7 @@ func _detect_wii() -> void:
 
 func _detect_ha() -> void:
 	# Load HA config from user://config.json
-	var config := ConfigLoader.get_value("ha_url", "") if _config_loader_ready() else ""
+	var config: String = ConfigLoader.get_value("ha_url", "") if _config_loader_ready() else ""
 	if config == "":
 		return
 	_ha_url = config
@@ -114,9 +114,10 @@ func _detect_ha() -> void:
 	if err != OK:
 		http.queue_free()
 		return
-	var result := await http.request_completed
+	var result: Array = await http.request_completed
 	http.queue_free()
 	var status_code: int = result[1]
+
 	if status_code == 200 or status_code == 401:
 		# 401 = HA is there but needs auth — still counts as online
 		_has_ha = true

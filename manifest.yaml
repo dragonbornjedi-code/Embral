@@ -45,6 +45,11 @@ autoloads:
     purpose: Loads user://config.json. Player settings and preferences.
     status: planned
 
+  save_manager:
+    path: scripts/autoloads/save_manager.gd
+    purpose: Manages game state persistence (Quest, NPC, Player stats).
+    status: created
+
 # ═══════════════════════════════════════════
 # PLAYER SYSTEM
 # ═══════════════════════════════════════════
