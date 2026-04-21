@@ -27,7 +27,7 @@ QuestManager="*res://scripts/autoloads/quest_manager.gd"
 ConfigLoader="*res://scripts/autoloads/config_loader.gd"
 SaveManager="*res://scripts/autoloads/save_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
-SqliteDB="*res://addons/sqlite3/gdext.gdextension"
+SqliteDB="*res://addons/godot-sqlite/bin/godot-sqlite.gdextension"
 DialogicStub="*res://scripts/autoloads/dialogic_stub.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 

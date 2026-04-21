@@ -49,13 +49,13 @@ func _physics_process(_delta: float) -> void:
 
 func _initialize() -> void:
 	if is_tutorial:
-		_populate_agent_files("res://demo/agents/tutorial/")
+		_populate_agent_files("res://addons/demo/agents/tutorial/")
 		begin_tutorial.text = "End Tutorial"
 		navigation_hint.text = "Navigate ➤"
 		scene_title.text = "Tutorial"
 		_on_agent_selection_id_pressed(0)
 	else:
-		_populate_agent_files("res://demo/agents/")
+		_populate_agent_files("res://addons/demo/agents/")
 		begin_tutorial.text = "Begin Tutorial"
 		navigation_hint.text = "Select Agent ➤"
 		scene_title.text = "Showcase"
@@ -136,7 +136,7 @@ func _on_agent_selection_id_pressed(id: int) -> void:
 
 
 func _on_switch_to_game_pressed() -> void:
-	get_tree().change_scene_to_file("res://demo/scenes/game.tscn")
+	get_tree().change_scene_to_file("res://addons/demo/scenes/game.tscn")
 
 
 func _on_minimize_description_button_down() -> void:

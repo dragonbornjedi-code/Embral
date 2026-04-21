@@ -1,14 +1,14 @@
 extends Node2D
 
-const Simple := preload("res://demo/agents/01_agent_melee_simple.tscn")
-const Charger := preload("res://demo/agents/02_agent_charger.tscn")
-const Imp := preload("res://demo/agents/03_agent_imp.tscn")
-const Skirmisher := preload("res://demo/agents/04_agent_skirmisher.tscn")
-const Ranged := preload("res://demo/agents/05_agent_ranged.tscn")
-const Combo := preload("res://demo/agents/06_agent_melee_combo.tscn")
-const Nuanced := preload("res://demo/agents/07_agent_melee_nuanced.tscn")
-const Demon := preload("res://demo/agents/08_agent_demon.tscn")
-const Summoner := preload("res://demo/agents/09_agent_summoner.tscn")
+const Simple := preload("res://addons/demo/agents/01_agent_melee_simple.tscn")
+const Charger := preload("res://addons/demo/agents/02_agent_charger.tscn")
+const Imp := preload("res://addons/demo/agents/03_agent_imp.tscn")
+const Skirmisher := preload("res://addons/demo/agents/04_agent_skirmisher.tscn")
+const Ranged := preload("res://addons/demo/agents/05_agent_ranged.tscn")
+const Combo := preload("res://addons/demo/agents/06_agent_melee_combo.tscn")
+const Nuanced := preload("res://addons/demo/agents/07_agent_melee_nuanced.tscn")
+const Demon := preload("res://addons/demo/agents/08_agent_demon.tscn")
+const Summoner := preload("res://addons/demo/agents/09_agent_summoner.tscn")
 
 const WAVES: Array = [
 	[Simple, Simple, Nuanced],
@@ -81,4 +81,4 @@ func _on_player_death() -> void:
 
 
 func _on_switch_to_showcase_pressed() -> void:
-	get_tree().change_scene_to_file("res://demo/scenes/showcase.tscn")
+	get_tree().change_scene_to_file("res://addons/demo/scenes/showcase.tscn")

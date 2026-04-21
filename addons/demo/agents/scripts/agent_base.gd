@@ -14,11 +14,11 @@ extends CharacterBody2D
 signal death
 
 # Resource file to use in summon_minion() method.
-const MINION_RESOURCE := "res://demo/agents/03_agent_imp.tscn"
+const MINION_RESOURCE := "res://addons/demo/agents/03_agent_imp.tscn"
 
 # Projectile resource.
-const NinjaStar := preload("res://demo/agents/ninja_star/ninja_star.tscn")
-const Fireball := preload("res://demo/agents/fireball/fireball.tscn")
+const NinjaStar := preload("res://addons/demo/agents/ninja_star/ninja_star.tscn")
+const Fireball := preload("res://addons/demo/agents/fireball/fireball.tscn")
 
 var summon_count: int = 0
 

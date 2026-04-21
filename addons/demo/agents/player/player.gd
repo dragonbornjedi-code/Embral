@@ -8,7 +8,7 @@
 #* https://opensource.org/licenses/MIT.
 #* =============================================================================
 #*
-extends "res://demo/agents/scripts/agent_base.gd"
+extends "res://addons/demo/agents/scripts/agent_base.gd"
 
 ## Player.
 
