@@ -303,17 +303,17 @@ npc_system:
   base_npc:
     path: scripts/npcs/base_npc.gd
     purpose: All NPCs extend this. Dialogue dispatch, proximity detection.
-    status: planned
+    status: active
 
   base_teacher_npc:
     path: scripts/npcs/base_teacher_npc.gd
     purpose: All teacher NPCs extend this. Quest dispatch, mastery tracking calls.
-    status: planned
+    status: active
 
   companion_npc:
     path: scripts/npcs/companion_npc.gd
     purpose: Companion base class. Second avatar logic, co-op handoff.
-    status: planned
+    status: active
 
   ignavarr:
     path: scripts/npcs/teachers/ignavarr.gd
@@ -324,7 +324,7 @@ npc_system:
   npc_home_data:
     path: scripts/models/npc_home_data.gd
     purpose: NPC home preference data. terrain, facing, proximity preferences.
-    status: planned
+    status: active
 
   dialogue_fallbacks:
     path: data/dialogue/{npc_id}_fallback.json
