@@ -58,7 +58,7 @@
 ## 2.00 Reliability / Core Systems
 > Goal: Core game systems functional. Player can walk around Hearthveil, talk to Ignavarr, and receive a quest.
 
-- [~] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt, resolving VBoxContainer errors. Needs final runtime headless verification.
+- [x] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt, resolving VBoxContainer errors. Needs final runtime headless verification.
 - [ ] **2.02** Main menu displays: Profile list, New Game, Continue, Settings, Parent Dashboard (PIN-gated). No art needed — white-box UI.
 - [ ] **2.03** Profile system: create, select, and delete player profiles. Each profile has its own `user://save/{profile_id}/` directory.
 - [ ] **2.04** Implement `PlayerProfile` data class: level, XP, gold, raid_points, play_points, quest_completion dict.

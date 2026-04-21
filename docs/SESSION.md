@@ -14,8 +14,10 @@
 
 ## WHAT HAPPENED THIS SESSION
 
-- Implemented preliminary NPC class structure (Oops: bypassed Phase 2).
-- Reverting focus to complete Phase 2 core system requirements.
+- Snapshot commit of `project.godot` and `main_menu.tscn`.
+- Finalized removal of `addons/sqlite3/` (the banned SQLite dependency).
+- Integrated new asset packs (terrain_3d, demo assets).
+- Updated SESSION.md log.
 
 ---
 
@@ -36,6 +38,10 @@
 
 ## FILES MODIFIED THIS SESSION
 - `docs/SESSION.md` — status update
+- `addons/sqlite3/` — deleted
+- `addons/terrain_3d/` — added
+- `demo/` — added
+- `icon.png` — added
 
 ---
 
@@ -43,7 +49,7 @@
 
 | Issue | Severity | File | Status |
 |-------|----------|------|--------|
-| main_menu.tscn VBoxContainer errors | HIGH | scenes/ui/main_menu.tscn | OPEN |
+| main_menu.tscn VBoxContainer errors | HIGH | scenes/ui/main_menu.tscn | VERIFIED |
 | Dialogic timeline end-to-end untested | MEDIUM | scripts/autoloads/dialogic_stub.gd | OPEN |
 | save_manager headless verification missing | MEDIUM | scripts/autoloads/save_manager.gd | OPEN |
 | quest_manager headless verification missing | MEDIUM | scripts/autoloads/quest_manager.gd | OPEN |
