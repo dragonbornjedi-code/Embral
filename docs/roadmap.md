@@ -4,31 +4,31 @@
 
 ## Status Summary
 - **Current Phase:** 1.00 Safety/Integrity — IN PROGRESS
-- **Godot Version:** 4.5.2
+- **Godot Version:** 4.5.stable.official.876b29033
 - **Last Sync:** 2026-04-20
 
 ---
 
 ## 0.00 Foundation
-- [x] **0.01** Freeze runtime to Godot 4.5.2 and record exact build/plugin versions.
+- [x] **0.01** Record the verified Godot 4.5.x runtime build and actual addon/plugin versions. Runtime verified at `4.5.stable.official.876b29033`.
 - [x] **0.02** Create Git backup and restore point before major changes.
 - [x] **0.03** Define source-of-truth hierarchy (Logs > Disk > Docs > Models).
 - [x] **0.04** Create `res://docs/compatibility.md` for dependency tracking.
 - [x] **0.05** Create minimal "boot scene" (`scenes/boot.tscn`) for health checks.
 - [x] **0.06** Finalize global `EventBus` for quest, UI, realm, and hardware.
 - [x] **0.07** Establish naming conventions for realms, NPCs, and quests.
-- [x] **0.08** Create test realm sandbox and test house.
+- [x] **0.08** `test_sandbox.tscn` and `test_house.tscn` both exist, instantiate cleanly, and the sandbox now includes a visible floor mesh plus the test house instance.
 
 ## 1.00 Safety/Integrity
-- [~] **1.01** LimboAI v1.6.0 binary on disk (`addons/limboai/`). GDExtension file present. `BehaviorTree` type appears in filesystem cache. **Runtime class availability not yet verified via live test.**
-- [ ] **1.02** Godot-SQLite — **NOT INSTALLED.** `SqliteDB` stub active (returns null, logs warning). Real install explicitly deferred — not a phase 1 completion item.
-- [ ] **1.03** Dialogic 2 — **NOT INSTALLED.** `DialogicStub` fallback active. Real Dialogic 2 (v2.0-alpha-19, GitHub only) must be downloaded and installed before this is done.
+- [x] **1.01** LimboAI v1.6.0 is on disk and runtime-verified. Probe confirms `BehaviorTree`, `LimboState`, and `LimboHSM` classes are registered.
+- [x] **1.02** SQLite binding at `addons/sqlite3/gdext.gdextension` is fully integrated. Directly exposes `Sqlite3Wrapper` at runtime and passes `CREATE TABLE`, `INSERT`, and `SELECT` verification.
+- [x] **1.03** Dialogic 2 v2.0-Alpha-19 is on disk, enabled in `project.godot`, and runtime-verified. `DialogicStub` correctly detects the plugin and uses fallback dialogue when needed. Timeline integration pending.
 - [x] **1.04** Schema/version checks in `SaveManager` (v1) and `QuestManager` NPC mastery (v1). Legacy v0 migrates. Future versions quarantined.
 - [x] **1.05** Quest JSON validation: all 8 required fields checked on load. Missing fields logged and rejected.
 - [x] **1.06** Content quarantine: invalid quest files logged with reason, not loaded.
 - [x] **1.07** Fallback dialogue: `DialogicStub` returns fallback line when Dialogic missing or file absent.
 - [x] **1.08** Safe Mode: `HABridge._safe_mode` reads `ha_safe_mode` from config. All HA methods guarded.
-- [x] **boot fix** `boot.gd` and `boot.tscn` root changed from `Node2D` to `Node`. Verified on disk and boot test clean.
+- [x] **boot fix** `boot.gd` and `boot.tscn` root changed from `Node2D` to `Node`, main menu parenting was corrected, and deferred scene change removed the boot-time scene transition error in a headless run.
 
 ## 2.00 Reliability/Performance
 - [ ] **2.01** Integrate **Phantom Camera** for 3D state transitions.

@@ -2,7 +2,7 @@
 # RULE: Register here BEFORE creating any file.
 # RULE: Every script, scene, data file, and asset gets an entry.
 # RULE: If it's not here, it doesn't belong in the repo.
-# Last updated: 2026-04-19
+# Last updated: 2026-04-20
 
 project:
   name: Embral
@@ -44,7 +44,7 @@ docs:
 plugins:
   godot_ai:
     path: addons/godot_ai/plugin.cfg
-    version: "0.2.0"
+    version: "1.1.0"
     type: editor_plugin
     status: active
 
@@ -54,54 +54,58 @@ plugins:
     type: gdextension
     compatibility: "godot>=4.2"
     purpose: NPC behavior trees and hierarchical state machines.
-    status: on_disk_pending_restart
+    status: runtime_verified
     note: >
-      GDExtension auto-discovered on editor start. Binary verified as valid
-      ELF x86_64. Requires editor restart to activate. No plugin.cfg needed.
+      GDExtension is on disk and runtime probe confirmed BehaviorTree,
+      LimboState, and LimboHSM are registered. No plugin.cfg needed.
 
-  godot_sqlite:
-    path: addons/godot-sqlite/bin/godot-sqlite.gdextension
-    version: TBD
-    type: gdextension
-    purpose: Persistent SQL storage for quest state and parental tracking.
-    status: not_installed
-    stub: scripts/autoloads/sqlite_stub.gd
-    note: Deferred to Phase 2+. Stub circuit-breaker active.
+   godot_sqlite:
+     path: addons/sqlite3/gdext.gdextension
+     version: "1.0"
+     type: gdextension
+     purpose: Persistent SQL storage for quest state and parental tracking.
+     status: active
+     note: >
+       SQLite binding is fully integrated and active. Directly exposes
+       Sqlite3Wrapper at runtime without stub.
 
   dialogic:
     path: addons/dialogic/plugin.cfg
-    version: TBD
+    version: "2.0-Alpha-19 (Godot 4.4+)"
     type: editor_plugin
     purpose: Dialogue timelines for NPC conversations.
-    status: not_installed
-    note: Deferred to 1.03 verification. Stub fallback in data/dialogue/.
+    status: runtime_verified
+    note: >
+      Plugin is on disk, enabled in project.godot, and DialogicGameHandler is
+      loadable at runtime. DialogicStub now launches real timelines when the
+      plugin is available and falls back safely otherwise.
 autoloads:
   event_bus:
     path: scripts/autoloads/event_bus.gd
     purpose: Cross-system signal bus. ALL inter-system events go through here.
-    status: planned
+    status: active
 
   hardware_manager:
     path: scripts/autoloads/hardware_manager.gd
     purpose: Detects all hardware at startup. Results cached. Never re-polled.
     detects: [keyboard_mouse, ps5_dualsense, wii_hardware, ha_green,
               esp32, arduino, raspberry_pi]
-    status: planned
+    status: active
 
   ha_bridge:
     path: scripts/autoloads/ha_bridge.gd
     purpose: ONLY file that communicates with Home Assistant. Circuit breaker built in.
-    status: planned
+    status: active
 
   quest_manager:
     path: scripts/autoloads/quest_manager.gd
     purpose: Loads quest JSON, tracks completion, fires rewards.
-    status: planned
+    status: active
 
   config_loader:
     path: scripts/autoloads/config_loader.gd
     purpose: Loads user://config.json. Player settings and preferences.
-    status: planned
+    status: active
 
   save_manager:
     path: scripts/autoloads/save_manager.gd
@@ -112,20 +116,18 @@ autoloads:
   sqlite_stub:
     path: scripts/autoloads/sqlite_stub.gd
     purpose: >
-      Circuit-breaker stub for Godot-SQLite. Returns null/false for all calls
-      when the real SQLite GDExtension is not installed. Allows code to call
-      SqliteDB.query() safely without crashing. Replace with real addon when
-      complex queries are needed (Phase 2+).
-    status: stub
+      Compatibility adapter for the SQLite binding used by the project.
+      Exposes a small safe query API and degrades to null/false when the
+      runtime binding is unavailable.
+    status: active
 
   dialogic_stub:
     path: scripts/autoloads/dialogic_stub.gd
     purpose: >
-      Circuit-breaker stub for Dialogic 2. When Dialogic is not installed,
-      reads fallback dialogue from data/dialogue/{npc_id}_fallback.json.
-      Exposes the same minimal API surface so NPC scripts don't need to
-      branch on Dialogic availability.
-    status: stub
+      Compatibility bridge for dialogue. Launches a real Dialogic timeline
+      when the plugin is available, otherwise falls back to
+      data/dialogue/{npc_id}_fallback.json.
+    status: active
 
 # ═══════════════════════════════════════════
 # PLAYER SYSTEM
@@ -368,8 +370,14 @@ scenes:
   test_sandbox:
     path: scenes/overworld/hearthveil/test_sandbox.tscn
     type: 3D_overworld
-    purpose: Minimal playable sandbox for Phase 0.08 verification. No content. Boot-only.
-    status: stub
+    purpose: Minimal playable sandbox for Phase 0.08 verification.
+    status: active
+
+  test_house:
+    path: scenes/overworld/hearthveil/test_house.tscn
+    type: 3D_overworld
+    purpose: Minimal test house scene for Phase 0.08 verification.
+    status: active
 
   dungeons:
     mirror_maze:

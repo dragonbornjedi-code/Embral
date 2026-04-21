@@ -24,9 +24,8 @@ func _ready() -> void:
 	
 	if all_ok:
 		print("[SUCCESS] All core systems verified.")
-		# In a real build, we would transition to the main menu here.
-		# For Phase 0.05 verification, we'll just log success.
-		_load_main_menu()
+		# Defer scene changes until the current tree mutation is complete.
+		_load_main_menu.call_deferred()
 	else:
 		printerr("[FATAL] Foundation failure. Check project.godot autoloads.")
 

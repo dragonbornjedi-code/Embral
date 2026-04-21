@@ -1,14 +1,14 @@
 # Dependency & Compatibility Matrix
 
-> Last updated: 2026-04-20 — Phase 0.00 Foundation complete.
+> Last updated: 2026-04-20 — audited against runtime and files on disk.
 
 | Dependency | Version | Status | Notes |
 |------------|---------|--------|-------|
-| Godot Engine | 4.5.2 | **Target** | Recommended maintenance release. Pin this. Do not upgrade without a new restore-point tag. |
-| godot-ai (MCP) | 0.2.0 | **Installed** | Integrated AI development plugin. Lives in `addons/godot_ai/`. |
-| LimboAI | 4.4–4.5 build | **Pending (1.01)** | NPC state machines and behavior trees. Install before any NPC work. |
-| Godot-SQLite | 4.x | **Pending (1.02)** | Persistent quest state and parental tracking. Install before save system expansion. |
-| Dialogic 2 | TBD | **Pending (1.03)** | Dialogue system. Verify distribution path before depending on it — Asset Library parity unconfirmed. |
+| Godot Engine | 4.5.stable.official.876b29033 | **Verified Runtime** | Verified with `godot --version` and headless project boot on 2026-04-20. |
+| godot-ai (MCP) | 1.1.0 | **Installed** | Editor plugin present in `addons/godot_ai/` and enabled in `project.godot`. |
+| LimboAI | 1.6.0 | **Runtime-Verified** | `addons/limboai/` present; probe confirms `BehaviorTree`, `LimboState`, and `LimboHSM` are registered. |
+ | SQLite binding | `addons/sqlite3` | **Active** | Fully integrated and active. Directly exposes `Sqlite3Wrapper` at runtime and passes `CREATE TABLE`, `INSERT`, and `SELECT` verification.
+ | Dialogic 2 | 2.0-Alpha-19 (Godot 4.4+) | **Active** | Plugin present and enabled. `DialogicStub` correctly detects the plugin and uses fallback dialogue when needed. Timeline integration pending.
 | Phantom Camera | TBD | **Pending (2.01)** | 3D camera state transitions. Low blast radius — install when realm scenes begin. |
 
 ## Build Environment
@@ -18,17 +18,19 @@
 - **Git Repo:** dragonbornjedi-code/embral
 - **Restore Tag:** `v0.00-foundation-pre-work` (commit 1466890)
 
-## Phase 0.00 Status — All items complete
-- [x] Godot 4.5.2 locked in `project.godot`
+## Phase 0.00 Status — Audited
+- [x] Exact runtime build recorded from a live `godot --version` check
 - [x] Git restore-point tag `v0.00-foundation-pre-work` created
 - [x] `docs/source_of_truth.md` written
 - [x] `docs/compatibility.md` (this file) active
 - [x] `docs/naming_conventions.md` written
-- [x] Boot scene (`scenes/boot.tscn`) + health check script active
+- [x] Boot scene (`scenes/boot.tscn`) + health check script active and headless-boot verified
 - [x] EventBus autoload fully implemented
 - [x] SaveManager with schema_version=1 and soft-fail quarantine
-- [x] Test sandbox stub (`scenes/overworld/hearthveil/test_sandbox.tscn`)
+- [x] Test sandbox and test house both exist and instantiate cleanly
 
-## Known Issues / Deferred to 1.04
-- `SaveManager` uses `user://save_game.json` but `manifest.yaml` defines `user://save/player_profile.json`. Save paths need unification in Phase 1.04.
-- `QuestManager` saves NPC mastery to `user://save/npc_mastery.json` independently of `SaveManager`. These should be consolidated.
+## Known Issues / Current Integrity Gaps
+- `SaveManager` uses `user://save_game.json` while `QuestManager` separately writes `user://save/npc_mastery.json`. Persistence remains split.
+- `addons/demo/` contains LimboAI demo content whose internal references still point at `res://demo/...`, so it is not cleanly usable from its current repo location.
+- Headless exit still reports Dialogic-owned leaked resources and orphan nodes during shutdown. Runtime boot and SQLite integration pass, but Dialogic teardown appears noisy in this environment.
+- Dialogic timelines are not yet integrated into gameplay.
