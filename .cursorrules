@@ -1,0 +1,7 @@
+Read AGENTS.md before every action. Read manifest.yaml before creating any file.
+Never install dependencies not in manifest.yaml.
+SQLite, Ollama, RAG, and backend AI are permanently banned.
+Edit existing files. Never create variants (_fixed, _v2, _clean, etc).
+Register in manifest.yaml BEFORE creating any file.
+Check git status before writing anything.
+The three JSON project files are inspiration only, not specs.
