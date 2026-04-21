@@ -1,4 +1,4 @@
-# EMBRAL — Manifest v1.0
+# EMBRAL — Manifest v2.0
 # RULE: Register here BEFORE creating any file.
 # RULE: Every script, scene, data file, and asset gets an entry.
 # RULE: If it's not here, it doesn't belong in the repo.
@@ -6,13 +6,25 @@
 
 project:
   name: Embral
-  version: 0.1.0-foundation
-  engine: godot-4.x
+  version: 0.2.0-phase1-complete
+  engine: godot-4.5.stable.official.876b29033
   license: MIT
-  repo: https://github.com/dragonbornjedi-code/embral
+  repo: https://github.com/dragonbornjedi-code/Embral
   single_device: true
   no_backend_ai: true
   no_rag: true
+  no_sqlite: true
+
+# ═══════════════════════════════════════════
+# BANNED DEPENDENCIES — NEVER ADD THESE
+# ═══════════════════════════════════════════
+banned:
+  sqlite:           "Not needed. Godot JSON/file system handles all persistence."
+  godot_sqlite:     "Was added by Windsurf. Removed. Never re-add."
+  ollama:           "No AI inference at runtime. Ever."
+  chromadb:         "No vector stores. Ever."
+  rag_pipeline:     "No RAG. Ever."
+  backend_server:   "Single device game. No servers."
 
 # ═══════════════════════════════════════════
 # DOCS — Reference documents (no scripts in docs/)
@@ -20,7 +32,7 @@ project:
 docs:
   roadmap:
     path: docs/roadmap.md
-    purpose: Living development roadmap, phase 0.00–5.00.
+    purpose: Living development roadmap. Phases 0.00–8.xx. Update after every session.
     status: active
 
   compatibility:
@@ -30,7 +42,7 @@ docs:
 
   source_of_truth:
     path: docs/source_of_truth.md
-    purpose: Defines the authoritative hierarchy for runtime state vs. files vs. docs vs. model assumptions.
+    purpose: Authoritative hierarchy — Runtime > Disk > Docs > Model assumptions.
     status: active
 
   naming_conventions:
@@ -38,15 +50,30 @@ docs:
     purpose: Canonical naming rules for realms, NPCs, quests, files, and variables.
     status: active
 
+  session_log:
+    path: docs/SESSION.md
+    purpose: >
+      Updated at the END of every AI session. Tells the NEXT session what was done,
+      what is broken, and what to do first. This is the shared memory between AI sessions.
+    status: active
+
+  ai_context:
+    path: docs/AI_CONTEXT.md
+    purpose: >
+      Master context prompt loaded by all AI CLI tools via shell aliases.
+      Contains current status, next tasks, and critical rules summary.
+    status: active
+
 # ═══════════════════════════════════════════
 # PLUGINS / ADDONS
 # ═══════════════════════════════════════════
 plugins:
-  godot_ai:
+  godot_ai_mcp:
     path: addons/godot_ai/plugin.cfg
     version: "1.1.0"
     type: editor_plugin
     status: active
+    note: MCP plugin. Server runs on port 8000.
 
   limboai:
     path: addons/limboai/bin/limboai.gdextension
@@ -56,29 +83,27 @@ plugins:
     purpose: NPC behavior trees and hierarchical state machines.
     status: runtime_verified
     note: >
-      GDExtension is on disk and runtime probe confirmed BehaviorTree,
-      LimboState, and LimboHSM are registered. No plugin.cfg needed.
-
-   godot_sqlite:
-     path: addons/sqlite3/gdext.gdextension
-     version: "1.0"
-     type: gdextension
-     purpose: Persistent SQL storage for quest state and parental tracking.
-     status: active
-     note: >
-       SQLite binding is fully integrated and active. Directly exposes
-       Sqlite3Wrapper at runtime without stub.
+      Runtime probe confirmed BehaviorTree, LimboState, and LimboHSM are registered.
+      Demo folder (addons/demo/) has been REMOVED — it caused parse errors.
 
   dialogic:
     path: addons/dialogic/plugin.cfg
-    version: "2.0-Alpha-19 (Godot 4.4+)"
+    version: "2.0-Alpha-19"
     type: editor_plugin
     purpose: Dialogue timelines for NPC conversations.
     status: runtime_verified
     note: >
-      Plugin is on disk, enabled in project.godot, and DialogicGameHandler is
-      loadable at runtime. DialogicStub now launches real timelines when the
-      plugin is available and falls back safely otherwise.
+      DialogicGameHandler loadable at runtime. dialogic_stub.gd bridges to real
+      timelines when available, falls back to JSON when not.
+
+  # REMOVED — do not re-add
+  # godot_sqlite was added by Windsurf without authorization.
+  # Embral uses Godot's built-in JSON + FileAccess for all persistence.
+  # Removing it fixed the startup GDExtension errors.
+
+# ═══════════════════════════════════════════
+# AUTOLOADS — registered in project.godot
+# ═══════════════════════════════════════════
 autoloads:
   event_bus:
     path: scripts/autoloads/event_bus.gd
@@ -99,7 +124,7 @@ autoloads:
 
   quest_manager:
     path: scripts/autoloads/quest_manager.gd
-    purpose: Loads quest JSON, tracks completion, fires rewards.
+    purpose: Loads quest JSON, tracks completion, fires rewards, NPC mastery tracking.
     status: active
 
   config_loader:
@@ -109,25 +134,40 @@ autoloads:
 
   save_manager:
     path: scripts/autoloads/save_manager.gd
-    purpose: Manages game state persistence (Quest, NPC, Player stats).
+    purpose: >
+      Manages all game state persistence. Schema v1. Auto-migrates v0 saves.
+      Quarantines unrecognized schema versions.
     status: active
     schema_version: 1
-
-  sqlite_stub:
-    path: scripts/autoloads/sqlite_stub.gd
-    purpose: >
-      Compatibility adapter for the SQLite binding used by the project.
-      Exposes a small safe query API and degrades to null/false when the
-      runtime binding is unavailable.
-    status: active
 
   dialogic_stub:
     path: scripts/autoloads/dialogic_stub.gd
     purpose: >
-      Compatibility bridge for dialogue. Launches a real Dialogic timeline
-      when the plugin is available, otherwise falls back to
-      data/dialogue/{npc_id}_fallback.json.
+      Compatibility bridge for Dialogic 2. Launches real timelines when the plugin
+      is available. Falls back to data/dialogue/{npc_id}_fallback.json otherwise.
+      Never fails silently — always returns SOME dialogue.
     status: active
+
+  # REMOVED — do not re-add
+  # sqlite_stub was added by Windsurf. SQLite is not part of Embral.
+
+# ═══════════════════════════════════════════
+# BOOT SYSTEM
+# ═══════════════════════════════════════════
+boot:
+  boot_scene:
+    path: scenes/boot.tscn
+    purpose: First scene loaded. Runs health checks, verifies autoloads, transitions to main menu.
+    root_node_type: Node
+    status: active
+
+  boot_script:
+    path: scripts/boot.gd
+    purpose: Health check logic. Verifies all autoloads. Logs OK/FAIL per system.
+    status: active
+    notes: >
+      Root changed from Node2D to Node. Main menu parenting corrected.
+      Deferred scene change fixed the headless boot-time error.
 
 # ═══════════════════════════════════════════
 # PLAYER SYSTEM
@@ -140,42 +180,54 @@ player_system:
 
   party_manager:
     path: scripts/player/party_manager.gd
-    purpose: Manages traveling party (player + companion + wisps). Max 6 slots.
+    purpose: >
+      Manages traveling party. Max 6 slots: player + companion + 3 player wisps
+      + 3 companion wisps. World renders max 4 entities simultaneously.
     status: planned
 
   player_controller:
     path: scripts/player/player_controller.gd
-    purpose: Input handling for player character. Reads from hardware_manager.
+    purpose: Input handling. Reads from HardwareManager. Never detects hardware directly.
     status: planned
 
 # ═══════════════════════════════════════════
 # CREATURE SYSTEM
+# Three types — never confused
 # ═══════════════════════════════════════════
 creature_system:
-
   wisp_data:
     path: scripts/models/wisp_data.gd
-    purpose: Data class for a single Wisp instance.
+    purpose: Data class for a single Wisp instance. Level, element, abilities, XP.
     status: planned
 
   pet_data:
     path: scripts/models/pet_data.gd
-    purpose: Data class for a single Pet instance.
+    purpose: Data class for a single Pet instance. Happiness, level, bonuses.
     status: planned
 
   companion_data:
     path: scripts/models/companion_data.gd
-    purpose: Data class for a Companion (second avatar).
+    purpose: Data class for a Companion (second avatar). Name, appearance, wisps.
+    status: planned
+
+  wisp_entity:
+    path: scripts/npcs/wisp_entity.gd
+    purpose: In-world Wisp visual entity. Follows player slot 1 in overworld.
+    status: planned
+
+  pet_minigame:
+    path: scripts/ui/pet_minigame.gd
+    purpose: Interactive pet area at Player's House. Feed, play, groom interactions.
     status: planned
 
   wisp_types:
-    ember:   {element: fire,     realm: ember_hollow, visual_color: "1.0, 0.4, 0.1"}
-    ripple:  {element: water,    realm: tidemark,     visual_color: "0.2, 0.5, 1.0"}
-    breeze:  {element: wind,     realm: forge_run,    visual_color: "0.7, 0.9, 1.0"}
-    mossy:   {element: earth,    realm: rootstead,    visual_color: "0.3, 0.6, 0.2"}
-    volt:    {element: electric, realm: the_spire,    visual_color: "1.0, 0.95, 0.2"}
-    lumis:   {element: light,    realm: the_drift,    visual_color: "1.0, 1.0, 0.8"}
-    shade:   {element: dark,     realm: dungeon_only, visual_color: "0.3, 0.2, 0.4"}
+    ember:   {element: fire,     realm: ember_hollow,  visual_color: "#FF6B1A"}
+    ripple:  {element: water,    realm: tidemark,       visual_color: "#2E86C1"}
+    breeze:  {element: wind,     realm: forge_run,      visual_color: "#AED6F1"}
+    mossy:   {element: earth,    realm: rootstead,      visual_color: "#28B463"}
+    volt:    {element: electric, realm: the_spire,      visual_color: "#F4D03F"}
+    lumis:   {element: light,    realm: the_drift,      visual_color: "#FDFEFE"}
+    shade:   {element: dark,     realm: dungeon_only,   visual_color: "#6C3483"}
 
 # ═══════════════════════════════════════════
 # QUEST SYSTEM
@@ -183,41 +235,65 @@ creature_system:
 quest_system:
   quest_data:
     path: scripts/models/quest_data.gd
-    purpose: Data class for quest state (not content — content is JSON).
+    purpose: Data class for quest runtime state. Not content (content is JSON).
     status: planned
 
   quest_loader:
     path: scripts/quest/quest_loader.gd
-    purpose: Reads data/quests/ JSON files. Parses into QuestData objects.
-    status: planned
+    purpose: Reads data/quests/ JSON files. Validates 8 required fields. Rejects invalid.
+    status: active
+    validation_fields: [quest_id, realm, npc_giver, research_basis,
+                        developmental_target, age_range, steps, scaffolding]
 
   quest_runner:
     path: scripts/quest/quest_runner.gd
-    purpose: Executes quest steps, fires events, manages quest state machine.
+    purpose: Executes quest steps. Manages state machine. Fires EventBus signals.
     status: planned
 
   quest_reward:
     path: scripts/quest/quest_reward.gd
-    purpose: Handles XP grants, gold grants, item/wisp/pet unlocks.
+    purpose: Handles XP grants, gold grants, wisp egg drops, item unlocks.
     status: planned
+
+  quest_data_files:
+    base_path: data/quests/{realm}/
+    naming: "{realm_prefix}_{category}_{###}.json"
+    example: "EH_EMO_001.json"
+    status: empty_structure_ready
 
 # ═══════════════════════════════════════════
 # DUNGEON SYSTEM
+# 2D platformer — separate from 3D overworld
 # ═══════════════════════════════════════════
 dungeon_system:
   dungeon_manager:
     path: scripts/dungeon/dungeon_manager.gd
-    purpose: 2D dungeon scene controller. Separate from 3D overworld.
+    purpose: 2D dungeon scene controller. Handles room transitions, enemy spawns.
     status: planned
 
   wisp_battle:
     path: scripts/dungeon/wisp_battle.gd
-    purpose: Turn-based Wisp Crystal battle system.
+    purpose: Turn-based Wisp Crystal battle system. Educational check per encounter.
     status: planned
 
   crystal_system:
     path: scripts/dungeon/crystal_system.gd
-    purpose: Crystal types, type effectiveness calculations.
+    purpose: Crystal types, type effectiveness table, combo calculations.
+    status: planned
+
+  dungeon_enemy:
+    path: scripts/dungeon/dungeon_enemy.gd
+    purpose: Base enemy class for dungeon encounters. Extends for each wisp type.
+    status: planned
+
+  mini_boss:
+    path: scripts/dungeon/mini_boss.gd
+    purpose: Stronger encounter. 1-2 per dungeon run. Random placement.
+    status: planned
+
+  dungeon_boss:
+    path: scripts/dungeon/dungeon_boss.gd
+    purpose: End-of-dungeon boss. Multi-phase. Phase 1 battle, Phase 2 puzzle.
     status: planned
 
 # ═══════════════════════════════════════════
@@ -226,251 +302,312 @@ dungeon_system:
 npc_system:
   base_npc:
     path: scripts/npcs/base_npc.gd
-    purpose: All NPCs extend this.
+    purpose: All NPCs extend this. Dialogue dispatch, proximity detection.
     status: planned
 
   base_teacher_npc:
     path: scripts/npcs/base_teacher_npc.gd
-    purpose: All teacher NPCs extend this. Quest dispatch, fallback dialogue.
+    purpose: All teacher NPCs extend this. Quest dispatch, mastery tracking calls.
     status: planned
 
   companion_npc:
     path: scripts/npcs/companion_npc.gd
-    purpose: Companion (second avatar) base class.
+    purpose: Companion base class. Second avatar logic, co-op handoff.
+    status: planned
+
+  ignavarr:
+    path: scripts/npcs/teachers/ignavarr.gd
+    role: main_narrator_mayor
+    realm: hearthveil
+    status: planned
+
+  npc_home_data:
+    path: scripts/models/npc_home_data.gd
+    purpose: NPC home preference data. terrain, facing, proximity preferences.
     status: planned
 
   dialogue_fallbacks:
     path: data/dialogue/{npc_id}_fallback.json
-    purpose: >
-      Fallback dialogue lines used when Dialogic is not installed or a
-      timeline is missing. Loaded by dialogic_stub.gd. Format:
-      {"npc_id": "...", "lines": ["...", "..."], "no_quest_line": "..."}
+    purpose: Fallback dialogue when Dialogic unavailable or timeline missing.
+    format: '{"npc_id":"...","lines":["..."],"no_quest_line":"..."}'
     status: format_defined
 
-  # Teacher NPCs — registered as confirmed. Scripts created when realm is built.
   teachers:
     hearthveil:
-      ignavarr:
-        path: scripts/npcs/teachers/ignavarr.gd
-        role: main_narrator_mayor
-        realm: hearthveil
-        status: planned
+      ignavarr: {status: planned, subcategory: narrator_mayor}
 
     ember_hollow:
-      # subcategories: emotion_id, empathy, self_regulation, conflict_resolution,
-      # kindness, emotional_expression, sensory_awareness, sensory_toolkit,
-      # friendship, boundaries, mindfulness, big_feelings
-      # NPCs: to be named — 4 starter, 8 unlock over time
-      placeholder_count: 12
+      subcategories: [emotion_identification, empathy_perspective,
+                      self_regulation, conflict_resolution, kindness_cooperation,
+                      emotional_expression, sensory_awareness, sensory_toolkit,
+                      friendship_social, boundaries_consent, mindfulness, big_feelings]
+      npc_count: 12
+      starter_npcs: 4
       status: design_phase
 
     tidemark:
-      # subcategories: letter_recognition, phonics, phonological_awareness,
-      # sight_words, reading_comprehension, vocabulary, storytelling,
-      # listening, expressive_language, spelling, handwriting, social_language
-      placeholder_count: 12
+      subcategories: [letter_recognition, phonics_letter_sound, phonological_rhyming,
+                      sight_words, reading_comprehension, vocabulary, storytelling,
+                      listening_directions, expressive_language, spelling, handwriting,
+                      social_language]
+      npc_count: 12
+      starter_npcs: 4
       status: design_phase
 
     forge_run:
-      # subcategories: gross_motor_balance, gross_motor_throwing,
-      # gross_motor_climbing, fine_motor_pencil, fine_motor_cutting,
-      # fine_motor_building, body_awareness, exercise_habits, yoga,
-      # sports_teamwork, dance, bilateral_coordination
-      placeholder_count: 12
+      subcategories: [gross_motor_balance, gross_motor_throwing, gross_motor_climbing,
+                      fine_motor_pencil, fine_motor_cutting, fine_motor_building,
+                      body_awareness, exercise_habits, yoga_stretch,
+                      sports_teamwork, dance_movement, bilateral_coordination]
+      npc_count: 12
+      starter_npcs: 4
       status: design_phase
 
     rootstead:
-      # subcategories: personal_hygiene, dressing, nutrition, cooking,
-      # chores, safety, money, time_management, organization,
-      # community_helpers, navigation, pet_and_plant_care, multi_step_directions
-      placeholder_count: 13
+      subcategories: [personal_hygiene, dressing_independence, nutrition_food,
+                      cooking_preparation, household_chores, basic_safety,
+                      money_economics, time_routines, organization_responsibility,
+                      community_helpers, environment_navigation,
+                      pet_plant_care, multi_step_directions]
+      npc_count: 13
+      starter_npcs: 4
       status: design_phase
 
     the_spire:
-      # subcategories: scientific_method, plants_botany, animals_biology,
-      # weather_earth, physics, number_sense, addition_subtraction,
-      # patterns_sequences, shapes_geometry, time_calendar,
-      # multiplication_division, geography, technology, environmental_science,
-      # logic_cause_effect
-      placeholder_count: 15
+      subcategories: [scientific_method, plants_botany, animals_biology,
+                      weather_earth_science, simple_physics, number_sense,
+                      addition_subtraction, patterns_sequences, shapes_geometry,
+                      time_calendar, multiplication_division_intro, geography,
+                      technology_how_things_work, environmental_science,
+                      logic_cause_effect]
+      npc_count: 15
+      starter_npcs: 4
       status: design_phase
 
     the_drift:
-      # subcategories: visual_art, painting_color, music_rhythm, singing,
-      # storytelling_comics, building_construction, drama_roleplay, dance,
-      # crafting, invention, growth_mindset, flexible_thinking
-      placeholder_count: 12
+      subcategories: [visual_art_drawing, painting_color_theory, music_rhythm_beat,
+                      singing_vocal, storytelling_comics, building_construction,
+                      drama_roleplay, dance_expression, crafting_making,
+                      invention_problem_solving, growth_mindset, flexible_thinking]
+      npc_count: 12
+      starter_npcs: 4
       status: design_phase
+
+# ═══════════════════════════════════════════
+# FAMILY SYSTEMS
+# ═══════════════════════════════════════════
+family_systems:
+  nightly_review:
+    path: scripts/ui/nightly_review.gd
+    purpose: Parent + Ezra evening review portal. Ignavarr hosts. Raid Point mechanic.
+    status: planned
+
+  weekend_family_raid:
+    path: scripts/family/family_raid_manager.gd
+    purpose: Weekend family activity system. Triggered at 3 Raid Points/week.
+    status: planned
+
+  family_raid_shop:
+    path: scripts/ui/family_raid_shop.gd
+    purpose: Exclusive shop. Only accessible after Family Raid completion.
+    status: planned
+
+  mini_game_manager:
+    path: scripts/family/mini_game_manager.gd
+    purpose: Manages local multiplayer mini-games. 1-4 players. Play Points.
+    status: planned
+
+  mini_games:
+    wisp_match:    {path: scripts/minigames/wisp_match.gd,    status: planned}
+    word_catch:    {path: scripts/minigames/word_catch.gd,    status: planned}
+    number_race:   {path: scripts/minigames/number_race.gd,   status: planned}
+    emotion_sort:  {path: scripts/minigames/emotion_sort.gd,  status: planned}
+    balance_trial: {path: scripts/minigames/balance_trial.gd, status: planned, requires: wii_balance_board}
+    letter_bounce: {path: scripts/minigames/letter_bounce.gd, status: planned}
 
 # ═══════════════════════════════════════════
 # HARDWARE SYSTEM
 # ═══════════════════════════════════════════
 hardware_system:
   hardware_manager:
-    path: scripts/hardware/hardware_manager.gd
-    note: THIS IS ALSO AN AUTOLOAD — registered above. One file, two roles.
+    path: scripts/autoloads/hardware_manager.gd
+    note: Autoload above. Hardware detection only. One file, cached at startup.
+    status: active
 
   ps5_input:
     path: scripts/hardware/ps5_input.gd
-    purpose: DualSense haptic feedback, motion, LED bar, adaptive triggers.
-    detection: Input.get_connected_joypads() + name contains "dualsense"
+    purpose: DualSense haptic, motion, LED bar, adaptive triggers.
+    detection: Input.get_connected_joypads() name contains "dualsense"
     status: planned
 
   wii_input:
     path: scripts/hardware/wii_input.gd
-    purpose: xwiimote integration. Wiimote, Nunchuck, Balance Board, IR Camera.
+    purpose: xwiimote — Wiimote, Nunchuck, Balance Board, IR Camera.
     detection: scan /proc/bus/input/devices for "Nintendo Wii"
     status: planned
 
   esp32_client:
     path: scripts/hardware/esp32_client.gd
-    purpose: HTTP or serial interface for ESP32 gadgets.
-    detection: configurable endpoint ping at startup
+    purpose: HTTP or serial for ESP32 gadgets.
     status: planned
 
   arduino_client:
     path: scripts/hardware/arduino_client.gd
-    purpose: Serial interface for Arduino gadgets.
-    detection: serial port scan at startup
+    purpose: Serial interface for Arduino.
     status: planned
 
   pi_client:
     path: scripts/hardware/pi_client.gd
-    purpose: SSH or HTTP interface for Raspberry Pi integrations.
-    detection: configurable endpoint ping at startup
+    purpose: HTTP interface for Raspberry Pi integrations.
+    status: planned
+
+# ═══════════════════════════════════════════
+# UI SYSTEM
+# ═══════════════════════════════════════════
+ui_system:
+  main_menu:
+    path: scenes/ui/main_menu.tscn
+    script: scripts/ui/main_menu.gd
+    contains: [profile_list, new_game, continue, settings, parent_dashboard_entry]
+    status: stub
+
+  profile_select:
+    path: scenes/ui/profile_select.tscn
+    script: scripts/ui/profile_select.gd
+    contains: [profile_list, create_profile, delete_profile]
+    status: planned
+
+  parent_dashboard:
+    path: scenes/ui/parent_dashboard.tscn
+    script: scripts/ui/parent_dashboard.gd
+    access: PIN_gated
+    contains: [xp_history, quest_completion, npc_mastery_levels,
+               emotional_checkins, strength_weakness_map,
+               teaching_style_effectiveness, session_timeline]
+    status: planned
+
+  player_hud:
+    path: scenes/ui/player_hud.tscn
+    script: scripts/ui/player_hud.gd
+    contains: [xp_bar, gold_display, active_quest, party_portrait_row,
+               emotional_checkin_trigger, notification_overlay]
+    status: planned
+
+  emotional_checkin:
+    path: scenes/ui/emotional_checkin.tscn
+    script: scripts/ui/emotional_checkin.gd
+    modes: [face_selector, color_picker, number_scale_1_5, weather_picker]
+    triggers: [game_startup, every_30_minutes_of_play]
+    status: planned
+
+  quest_ui:
+    path: scenes/ui/quest_ui.tscn
+    script: scripts/ui/quest_ui.gd
+    contains: [quest_objective, step_display, scaffold_hint_button, completion_overlay]
+    status: planned
+
+  dialogue_panel:
+    path: scenes/ui/dialogue_panel.tscn
+    script: scripts/ui/dialogue_panel.gd
+    purpose: Fallback dialogue display when Dialogic timeline unavailable.
     status: planned
 
 # ═══════════════════════════════════════════
 # SCENES
 # ═══════════════════════════════════════════
 scenes:
-  main_menu:
-    path: scenes/ui/main_menu.tscn
-    contains: [settings, profile_select, parent_dashboard_entry]
-    status: planned
-
-  profile_select:
-    path: scenes/ui/profile_select.tscn
-    contains: [new_game, continue, profile_list]
-    status: planned
-
-  parent_dashboard:
-    path: scenes/ui/parent_dashboard.tscn
-    access: PIN_gated
-    contains: [xp_history, quest_completion, npc_mastery_levels,
-               emotional_checkins, strength_weakness_map,
-               teaching_style_effectiveness]
-    status: planned
-
-  hearthveil:
-    path: scenes/overworld/hearthveil/hearthveil.tscn
-    type: 3D_overworld
-    status: planned
+  boot:
+    path: scenes/boot.tscn
+    status: active
 
   test_sandbox:
     path: scenes/overworld/hearthveil/test_sandbox.tscn
-    type: 3D_overworld
-    purpose: Minimal playable sandbox for Phase 0.08 verification.
+    purpose: Phase 0.08 verification sandbox. Floor mesh + test house instanced.
     status: active
 
   test_house:
     path: scenes/overworld/hearthveil/test_house.tscn
-    type: 3D_overworld
-    purpose: Minimal test house scene for Phase 0.08 verification.
+    purpose: Phase 0.08 verification house scene.
     status: active
 
+  overworld_realms:
+    hearthveil:       {path: scenes/overworld/hearthveil/hearthveil.tscn,     status: planned}
+    ember_hollow:     {path: scenes/overworld/ember_hollow/ember_hollow.tscn, status: planned}
+    tidemark:         {path: scenes/overworld/tidemark/tidemark.tscn,         status: planned}
+    forge_run:        {path: scenes/overworld/forge_run/forge_run.tscn,       status: planned}
+    rootstead:        {path: scenes/overworld/rootstead/rootstead.tscn,       status: planned}
+    the_spire:        {path: scenes/overworld/the_spire/the_spire.tscn,       status: planned}
+    the_drift:        {path: scenes/overworld/the_drift/the_drift.tscn,       status: planned}
+
   dungeons:
-    mirror_maze:
-      path: scenes/dungeons/mirror_maze.tscn
-      realm: ember_hollow
-      type: 2D_platformer
-      status: planned
-    word_caverns:
-      path: scenes/dungeons/word_caverns.tscn
-      realm: tidemark
-      type: 2D_platformer
-      status: planned
-    obstacle_forge:
-      path: scenes/dungeons/obstacle_forge.tscn
-      realm: forge_run
-      type: 2D_platformer
-      status: planned
-    daily_tower:
-      path: scenes/dungeons/daily_tower.tscn
-      realm: rootstead
-      type: 2D_platformer
-      status: planned
-    gear_gauntlet:
-      path: scenes/dungeons/gear_gauntlet.tscn
-      realm: the_spire
-      type: 2D_platformer
-      status: planned
-    curiosity_cave:
-      path: scenes/dungeons/curiosity_cave.tscn
-      realm: the_drift
-      type: 2D_platformer
-      status: planned
+    mirror_maze:     {path: scenes/dungeons/mirror_maze.tscn,    realm: ember_hollow, status: planned}
+    word_caverns:    {path: scenes/dungeons/word_caverns.tscn,   realm: tidemark,     status: planned}
+    obstacle_forge:  {path: scenes/dungeons/obstacle_forge.tscn, realm: forge_run,    status: planned}
+    daily_tower:     {path: scenes/dungeons/daily_tower.tscn,    realm: rootstead,    status: planned}
+    gear_gauntlet:   {path: scenes/dungeons/gear_gauntlet.tscn,  realm: the_spire,    status: planned}
+    curiosity_cave:  {path: scenes/dungeons/curiosity_cave.tscn, realm: the_drift,    status: planned}
+
+  embral_trials:
+    heart_trial:      {path: scenes/trials/heart_trial.tscn,     realm: ember_hollow, status: planned}
+    word_surge:       {path: scenes/trials/word_surge.tscn,       realm: tidemark,     status: planned}
+    forge_gauntlet:   {path: scenes/trials/forge_gauntlet.tscn,   realm: forge_run,    status: planned}
+    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead,    status: planned}
+    vault_challenge:  {path: scenes/trials/vault_challenge.tscn,  realm: the_spire,    status: planned}
+    creation_crucible:{path: scenes/trials/creation_crucible.tscn,realm: the_drift,    status: planned}
+
+# ═══════════════════════════════════════════
+# DATA FILES
+# ═══════════════════════════════════════════
+data_files:
+  rewards:
+    path: data/items/rewards.json
+    version: "3.0.0"
+    status: active
+
+  quest_prefix_map:
+    EH: ember_hollow
+    TM: tidemark
+    FR: forge_run
+    RS: rootstead
+    SP: the_spire
+    DR: the_drift
+    HV: hearthveil
 
 # ═══════════════════════════════════════════
 # SAVE SYSTEM
 # ═══════════════════════════════════════════
 save_system:
   files:
-    player_save:    user://save/player_profile.json
-    world_state:    user://save/world_state.json
-    pet_roster:     user://save/pet_roster.json
-    wisp_roster:    user://save/wisp_roster.json
-    party:          user://save/party.json
-    npc_mastery:    user://save/npc_mastery.json
-    parent_data:    user://save/parent_dashboard.json
-    config:         user://config.json
+    player_save:   user://save/player_profile.json
+    world_state:   user://save/world_state.json
+    pet_roster:    user://save/pet_roster.json
+    wisp_roster:   user://save/wisp_roster.json
+    party:         user://save/party.json
+    npc_mastery:   user://save/npc_mastery.json
+    parent_data:   user://save/parent_dashboard.json
+    config:        user://config.json
   cloud_sync: false
   analytics: false
   external_backup: false
+  schema_version: 1
 
 # ═══════════════════════════════════════════
-# PARENT DASHBOARD DATA TRACKING
-# ═══════════════════════════════════════════
-parent_dashboard:
-  tracks:
-    - quest_completion_per_npc
-    - xp_earned_per_realm
-    - npc_mastery_level_per_npc
-    - average_score_per_subcategory
-    - time_spent_per_realm
-    - emotional_checkin_history
-    - retry_count_per_quest         # identifies difficulty/frustration
-    - response_latency_per_step     # thinking vs guessing indicator
-    - cross_subcategory_strengths   # where skills appear in multiple realms
-    - teaching_style_response       # which quest types get highest scores
-
-  emotional_checkin:
-    trigger: game_startup_always
-    trigger_periodic: every_30_minutes_of_play
-    modes:
-      - face_selector         # happy/neutral/sad/angry/scared faces
-      - color_picker          # what color matches how you feel
-      - number_scale          # 1-5 scale with face anchors
-      - weather_picker        # sunny/cloudy/rainy/stormy (Body Weather Station)
-    player_chooses_mode: true
-    stored_in: user://save/parent_dashboard.json
-
-# ═══════════════════════════════════════════
-# PLAYER LEVEL MILESTONES
+# PROGRESSION MILESTONES
 # ═══════════════════════════════════════════
 level_milestones:
   1:    tutorial_complete_hearthveil_open
   5:    wisps_unlocked
   10:   companions_unlocked
   25:   ground_mounts_unlocked, companion_home_slot_plus_1
-  50:   companion_home_slot_plus_1, new_features_TBD
-  75:   companion_home_slot_plus_1, new_features_TBD
-  100:  ascension_milestone, flying_mounts_unlocked
+  50:   new_content_layer, companion_home_slot_plus_1
+  75:   new_content_layer, companion_home_slot_plus_1
+  100:  ascension_milestone, flying_mounts_unlocked, new_ignavarr_chapter
   every_25_after_100: companion_home_slot_plus_1
 
 npc_dungeon_unlock: 3_npcs_discovered_per_realm
-
 companion_home_capacity:
-  base: 1
-  per_25_levels: +1
   formula: "1 + floor(player_level / 25)"
+  level_1: 1
+  level_25: 2
+  level_50: 3
+  level_100: 5
