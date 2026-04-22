@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://dragon_mount"]
+
+[ext_resource type="Script" path="res://scripts/mounts/FlyingMount.gd" id="1_script"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.8
+height = 3.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_wing"]
+size = Vector3(2.5, 0.1, 1.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tail"]
+top_radius = 0.1
+bottom_radius = 0.4
+height = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_neck"]
+top_radius = 0.25
+bottom_radius = 0.4
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Material_dragon"]
+albedo_color = Color(0.2, 0.5, 0.2, 1)
+metallic = 0.3
+roughness = 0.7
+
+[node name="DragonMount" type="Node3D" groups=["mounts"]]
+script = ExtResource("1_script")
+mount_name = "Dragon"
+flight_speed_multiplier = 1.2
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_body")
+surface_material_override/0 = SubResource("Material_dragon")
+
+[node name="Neck" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0.5, 1.2)
+mesh = SubResource("CylinderMesh_neck")
+surface_material_override/0 = SubResource("Material_dragon")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 1.8)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("Material_dragon")
+
+[node name="LeftWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -1.8, 0.5, 0)
+mesh = SubResource("BoxMesh_wing")
+surface_material_override/0 = SubResource("Material_dragon")
+
+[node name="RightWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 1.8, 0.5, 0)
+mesh = SubResource("BoxMesh_wing")
+surface_material_override/0 = SubResource("Material_dragon")
+
+[node name="Tail" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.3, -2.0)
+mesh = SubResource("CylinderMesh_tail")
+surface_material_override/0 = SubResource("Material_dragon")

@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://shopkeeper_npc"]
+
+[ext_resource type="Script" path="res://scripts/npc/Shopkeeper.gd" id="1_script"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_area"]
+height = 3.0
+radius = 2.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.4
+height = 1.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.28
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gold"]
+albedo_color = Color(1.0, 0.85, 0.0, 1)
+emission_enabled = true
+emission = Color(1.0, 0.7, 0.0, 1)
+emission_energy_multiplier = 0.5
+metallic = 0.8
+roughness = 0.3
+
+[node name="Shopkeeper" type="Area3D" groups=["npcs", "shopkeepers"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_script")
+npc_name = "Goldie the Merchant"
+npc_color = Color(1.0, 0.85, 0.0, 1)
+greeting = "Welcome, valued customer! My treasures await!"
+shop_prompt = "Press E to browse my wonderful wares!"
+farewell = "Spend that gold wisely... or come back for more!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_area")
+
+[node name="MeshInstance3D" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_body")
+surface_material_override/0 = SubResource("Mat_Gold")
+
+[node name="Head" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("Mat_Gold")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+pixel_size = 0.01
+text = "$"
+font_size = 72
+modulate = Color(1, 0.85, 0, 1)
+outline_modulate = Color(0.4, 0.25, 0, 1)
+outline_size = 12

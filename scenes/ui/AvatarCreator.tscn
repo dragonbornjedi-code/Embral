@@ -1,0 +1,126 @@
+[gd_scene load_steps=2 format=3 uid="uid://avatar_creator_scene"]
+
+[ext_resource type="Script" path="res://scripts/ui/AvatarCreator.gd" id="1_script"]
+
+[node name="AvatarCreator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.15, 0.25, 1)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="LeftPanel" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="TitleLabel" type="Label" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Create Your Hero!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+
+[node name="ColorLabel" type="Label" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Pick Your Color:"
+
+[node name="ColorGrid" type="GridContainer" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+columns = 5
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+
+[node name="HairLabel" type="Label" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Pick Your Style:"
+
+[node name="HairOptions" type="HBoxContainer" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Panel/HBox/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RightPanel" type="VBoxContainer" parent="Panel/HBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="PreviewLabel" type="Label" parent="Panel/HBox/RightPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Preview"
+horizontal_alignment = 1
+
+[node name="PreviewContainer" type="PanelContainer" parent="Panel/HBox/RightPanel"]
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PreviewViewport" type="SubViewportContainer" parent="Panel/HBox/RightPanel/PreviewContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Panel/HBox/RightPanel/PreviewContainer/PreviewViewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(280, 280)
+render_target_update_mode = 4
+
+[node name="PreviewCamera" type="Camera3D" parent="Panel/HBox/RightPanel/PreviewContainer/PreviewViewport/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 3)
+current = true
+fov = 50.0
+
+[node name="PreviewLight" type="DirectionalLight3D" parent="Panel/HBox/RightPanel/PreviewContainer/PreviewViewport/SubViewport"]
+transform = Transform3D(0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, -0.75, 0.433, 2, 3, 2)
+light_energy = 1.5
+
+[node name="PreviewMesh" type="MeshInstance3D" parent="Panel/HBox/RightPanel/PreviewContainer/PreviewViewport/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="RandomButton" type="Button" parent="Panel/HBox/RightPanel"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🎲 Surprise Me!"
+
+[node name="DoneButton" type="Button" parent="Panel/HBox/RightPanel"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.2, 0.9, 0.3, 1)
+text = "Let's Go! ➡"

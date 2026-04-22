@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg7km3hqj2s1p"]
+
+[ext_resource type="Script" path="res://scripts/ui/MobileControls.gd" id="1_mobile"]
+[ext_resource type="Script" path="res://scripts/ui/VirtualJoystick.gd" id="2_joystick"]
+
+[node name="MobileControls" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_mobile")
+
+[node name="TouchLayer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeftJoystick" type="Control" parent="TouchLayer"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = -40.0
+grow_vertical = 0
+script = ExtResource("2_joystick")
+base_color = Color(0.2, 0.5, 0.8, 0.4)
+stick_color = Color(0.3, 0.7, 1, 0.9)
+active_color = Color(0.4, 0.8, 1, 1)
+base_radius = 75.0
+stick_radius = 35.0
+dead_zone = 0.12
+dynamic_position = true
+idle_alpha = 0.4
+
+[node name="RightJoystick" type="Control" parent="TouchLayer"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -220.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("2_joystick")
+base_color = Color(0.8, 0.5, 0.2, 0.4)
+stick_color = Color(1, 0.7, 0.3, 0.9)
+active_color = Color(1, 0.8, 0.4, 1)
+base_radius = 75.0
+stick_radius = 35.0
+dead_zone = 0.1
+dynamic_position = false
+idle_alpha = 0.4
+
+[node name="ButtonContainer" type="Control" parent="TouchLayer"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -400.0
+offset_right = -40.0
+offset_bottom = -240.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="JumpButton" type="TouchScreenButton" parent="TouchLayer/ButtonContainer"]
+position = Vector2(170, 80)
+shape = SubResource("CircleShape2D_jump")
+action = "jump"
+
+[node name="InteractButton" type="TouchScreenButton" parent="TouchLayer/ButtonContainer"]
+position = Vector2(90, 120)
+shape = SubResource("CircleShape2D_interact")
+action = "interact"
+
+[node name="AimButton" type="TouchScreenButton" parent="TouchLayer/ButtonContainer"]
+position = Vector2(170, 0)
+shape = SubResource("CircleShape2D_aim")
+action = "aim"
+
+[node name="MountButton" type="TouchScreenButton" parent="TouchLayer/ButtonContainer"]
+position = Vector2(10, 80)
+shape = SubResource("CircleShape2D_mount")
+action = "summon_mount"
+
+[node name="TopBar" type="HBoxContainer" parent="TouchLayer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="PauseButton" type="TouchScreenButton" parent="TouchLayer/TopBar"]
+action = "pause"
+
+[node name="InventoryButton" type="TouchScreenButton" parent="TouchLayer/TopBar"]
+action = "inventory"

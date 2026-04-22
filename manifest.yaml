@@ -469,48 +469,75 @@ ui_system:
     path: scenes/ui/main_menu.tscn
     script: scripts/ui/main_menu.gd
     contains: [profile_list, new_game, continue, settings, parent_dashboard_entry]
-    status: stub
+    status: active
 
-  profile_select:
-    path: scenes/ui/profile_select.tscn
-    script: scripts/ui/profile_select.gd
-    contains: [profile_list, create_profile, delete_profile]
-    status: planned
+  achievement_popup:
+    path: scenes/ui/AchievementPopup.tscn
+    status: active
+
+  avatar_creator:
+    path: scenes/ui/AvatarCreator.tscn
+    status: active
+
+  daily_progress_tracker:
+    path: scenes/ui/DailyProgressTracker.tscn
+    status: active
+
+  dialogue_panel:
+    path: scenes/ui/DialoguePanel.tscn
+    script: scripts/ui/dialogue_panel.gd
+    purpose: Fallback dialogue display when Dialogic timeline unavailable.
+    status: active
+
+  lockout_screen:
+    path: scenes/ui/LockoutScreen.tscn
+    status: active
+
+  mobile_controls:
+    path: scenes/ui/MobileControls.tscn
+    status: active
 
   parent_dashboard:
-    path: scenes/ui/parent_dashboard.tscn
+    path: scenes/ui/ParentDashboard.tscn
     script: scripts/ui/parent_dashboard.gd
     access: PIN_gated
     contains: [xp_history, quest_completion, npc_mastery_levels,
                emotional_checkins, strength_weakness_map,
                teaching_style_effectiveness, session_timeline]
-    status: planned
+    status: active
 
   player_hud:
-    path: scenes/ui/player_hud.tscn
+    path: scenes/ui/PlayerHUD.tscn
     script: scripts/ui/player_hud.gd
     contains: [xp_bar, gold_display, active_quest, party_portrait_row,
                emotional_checkin_trigger, notification_overlay]
-    status: planned
+    status: active
 
-  emotional_checkin:
-    path: scenes/ui/emotional_checkin.tscn
-    script: scripts/ui/emotional_checkin.gd
-    modes: [face_selector, color_picker, number_scale_1_5, weather_picker]
-    triggers: [game_startup, every_30_minutes_of_play]
-    status: planned
+  quest_list_panel:
+    path: scenes/ui/QuestListPanel.tscn
+    status: active
+
+  quest_timer:
+    path: scenes/ui/QuestTimer.tscn
+    status: active
 
   quest_ui:
-    path: scenes/ui/quest_ui.tscn
+    path: scenes/ui/QuestUI.tscn
     script: scripts/ui/quest_ui.gd
     contains: [quest_objective, step_display, scaffold_hint_button, completion_overlay]
-    status: planned
+    status: active
 
-  dialogue_panel:
-    path: scenes/ui/dialogue_panel.tscn
-    script: scripts/ui/dialogue_panel.gd
-    purpose: Fallback dialogue display when Dialogic timeline unavailable.
-    status: planned
+  routine_quest_overlay:
+    path: scenes/ui/RoutineQuestOverlay.tscn
+    status: active
+
+  shop_ui:
+    path: scenes/ui/ShopUI.tscn
+    status: active
+
+  testing_level_ui:
+    path: scenes/ui/TestingLevelUI.tscn
+    status: active
 
 # ═══════════════════════════════════════════
 # SCENES
@@ -519,6 +546,43 @@ scenes:
   boot:
     path: scenes/boot.tscn
     status: active
+
+  effects:
+    celebration_manager:
+      path: scenes/effects/CelebrationManager.tscn
+      status: active
+    quest_complete_dialog:
+      path: scenes/effects/QuestCompleteDialog.tscn
+      status: active
+
+  player:
+    path: scenes/player/Player.tscn
+    status: active
+
+  npcs:
+    ignavarr:
+      path: scenes/npcs/Ignavarr.tscn
+      status: active
+    numerius:
+      path: scenes/npcs/Numerius.tscn
+      status: active
+    shopkeeper:
+      path: scenes/npcs/Shopkeeper.tscn
+      status: active
+    quest_giver_base:
+      path: scenes/npcs/QuestGiverBase.tscn
+      status: active
+
+  entities:
+    coin:
+      path: scenes/entities/Coin.tscn
+      status: active
+    dragon_mount:
+      path: scenes/entities/DragonMount.tscn
+      status: active
+    phoenix_mount:
+      path: scenes/entities/PhoenixMount.tscn
+      status: active
 
   test_sandbox:
     path: scenes/overworld/hearthveil/test_sandbox.tscn
@@ -531,13 +595,48 @@ scenes:
     status: active
 
   overworld_realms:
-    hearthveil:       {path: scenes/overworld/hearthveil/hearthveil.tscn,     status: planned}
+    hearthveil:
+      path: scenes/overworld/hearthveil/hearthveil.tscn
+      status: planned
+      hub_buildings:
+        - ArtAcademy.tscn
+        - ClockTower.tscn
+        - CraftCorner.tscn
+        - FeelingsForest.tscn
+        - FitnessArena.tscn
+        - FriendshipFort.tscn
+        - HelperHouse.tscn
+        - HistoryMuseum.tscn
+        - HubWorld.tscn
+        - LanguageLodge.tscn
+        - LiteracyTower.tscn
+        - MathTemple.tscn
+        - MeditationMountain.tscn
+        - MoneyMountain.tscn
+        - MotorMountain.tscn
+        - MusicHall.tscn
+        - SafetyStation.tscn
+        - ScienceLab.tscn
+        - SparkleSpa.tscn
+        - TechHub.tscn
+        - YogaGarden.tscn
     ember_hollow:     {path: scenes/overworld/ember_hollow/ember_hollow.tscn, status: planned}
     tidemark:         {path: scenes/overworld/tidemark/tidemark.tscn,         status: planned}
     forge_run:        {path: scenes/overworld/forge_run/forge_run.tscn,       status: planned}
     rootstead:        {path: scenes/overworld/rootstead/rootstead.tscn,       status: planned}
     the_spire:        {path: scenes/overworld/the_spire/the_spire.tscn,       status: planned}
     the_drift:        {path: scenes/overworld/the_drift/the_drift.tscn,       status: planned}
+
+  world:
+    main:
+      path: scenes/overworld/Main.tscn
+      status: active
+    test_scene:
+      path: scenes/overworld/TestScene.tscn
+      status: active
+    minimal:
+      path: scenes/overworld/Minimal.tscn
+      status: active
 
   dungeons:
     mirror_maze:     {path: scenes/dungeons/mirror_maze.tscn,    realm: ember_hollow, status: planned}
@@ -562,6 +661,10 @@ data_files:
   rewards:
     path: data/items/rewards.json
     version: "3.0.0"
+    status: active
+
+  gold_standard_quests:
+    path: data/quests/hearthveil/gold-standard-quests.json
     status: active
 
   quest_prefix_map:
@@ -590,6 +693,93 @@ save_system:
   analytics: false
   external_backup: false
   schema_version: 1
+
+# ═══════════════════════════════════════════
+# ASSETS — Raw binary files (textures, models, audio)
+# ═══════════════════════════════════════════
+assets:
+  audio:
+    path: assets/audio/
+    files:
+      - arm_yourself_enchanted_paste.m4a
+      - brush_with_honor.m4a
+      - cleansing_fight.m4a
+      - gingivitis_stirs.m4a
+      - morning_adventures.m4a
+      - move_with_purpose.m4a
+      - night_falls.m4a
+      - stretch_those_limbs.m4a
+      - the_realm_awaits.m4a
+      - time_for_bed.m4a
+
+  models:
+    path: assets/models/
+    files:
+      - baby_dragon_ghibli.glb
+      - baby_dragon_v1_creepy.glb
+      - christmas_tree.glb
+      - dragon_blood.glb
+      - dragon_celestial.glb
+      - dragon_crystal.glb
+      - dragon_fire.glb
+      - dragon_gold.glb
+      - dragon_ice.glb
+      - dragon_nature.glb
+      - dragon_poison.glb
+      - dragon_shadow.glb
+      - dragon_storm.glb
+      - dragon.glb
+      - fantasy_tower.glb
+      - grim_reaper.glb
+      - medieval_building.glb
+      - potion_black.glb
+      - potion_blue.glb
+      - potion_cyan.glb
+      - potion_fire.glb
+      - potion_gold.glb
+      - potion_green.glb
+      - potion_health.glb
+      - potion_ice.glb
+      - potion_lime.glb
+      - potion_magenta.glb
+      - potion_mana.glb
+      - potion_orange.glb
+      - potion_pink.glb
+      - potion_poison.glb
+      - potion_purple.glb
+      - potion_rainbow.glb
+      - potion_red.glb
+      - potion_silver.glb
+      - potion_white.glb
+      - professor_wisdom_owl.glb
+
+  textures:
+    path: assets/textures/
+    files:
+      - baby_dragon_ghibli_0.jpg
+      - baby_dragon_v1_creepy_0.jpg
+      - fantasy_tower_texture_pbr_20250901.png
+      - fantasy_tower_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+      - fantasy_tower_texture_pbr_20250901_normal.png
+      - grim_reaper_texture_pbr_20250901.png
+      - grim_reaper_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+      - grim_reaper_texture_pbr_20250901_normal.png
+      - medieval_building_texture_pbr_20250901.png
+      - medieval_building_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+      - medieval_building_texture_pbr_20250901_normal.png
+      - potion_red_Mushroom.png
+      - professor_wisdom_owl_0.jpg
+      - professor_wisdom_owl_1.jpg
+      - professor_wisdom_owl_2.jpg
+
+  shaders:
+    path: assets/textures/
+    files:
+      - character_tint.gdshader
+      - environment_effects.gdshader
+      - magic_aura.gdshader
+      - magic_glow.gdshader
+      - potion_liquid.gdshader
 
 # ═══════════════════════════════════════════
 # PROGRESSION MILESTONES

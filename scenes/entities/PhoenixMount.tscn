@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://phoenix_mount"]
+
+[ext_resource type="Script" path="res://scripts/mounts/FlyingMount.gd" id="1_script"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_body"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_wing"]
+size = Vector3(2.0, 0.1, 1.0)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tail"]
+top_radius = 0.1
+bottom_radius = 0.3
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="Material_phoenix"]
+albedo_color = Color(1.0, 0.4, 0.1, 1)
+emission_enabled = true
+emission = Color(1.0, 0.3, 0.0, 1)
+emission_energy_multiplier = 0.5
+
+[node name="PhoenixMount" type="Node3D" groups=["mounts"]]
+script = ExtResource("1_script")
+mount_name = "Phoenix"
+flight_speed_multiplier = 1.0
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_body")
+surface_material_override/0 = SubResource("Material_phoenix")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.2)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("Material_phoenix")
+
+[node name="LeftWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -1.5, 0.3, 0)
+mesh = SubResource("BoxMesh_wing")
+surface_material_override/0 = SubResource("Material_phoenix")
+
+[node name="RightWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 1.5, 0.3, 0)
+mesh = SubResource("BoxMesh_wing")
+surface_material_override/0 = SubResource("Material_phoenix")
+
+[node name="Tail" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.3, -1.5)
+mesh = SubResource("CylinderMesh_tail")
+surface_material_override/0 = SubResource("Material_phoenix")
+
+[node name="FireGlow" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.5, 0.1, 1)
+light_energy = 2.0
+omni_range = 5.0

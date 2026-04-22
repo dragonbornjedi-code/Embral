@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://coin_collectible"]
+
+[ext_resource type="Script" path="res://scripts/world/Coin.gd" id="1_script"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_coin"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.08
+
+[sub_resource type="StandardMaterial3D" id="Material_gold"]
+albedo_color = Color(1.0, 0.85, 0.0, 1)
+metallic = 0.8
+metallic_specular = 0.9
+emission_enabled = true
+emission = Color(1.0, 0.9, 0.3, 1)
+emission_energy_multiplier = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_collect"]
+radius = 0.5
+
+[node name="Coin" type="Area3D" groups=["coins", "collectibles"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_coin")
+surface_material_override/0 = SubResource("Material_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_collect")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_color = Color(1, 0.9, 0.4, 1)
+light_energy = 0.5
+omni_range = 1.5

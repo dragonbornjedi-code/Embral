@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3 uid="uid://lockout_screen"]
+
+[ext_resource type="Script" path="res://scripts/ui/LockoutScreen.gd" id="1_script"]
+
+[node name="LockoutScreen" type="CanvasLayer" groups=["lockout_screen"]]
+layer = 110
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.6, 0.1, 0.1, 0.95)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="LockIcon" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "🔒"
+horizontal_alignment = 1
+
+[node name="MainMessage" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Devices Locked"
+horizontal_alignment = 1
+
+[node name="SubMessage" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.8, 1)
+text = "Complete your quest to unlock"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+modulate = Color(1, 1, 1, 0.3)
+
+[node name="QuestInfoLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "Active Quest: None"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="OverrideContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="OverrideLabel" type="Label" parent="VBoxContainer/OverrideContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Parent Override"
+horizontal_alignment = 1
+
+[node name="CodeInputContainer" type="HBoxContainer" parent="VBoxContainer/OverrideContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="CodeInput" type="LineEdit" parent="VBoxContainer/OverrideContainer/CodeInputContainer"]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter code"
+alignment = 1
+secret = true
+secret_character = "●"
+
+[node name="SubmitButton" type="Button" parent="VBoxContainer/OverrideContainer/CodeInputContainer"]
+custom_minimum_size = Vector2(80, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Unlock"
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/OverrideContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+text = ""
+horizontal_alignment = 1
+
+[node name="PulseTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true

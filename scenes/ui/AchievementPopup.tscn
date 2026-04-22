@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://achievement_popup"]
+
+[ext_resource type="Script" path="res://scripts/ui/AchievementPopup.gd" id="1_script"]
+
+[node name="AchievementPopup" type="Control"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.0
+offset_top = 50.0
+offset_right = 175.0
+offset_bottom = 150.0
+grow_horizontal = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="IconLabel" type="Label" parent="Panel/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "🏆"
+vertical_alignment = 1
+
+[node name="VBox" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="Panel/HBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.85, 0, 1)
+text = "Achievement Unlocked!"
+
+[node name="DescLabel" type="Label" parent="Panel/HBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "First Steps
+Complete your first quest!"
+autowrap_mode = 2

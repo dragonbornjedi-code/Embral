@@ -1,0 +1,1056 @@
+[gd_scene load_steps=43 format=3]
+
+[ext_resource type="Script" path="res://scenes/Minimal.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/world/DayNightCycle.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/npc/SimpleNPC.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/npc/QuestGiver.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://quest_list_panel" path="res://scenes/ui/QuestListPanel.tscn" id="5"]
+
+[sub_resource type="StandardMaterial3D" id="mat_grass"]
+albedo_color = Color(0.25, 0.55, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_stone"]
+albedo_color = Color(0.55, 0.52, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_player"]
+albedo_color = Color(0.3, 0.5, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_gold"]
+albedo_color = Color(1.0, 0.85, 0.0, 1)
+emission_enabled = true
+emission = Color(1.0, 0.85, 0.0, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="StandardMaterial3D" id="mat_npc"]
+albedo_color = Color(0.8, 0.4, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_wood"]
+albedo_color = Color(0.55, 0.35, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_wood_dark"]
+albedo_color = Color(0.35, 0.22, 0.12, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_roof_red"]
+albedo_color = Color(0.65, 0.2, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_roof_blue"]
+albedo_color = Color(0.2, 0.3, 0.6, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_roof_gold"]
+albedo_color = Color(0.75, 0.6, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_tree_trunk"]
+albedo_color = Color(0.4, 0.28, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_tree_leaves"]
+albedo_color = Color(0.15, 0.5, 0.18, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_path"]
+albedo_color = Color(0.6, 0.55, 0.45, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_water"]
+albedo_color = Color(0.2, 0.45, 0.7, 0.8)
+transparency = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(4, 3, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_roof"]
+size = Vector3(5, 0.3, 5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_trunk"]
+top_radius = 0.2
+bottom_radius = 0.3
+height = 2.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_leaves"]
+radius = 1.2
+height = 2.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+sky_top_color = Color(0.35, 0.55, 0.85, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.9, 1)
+ground_bottom_color = Color(0.2, 0.17, 0.13, 1)
+ground_horizon_color = Color(0.5, 0.55, 0.5, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.85, 0.95, 1)
+ambient_light_energy = 0.4
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 0.3
+fog_enabled = true
+fog_light_color = Color(0.7, 0.75, 0.8, 1)
+fog_density = 0.001
+fog_sky_affect = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(4, 0.5, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_platform"]
+size = Vector3(4, 0.5, 4)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_coin"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_coin"]
+radius = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_npc"]
+radius = 1.5
+height = 3.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_building"]
+size = Vector3(5, 4, 5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_body"]
+top_radius = 0.4
+bottom_radius = 0.5
+height = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.35
+height = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_hat"]
+size = Vector3(0.6, 0.15, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hat_top"]
+top_radius = 0.2
+bottom_radius = 0.25
+height = 0.4
+
+[sub_resource type="PrismMesh" id="PrismMesh_crown"]
+size = Vector3(0.5, 0.3, 0.5)
+
+[node name="GameWorld" type="Node3D"]
+script = ExtResource("2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["sun"]]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 20, 0)
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+surface_material_override/0 = SubResource("mat_grass")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Platform1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform1"]
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform1"]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="Platform2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform2"]
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform2"]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="Platform3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 6, 6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform3"]
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform3"]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="Platform4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform4"]
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform4"]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="Platform5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 3, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform5"]
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform5"]
+shape = SubResource("BoxShape3D_platform")
+
+[node name="Coins" type="Node3D" parent="."]
+
+[node name="Coin1" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin1"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin1"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="Coin2" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin2"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin2"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="Coin3" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 7, 6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin3"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin3"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="Coin4" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin4"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin4"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="Coin5" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin5"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin5"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="Coin6" type="Area3D" parent="Coins" groups=["coins"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Coins/Coin6"]
+mesh = SubResource("SphereMesh_coin")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Coins/Coin6"]
+shape = SubResource("SphereShape3D_coin")
+
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="Ignavarr" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, 5)
+script = ExtResource("4")
+npc_name = "Ignavarr the Dragon"
+npc_color = Color(0.9, 0.3, 0.1, 1)
+primary_category = 0
+greeting = "ROAR! I am Ignavarr, guardian of words and letters!"
+quest_offer = "Young one, prove your mastery of the written word!"
+quest_complete = "Your knowledge of letters pleases me! Here is your reward!"
+no_quests = "You have completed all my literacy challenges... for now."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Ignavarr"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = SubResource("mat_roof_red")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Ignavarr"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1.7, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("mat_roof_red")
+
+[node name="Crown" type="MeshInstance3D" parent="NPCs/Ignavarr"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 2.1, 0)
+mesh = SubResource("PrismMesh_crown")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Ignavarr"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Numerius" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 5)
+script = ExtResource("4")
+npc_name = "Numerius the Wizard"
+npc_color = Color(0.2, 0.3, 0.9, 1)
+primary_category = 1
+greeting = "Greetings, young mathematician! Numbers hold great power!"
+quest_offer = "Can you solve these numerical mysteries?"
+quest_complete = "Excellent calculation! The numbers speak highly of you!"
+no_quests = "You have mastered all my current mathematical puzzles."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Numerius"]
+transform = Transform3D(1, 0, 0, 0, 1.2, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = SubResource("mat_roof_blue")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Numerius"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("mat_roof_blue")
+
+[node name="HatBrim" type="MeshInstance3D" parent="NPCs/Numerius"]
+transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.3, 0, 1.95, 0)
+mesh = SubResource("BoxMesh_hat")
+surface_material_override/0 = SubResource("mat_roof_blue")
+
+[node name="HatTop" type="MeshInstance3D" parent="NPCs/Numerius"]
+transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 2.3, 0)
+mesh = SubResource("CylinderMesh_hat_top")
+surface_material_override/0 = SubResource("mat_roof_blue")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Numerius"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Titan" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
+script = ExtResource("4")
+npc_name = "Titan the Champion"
+npc_color = Color(0.9, 0.7, 0.2, 1)
+primary_category = 6
+greeting = "HUZZAH! I am Titan! Ready to train your body?"
+quest_offer = "Physical strength builds mental strength! Try this challenge!"
+quest_complete = "Your body grows stronger! Well done, warrior!"
+no_quests = "Rest now. More physical challenges await tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Titan"]
+transform = Transform3D(1.6, 0, 0, 0, 1.5, 0, 0, 0, 1.6, 0, 0.8, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = SubResource("mat_roof_gold")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Titan"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1.9, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("mat_roof_gold")
+
+[node name="Shoulders" type="MeshInstance3D" parent="NPCs/Titan"]
+transform = Transform3D(2, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 0, 1.4, 0)
+mesh = SubResource("BoxMesh_hat")
+surface_material_override/0 = SubResource("mat_roof_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Titan"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Goldsworth" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.5, -8)
+script = ExtResource("4")
+npc_name = "Goldsworth the Treasurer"
+npc_color = Color(0.95, 0.85, 0.2, 1)
+primary_category = 16
+greeting = "Ah, a treasure hunter! I am Goldsworth, keeper of coins!"
+quest_offer = "Can you collect shiny coins scattered across the land?"
+quest_complete = "Magnificent! You've proven your worth in gold!"
+no_quests = "You've collected all the treasure... for now."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Goldsworth"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Goldsworth"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="Crown" type="MeshInstance3D" parent="NPCs/Goldsworth"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+mesh = SubResource("PrismMesh_crown")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Goldsworth"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Sage" type="Area3D" parent="NPCs" groups=["npcs"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -5)
+script = ExtResource("3")
+npc_name = "Sage the Elder"
+dialogue_lines = ["Welcome to Ezra's Quest, young adventurer!", "Speak to the colorful guardians around the world.", "Each guardian teaches a different skill!", "Ignavarr teaches Literacy, Numerius teaches Math.", "Titan builds Physical Fitness, Lotus teaches Yoga.", "Complete quests to earn Gold and XP!", "There are 20 different skills to master!"]
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Sage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+surface_material_override/0 = SubResource("mat_npc")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Sage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+surface_material_override/0 = SubResource("mat_npc")
+
+[node name="HatBrim" type="MeshInstance3D" parent="NPCs/Sage"]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 1.9, 0)
+mesh = SubResource("BoxMesh_hat")
+surface_material_override/0 = SubResource("mat_wood_dark")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Sage"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Nova" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 12)
+script = ExtResource("4")
+npc_name = "Nova the Explorer"
+npc_color = Color(0.2, 0.7, 0.3, 1)
+primary_category = 2
+greeting = "Greetings, young scientist! Nature holds many secrets!"
+quest_offer = "Press E to explore science mysteries!"
+quest_complete = "Brilliant discovery! You're a true explorer!"
+no_quests = "You've explored all today's mysteries. Come back tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Nova"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Nova"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Nova"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Circuit" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.5, 12)
+script = ExtResource("4")
+npc_name = "Circuit the Robot"
+npc_color = Color(0.6, 0.65, 0.7, 1)
+primary_category = 3
+greeting = "BEEP BOOP! Technology awaits, young programmer!"
+quest_offer = "Press E to learn technology skills!"
+quest_complete = "PROCESSING... SUCCESS! Great tech skills!"
+no_quests = "All systems operational. Return tomorrow for more!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Circuit"]
+transform = Transform3D(1, 0, 0, 0, 1.3, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Circuit"]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 1.7, 0)
+mesh = SubResource("BoxMesh_hat")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Circuit"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Chronos" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 15)
+script = ExtResource("4")
+npc_name = "Elder Chronos"
+npc_color = Color(0.5, 0.4, 0.3, 1)
+primary_category = 4
+greeting = "Ah, young one! History has much to teach us!"
+quest_offer = "Press E to discover history and culture!"
+quest_complete = "The past speaks through you! Well done!"
+no_quests = "The history books are closed for today."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Chronos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Chronos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Chronos"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Echo" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 10)
+script = ExtResource("4")
+npc_name = "Echo the Parrot"
+npc_color = Color(0.2, 0.7, 0.7, 1)
+primary_category = 5
+greeting = "SQUAWK! Let's practice our words together!"
+quest_offer = "Press E to practice language and communication!"
+quest_complete = "WONDERFUL WORDS! You speak so well!"
+no_quests = "No more talking quests today. Rest your voice!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Echo"]
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Echo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Echo"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Lotus" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.5, -14)
+script = ExtResource("4")
+npc_name = "Lotus the Monk"
+npc_color = Color(0.95, 0.7, 0.8, 1)
+primary_category = 7
+greeting = "Namaste, young one. Find your inner peace..."
+quest_offer = "Press E to practice yoga and mindfulness!"
+quest_complete = "Your spirit grows stronger. Well balanced!"
+no_quests = "Rest now. Tomorrow brings new poses."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Lotus"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0.6, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Lotus"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Lotus"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Rex" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.5, -14)
+script = ExtResource("4")
+npc_name = "Rex the Athlete"
+npc_color = Color(0.95, 0.5, 0.2, 1)
+primary_category = 8
+greeting = "LET'S GET MOVING! Big movements make big muscles!"
+quest_offer = "Press E to practice gross motor skills!"
+quest_complete = "AWESOME MOVES! You're getting stronger!"
+no_quests = "Muscles need rest. Come back tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Rex"]
+transform = Transform3D(1.4, 0, 0, 0, 1.3, 0, 0, 0, 1.4, 0, 0.8, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Rex"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1.8, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Rex"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Patches" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, -10)
+script = ExtResource("4")
+npc_name = "Patches the Tailor"
+npc_color = Color(0.6, 0.3, 0.7, 1)
+primary_category = 9
+greeting = "Ah, steady hands make fine work, dear!"
+quest_offer = "Press E to practice fine motor skills!"
+quest_complete = "Such precise work! Your fingers are nimble!"
+no_quests = "My workshop is closed for today. Rest those fingers!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Patches"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Patches"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 1.5, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Patches"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Harmony" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.5, -5)
+script = ExtResource("4")
+npc_name = "Harmony the Counselor"
+npc_color = Color(0.5, 0.7, 0.9, 1)
+primary_category = 10
+greeting = "Hello, friend. How are you feeling today?"
+quest_offer = "Press E to learn about emotions!"
+quest_complete = "You understand your feelings better now!"
+no_quests = "Take time to feel. More tomorrow."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Harmony"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Harmony"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Harmony"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Buddy" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.5, 0)
+script = ExtResource("4")
+npc_name = "Buddy the Friend"
+npc_color = Color(0.95, 0.85, 0.3, 1)
+primary_category = 11
+greeting = "Hey friend! Want to practice being a good pal?"
+quest_offer = "Press E to learn social skills!"
+quest_complete = "You're such a great friend! High five!"
+no_quests = "No more friendship quests today. See you tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Buddy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Buddy"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Buddy"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Sparkle" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.5, -5)
+script = ExtResource("4")
+npc_name = "Sparkle the Hygienist"
+npc_color = Color(0.85, 0.95, 1.0, 1)
+primary_category = 12
+greeting = "Squeaky clean! Ready to sparkle today?"
+quest_offer = "Press E to learn self-care and hygiene!"
+quest_complete = "You're sparkling clean! Well done!"
+no_quests = "All clean for today! Stay fresh!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Sparkle"]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Sparkle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Sparkle"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Zen" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.5, 8)
+script = ExtResource("4")
+npc_name = "Zen Master"
+npc_color = Color(0.7, 0.6, 0.85, 1)
+primary_category = 13
+greeting = "Be still... find your center..."
+quest_offer = "Press E to practice meditation!"
+quest_complete = "Inner peace achieved. Namaste."
+no_quests = "The mind needs rest. Return tomorrow."
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Zen"]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Zen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Zen"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Helper" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.5, 5)
+script = ExtResource("4")
+npc_name = "Home Helper"
+npc_color = Color(0.7, 0.6, 0.5, 1)
+primary_category = 14
+greeting = "A tidy home is a happy home! Let's clean up!"
+quest_offer = "Press E to learn household skills!"
+quest_complete = "What a great helper you are!"
+no_quests = "The house is spotless! Rest up!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Helper"]
+transform = Transform3D(1.1, 0, 0, 0, 1, 0, 0, 0, 1.1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Helper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Helper"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Shield" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -6)
+script = ExtResource("4")
+npc_name = "Guardian Shield"
+npc_color = Color(0.9, 0.4, 0.2, 1)
+primary_category = 15
+greeting = "Stay safe, young one! Safety first!"
+quest_offer = "Press E to learn safety and awareness!"
+quest_complete = "You're learning to stay safe! Excellent!"
+no_quests = "Stay vigilant! More safety training tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Shield"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.8, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Shield"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 1.8, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Shield"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Clocksworth" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 0)
+script = ExtResource("4")
+npc_name = "Clocksworth"
+npc_color = Color(0.7, 0.55, 0.3, 1)
+primary_category = 17
+greeting = "Tick tock! Time is precious, young one!"
+quest_offer = "Press E to learn time management!"
+quest_complete = "Right on time! Excellent timing!"
+no_quests = "Time's up for today. Tomorrow awaits!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Clocksworth"]
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Clocksworth"]
+transform = Transform3D(1.2, 0, 0, 0, 0.8, 0, 0, 0, 1.2, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Clocksworth"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Palette" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.5, 0)
+script = ExtResource("4")
+npc_name = "Palette the Artist"
+npc_color = Color(0.9, 0.4, 0.6, 1)
+primary_category = 18
+greeting = "Colors everywhere! Let's create art together!"
+quest_offer = "Press E to explore visual arts!"
+quest_complete = "A masterpiece! You're a true artist!"
+no_quests = "The paint is drying. More art tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Palette"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Palette"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Palette"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Melody" type="Area3D" parent="NPCs" groups=["npcs", "quest_givers"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 10)
+script = ExtResource("4")
+npc_name = "Melody the Musician"
+npc_color = Color(0.8, 0.3, 0.7, 1)
+primary_category = 19
+greeting = "La la la! Let's make some music together!"
+quest_offer = "Press E to explore music and performing arts!"
+quest_complete = "Bravo! What a wonderful performance!"
+no_quests = "The concert is over. Encore tomorrow!"
+
+[node name="Body" type="MeshInstance3D" parent="NPCs/Melody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CylinderMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="NPCs/Melody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Melody"]
+shape = SubResource("CylinderShape3D_npc")
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="LibraryHut" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 8)
+
+[node name="Floor" type="MeshInstance3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="WallBack" type="MeshInstance3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 2)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="WallLeft" type="MeshInstance3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="WallRight" type="MeshInstance3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="Roof" type="MeshInstance3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 3.5, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_roof_red")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/LibraryHut"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_building")
+
+[node name="MathTower" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 8)
+
+[node name="Floor" type="MeshInstance3D" parent="Buildings/MathTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="WallBack" type="MeshInstance3D" parent="Buildings/MathTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 2)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="WallLeft" type="MeshInstance3D" parent="Buildings/MathTower"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="WallRight" type="MeshInstance3D" parent="Buildings/MathTower"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 2, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_stone")
+
+[node name="Roof" type="MeshInstance3D" parent="Buildings/MathTower"]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 3.5, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_roof_blue")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/MathTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_building")
+
+[node name="GymArena" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="Floor" type="MeshInstance3D" parent="Buildings/GymArena"]
+transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_wood_dark")
+
+[node name="WallBack" type="MeshInstance3D" parent="Buildings/GymArena"]
+transform = Transform3D(1.5, 0, 0, 0, 1.2, 0, 0, 0, 1, 0, 2, 3.5)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_wood_dark")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/GymArena"]
+transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 2, 0)
+shape = SubResource("BoxShape3D_building")
+
+[node name="TreasureHouse" type="StaticBody3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -11)
+
+[node name="Floor" type="MeshInstance3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0.1, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="WallBack" type="MeshInstance3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 1.2, 1.6)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="WallLeft" type="MeshInstance3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0, 0, 0.8, 0, 0.8, 0, -1, 0, 0, -1.6, 1.2, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="WallRight" type="MeshInstance3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0, 0, 0.8, 0, 0.8, 0, -1, 0, 0, 1.6, 1.2, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("mat_gold")
+
+[node name="Roof" type="MeshInstance3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0.9, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 2.8, 0)
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("mat_roof_gold")
+
+[node name="Collision" type="CollisionShape3D" parent="Buildings/TreasureHouse"]
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_building")
+
+[node name="Trees" type="Node3D" parent="."]
+
+[node name="Tree1" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Tree2" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 3)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Tree3" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -15)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Tree4" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -12)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1.3, 0, 0, 0, 1.1, 0, 0, 0, 1.3, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Tree5" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 15)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Tree6" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 18)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("mat_tree_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree6"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 3.5, 0)
+mesh = SubResource("SphereMesh_leaves")
+surface_material_override/0 = SubResource("mat_tree_leaves")
+
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_player")
+surface_material_override/0 = SubResource("mat_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Camera" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0.4, 0, -0.4, 0.9, 0, 2, 6)
+current = true
+fov = 75.0
+
+[node name="HUD" type="CanvasLayer" parent="Player"]
+
+[node name="GoldLabel" type="Label" parent="Player/HUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 24
+text = "Gold: 0"
+
+[node name="XPLabel" type="Label" parent="Player/HUD"]
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 24
+text = "XP: 0"
+
+[node name="ControlsLabel" type="Label" parent="Player/HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -80.0
+offset_right = 250.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 14
+text = "WASD+Shift: Run | Space: Jump (x3!) | Ctrl: Ground Pound | Shift+Ctrl+Space: Long Jump | Wall+Space: Wall Jump"
+horizontal_alignment = 1
+
+[node name="DialoguePanel" type="Panel" parent="Player/HUD" groups=["dialogue_panel"]]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -180.0
+offset_right = 300.0
+offset_bottom = -100.0
+
+[node name="NameLabel" type="Label" parent="Player/HUD/DialoguePanel"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 590.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 18
+text = "NPC Name"
+
+[node name="DialogueLabel" type="Label" parent="Player/HUD/DialoguePanel"]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 35.0
+offset_right = 590.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 16
+text = "Dialogue text goes here..."
+autowrap_mode = 2
+
+[node name="QuestListPanel" parent="Player/HUD" instance=ExtResource("5")]

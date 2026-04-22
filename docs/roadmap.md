@@ -39,17 +39,17 @@
 
 ## 1.00 Safety / Integrity
 - [x] **1.01** LimboAI v1.6.0 runtime-verified. `BehaviorTree`, `LimboState`, `LimboHSM` registered.
-- [x] **1.02** ~~SQLite binding~~ — **REMOVED.** godot-sqlite was added by Windsurf without authorization. Embral uses Godot JSON + FileAccess. Removing it fixed GDExtension startup errors. Do not re-add.
+- [x] **1.02** ~~SQLite binding~~ — **REMOVED.** godot-sqlite was added by Windsurf without authorization. Embral uses Godot JSON + FileAccess. Removing it fixed GDExtension startup errors. Do not re-add. Verified clean boot.
 - [x] **1.03** Dialogic 2 v2.0-Alpha-19 on disk, enabled, runtime-verified. `dialogic_stub.gd` launches real timelines or falls back to JSON.
 - [x] **1.04** `SaveManager` schema v1 with v0 migration. Unknown versions quarantined.
 - [x] **1.05** Quest JSON validation: 8 required fields checked on load. Missing fields logged and rejected.
 - [x] **1.06** Content quarantine: invalid quest files logged with reason and not loaded.
 - [x] **1.07** Fallback dialogue: `dialogic_stub.gd` returns fallback line when Dialogic missing.
 - [x] **1.08** HA Safe Mode: `ha_bridge._safe_mode` reads from config. All HA methods guarded.
-- [x] **1.09** LimboAI `addons/demo/` folder **REMOVED.** It caused preload errors (res://demo/... paths). LimboAI itself untouched.
+- [x] **1.09** LimboAI `addons/demo/` folder **REMOVED.** It caused preload errors (res://demo/... paths). LimboAI itself untouched. Verified via git rm.
 - [x] **1.10** Boot root changed from `Node2D` to `Node`. Scene transition deferred. Headless boot clean.
 - [ ] **1.11** Verify `dialogic_stub.gd` actually launches a real Dialogic timeline end-to-end with a test NPC. Timeline integration pending — mark DONE only after live test.
-- [x] **1.12** Verify `save_manager.gd` write/read cycle in headless. (Done in current session)
+- [x] **1.12** Verify `save_manager.gd` write/read cycle in headless. (Verified in current session)
 - [ ] **1.13** Verify `quest_manager.gd` loads a sample quest JSON, validates all 8 fields, and emits `quest_started` signal in headless test.
 - [ ] **1.14** Add `docs/SESSION.md` update to the end of every CI/AI session as enforced habit. Verify it was updated in last 3 sessions.
 
@@ -58,7 +58,7 @@
 ## 2.00 Reliability / Core Systems
 > Goal: Core game systems functional. Player can walk around Hearthveil, talk to Ignavarr, and receive a quest.
 
-- [x] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt, resolving VBoxContainer errors. Needs final runtime headless verification.
+- [x] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt, resolving VBoxContainer errors. Fixed @onready parse error in scripts/ui/main_menu.gd. Verified clean headless boot.
 - [ ] **2.02** Main menu displays: Profile list, New Game, Continue, Settings, Parent Dashboard (PIN-gated). No art needed — white-box UI.
 - [ ] **2.03** Profile system: create, select, and delete player profiles. Each profile has its own `user://save/{profile_id}/` directory.
 - [ ] **2.04** Implement `PlayerProfile` data class: level, XP, gold, raid_points, play_points, quest_completion dict.

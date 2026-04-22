@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://quest_complete_dialog"]
+
+[ext_resource type="Script" path="res://scripts/ui/QuestCompleteDialog.gd" id="1_script"]
+
+[node name="QuestCompleteDialog" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Complete Quest?"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="QuestName" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Quest Name"
+horizontal_alignment = 1
+
+[node name="QuestDesc" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+text = "Quest description goes here. Did Ezra complete this task?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Rewards" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
+text = "Rewards: +10 XP, +5 Gold"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="ConfirmButton" type="Button" parent="CenterContainer/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Yes, Done!"
+
+[node name="CancelButton" type="Button" parent="CenterContainer/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Not Yet"

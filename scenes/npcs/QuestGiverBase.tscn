@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://quest_giver_base"]
+
+[ext_resource type="Script" path="res://scripts/npc/QuestGiver.gd" id="1_script"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_area"]
+height = 3.0
+radius = 2.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.35
+height = 1.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.25
+
+[node name="QuestGiver" type="Area3D" groups=["npcs", "quest_givers"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_script")
+npc_name = "Guide"
+primary_category = "L"
+greeting = "Hello, adventurer!"
+quest_offer = "I have a quest for you!"
+quest_complete = "Well done! Here's your reward!"
+no_quests = "No quests right now. Come back later!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_area")
+
+[node name="MeshInstance3D" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="QuestMarker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+pixel_size = 0.01
+text = "!"
+font_size = 64
+outline_size = 8

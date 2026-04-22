@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://player_hud_scene"]
+
+[ext_resource type="Script" path="res://scripts/ui/PlayerHUD.gd" id="1_script"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_script")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+
+[node name="LevelPanel" type="PanelContainer" parent="TopBar"]
+custom_minimum_size = Vector2(80, 0)
+
+[node name="LevelLabel" type="Label" parent="TopBar/LevelPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Lv.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XPBar" type="ProgressBar" parent="TopBar"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="XPLabel" type="Label" parent="TopBar/XPBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "0 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoldPanel" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="GoldIcon" type="Label" parent="TopBar/GoldPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "💰"
+
+[node name="GoldLabel" type="Label" parent="TopBar/GoldPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="ActiveQuest" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -60.0
+offset_right = 310.0
+offset_bottom = -10.0
+grow_vertical = 0
+
+[node name="QuestLabel" type="Label" parent="ActiveQuest"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "No active quest"

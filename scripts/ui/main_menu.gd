@@ -1,8 +1,8 @@
 extends Control
 
-@onready var start_button = $CenterContainer/MainVBox/StartButton
-@onready var options_button = $CenterContainer/MainVBox/OptionsButton
-@onready var quit_button = $CenterContainer/MainVBox/QuitButton
+@onready var start_button = $MainContainer/MainVBox/StartButton
+@onready var options_button = $MainContainer/MainVBox/OptionsButton
+@onready var quit_button = $MainContainer/MainVBox/QuitButton
 
 func _ready():
     start_button.pressed.connect(_on_start_pressed)

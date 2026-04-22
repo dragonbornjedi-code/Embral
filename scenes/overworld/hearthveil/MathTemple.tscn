@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://building_m"]
+
+[ext_resource type="Script" path="res://scripts/world/BuildingEntrance.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/npc/QuestGiver.gd" id="2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(4, 6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2"]
+size = Vector3(3, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.2, 0.4, 0.9, 1)
+
+[node name="MathTemple" type="Node3D"]
+
+[node name="BuildingMesh" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+size = Vector3(4, 6, 4)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="Roof" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 0)
+size = Vector3(5, 1, 5)
+material = SubResource("StandardMaterial3D_1")
+
+[node name="EntranceArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+script = ExtResource("1")
+category = "M"
+building_name = "Math Temple"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EntranceArea"]
+shape = SubResource("BoxShape3D_2")
+
+[node name="NPC_Numerius" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+script = ExtResource("2")
+npc_name = "Numerius"
+npc_title = "Math Wizard"
+category = "M"
+
+[node name="NPCCollision" type="CollisionShape3D" parent="NPC_Numerius"]
+shape = SubResource("BoxShape3D_1")
+
+[node name="InteractionArea" type="Area3D" parent="NPC_Numerius"]
+
+[node name="InteractionCollision" type="CollisionShape3D" parent="NPC_Numerius/InteractionArea"]
+shape = SubResource("BoxShape3D_2")
+
+[node name="Sign" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="Label3D" type="Label3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+text = "Math Temple"
+font_size = 48

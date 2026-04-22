@@ -1,0 +1,818 @@
+[gd_scene load_steps=47 format=3 uid="uid://bmvj56ubynvfy"]
+
+[ext_resource type="PackedScene" uid="uid://bqxqwc6nxvxs6" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://scripts/world/WorldEnvironment.gd" id="2_world_env"]
+[ext_resource type="Script" path="res://scripts/world/WeatherSystem.gd" id="3_weather"]
+[ext_resource type="Script" path="res://scripts/world/HubWorldManager.gd" id="4_hub_manager"]
+[ext_resource type="PackedScene" uid="uid://dialogue_panel_ui" path="res://scenes/ui/DialoguePanel.tscn" id="5_dialogue"]
+[ext_resource type="PackedScene" uid="uid://quest_ui_scene" path="res://scenes/ui/QuestUI.tscn" id="6_questui"]
+[ext_resource type="PackedScene" uid="uid://quest_giver_base" path="res://scenes/npc/QuestGiverBase.tscn" id="7_questgiver"]
+[ext_resource type="PackedScene" uid="uid://player_hud_scene" path="res://scenes/ui/PlayerHUD.tscn" id="8_playerhud"]
+[ext_resource type="PackedScene" uid="uid://quest_complete_dialog" path="res://scenes/ui/QuestCompleteDialog.tscn" id="9_questdialog"]
+[ext_resource type="PackedScene" uid="uid://cg7km3hqj2s1p" path="res://scenes/ui/MobileControls.tscn" id="10_mobile"]
+[ext_resource type="PackedScene" uid="uid://celebration_manager" path="res://scenes/effects/CelebrationManager.tscn" id="11_celebration"]
+[ext_resource type="PackedScene" uid="uid://shop_ui_scene" path="res://scenes/shop/ShopUI.tscn" id="12_shop"]
+[ext_resource type="PackedScene" uid="uid://daily_progress_tracker" path="res://scenes/ui/DailyProgressTracker.tscn" id="13_progress"]
+[ext_resource type="PackedScene" uid="uid://shopkeeper_npc" path="res://scenes/npc/Shopkeeper.tscn" id="14_shopkeeper"]
+[ext_resource type="PackedScene" uid="uid://quest_timer_ui" path="res://scenes/ui/QuestTimer.tscn" id="15_timer"]
+[ext_resource type="PackedScene" uid="uid://achievement_popup" path="res://scenes/ui/AchievementPopup.tscn" id="16_achievement"]
+[ext_resource type="PackedScene" uid="uid://parent_dashboard" path="res://scenes/ui/ParentDashboard.tscn" id="17_parent"]
+[ext_resource type="PackedScene" uid="uid://coin_collectible" path="res://scenes/world/Coin.tscn" id="18_coin"]
+[ext_resource type="PackedScene" uid="uid://dragon_ball_collectible" path="res://scenes/world/DragonBall.tscn" id="19_dragonball"]
+
+[sub_resource type="Environment" id="Environment_hub"]
+background_mode = 1
+background_color = Color(0.4, 0.7, 1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="Material_grass"]
+albedo_color = Color(0.3, 0.7, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_building"]
+size = Vector3(8, 6, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_building"]
+size = Vector3(8, 6, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_building_large"]
+size = Vector3(10, 8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_building_large"]
+size = Vector3(10, 8, 10)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fountain"]
+top_radius = 4.0
+bottom_radius = 4.5
+height = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_questboard"]
+size = Vector3(3, 4, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tree"]
+top_radius = 0.0
+bottom_radius = 2.5
+height = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_trunk"]
+top_radius = 0.3
+bottom_radius = 0.4
+height = 3.0
+
+; Academic colors (warm)
+[sub_resource type="StandardMaterial3D" id="Mat_Literacy"]
+albedo_color = Color(0.9, 0.7, 0.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Math"]
+albedo_color = Color(0.4, 0.6, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Science"]
+albedo_color = Color(0.4, 0.9, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Tech"]
+albedo_color = Color(0.6, 0.6, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_History"]
+albedo_color = Color(0.7, 0.5, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Language"]
+albedo_color = Color(0.9, 0.6, 0.7, 1)
+
+; Physical colors (energetic)
+[sub_resource type="StandardMaterial3D" id="Mat_Physical"]
+albedo_color = Color(0.9, 0.4, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Yoga"]
+albedo_color = Color(0.7, 0.5, 0.9, 1)
+
+; Emotional colors (soft)
+[sub_resource type="StandardMaterial3D" id="Mat_Emotional"]
+albedo_color = Color(0.9, 0.7, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Social"]
+albedo_color = Color(0.9, 0.8, 0.4, 1)
+
+; Life skills colors (earth tones)
+[sub_resource type="StandardMaterial3D" id="Mat_LifeSkills"]
+albedo_color = Color(0.6, 0.5, 0.4, 1)
+
+; Creative colors (vibrant)
+[sub_resource type="StandardMaterial3D" id="Mat_Arts"]
+albedo_color = Color(0.9, 0.5, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Music"]
+albedo_color = Color(0.5, 0.8, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Shop"]
+albedo_color = Color(1.0, 0.85, 0.0, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Tree"]
+albedo_color = Color(0.2, 0.5, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Trunk"]
+albedo_color = Color(0.4, 0.25, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_QuestBoard"]
+albedo_color = Color(0.5, 0.35, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Fountain"]
+albedo_color = Color(0.7, 0.7, 0.75, 1)
+
+[node name="HubWorld" type="Node3D"]
+script = ExtResource("4_hub_manager")
+
+[node name="WorldEnvironmentManager" type="Node" parent="."]
+script = ExtResource("2_world_env")
+
+[node name="WeatherSystem" type="Node3D" parent="."]
+script = ExtResource("3_weather")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hub")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, -0.75, 0.433, 0, 30, 0)
+light_color = Color(1, 0.95, 0.9, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+; ===== GROUND =====
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+surface_material_override/0 = SubResource("Material_grass")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+; ===== CENTER PLAZA =====
+[node name="CenterFountain" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CenterFountain"]
+mesh = SubResource("CylinderMesh_fountain")
+surface_material_override/0 = SubResource("Mat_Fountain")
+
+[node name="QuestBoard" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="QuestBoard"]
+mesh = SubResource("BoxMesh_questboard")
+surface_material_override/0 = SubResource("Mat_QuestBoard")
+
+[node name="NPCSpawn_QuestBoard" type="Marker3D" parent="QuestBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+; ===== ACADEMIC RING (Inner - radius 25) =====
+; Literacy (L) - North
+[node name="Building_Literacy" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Literacy"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Literacy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Literacy"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Literacy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; Math (M) - NE
+[node name="Building_Math" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 3, -17.7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Math"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Math")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Math"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Math"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; Science (S) - East
+[node name="Building_Science" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Science"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Science")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Science"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Science"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 0)
+
+; Tech (T) - SE
+[node name="Building_Tech" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 3, 17.7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Tech"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Tech")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Tech"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Tech"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; History (H) - South
+[node name="Building_History" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_History"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_History")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_History"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_History"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; Language (LC) - SW
+[node name="Building_Language" type="StaticBody3D" parent="." groups=["buildings", "academic"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7, 3, 17.7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Language"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Language")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Language"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Language"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; ===== PHYSICAL RING (radius 45) =====
+; Physical Fitness (PF) - North
+[node name="Building_Physical" type="StaticBody3D" parent="." groups=["buildings", "physical"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Physical"]
+mesh = SubResource("BoxMesh_building_large")
+surface_material_override/0 = SubResource("Mat_Physical")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Physical"]
+shape = SubResource("BoxShape3D_building_large")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Physical"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 7)
+
+; Yoga (YM) - NE
+[node name="Building_Yoga" type="StaticBody3D" parent="." groups=["buildings", "physical"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8, 3, -31.8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Yoga"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Yoga")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Yoga"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Yoga"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; Gross Motor (GM) - East
+[node name="Building_GrossMotor" type="StaticBody3D" parent="." groups=["buildings", "physical"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_GrossMotor"]
+mesh = SubResource("BoxMesh_building_large")
+surface_material_override/0 = SubResource("Mat_Physical")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_GrossMotor"]
+shape = SubResource("BoxShape3D_building_large")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_GrossMotor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -4, 0)
+
+; Fine Motor (FM) - SE
+[node name="Building_FineMotor" type="StaticBody3D" parent="." groups=["buildings", "physical"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8, 3, 31.8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_FineMotor"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Yoga")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_FineMotor"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_FineMotor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; ===== EMOTIONAL RING (radius 45) =====
+; Emotional Regulation (ER) - South
+[node name="Building_Emotional" type="StaticBody3D" parent="." groups=["buildings", "emotional"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Emotional"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Emotional")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Emotional"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Emotional"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; Social Skills (SS) - SW
+[node name="Building_Social" type="StaticBody3D" parent="." groups=["buildings", "emotional"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8, 3, 31.8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Social"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Social")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Social"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Social"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; Self-Care (SC) - West
+[node name="Building_SelfCare" type="StaticBody3D" parent="." groups=["buildings", "emotional"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_SelfCare"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Emotional")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_SelfCare"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_SelfCare"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 0)
+
+; Meditation (MM) - NW
+[node name="Building_Meditation" type="StaticBody3D" parent="." groups=["buildings", "emotional"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8, 3, -31.8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Meditation"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Yoga")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Meditation"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Meditation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; ===== LIFE SKILLS RING (radius 65) =====
+; Household (HS) - North
+[node name="Building_Household" type="StaticBody3D" parent="." groups=["buildings", "lifeskills"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -65)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Household"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_LifeSkills")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Household"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Household"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; Safety (SA) - East
+[node name="Building_Safety" type="StaticBody3D" parent="." groups=["buildings", "lifeskills"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Safety"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_LifeSkills")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Safety"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Safety"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 0)
+
+; Money (MR) - South
+[node name="Building_Money" type="StaticBody3D" parent="." groups=["buildings", "lifeskills"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 65)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Money"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_LifeSkills")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Money"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Money"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; Time Management (TM) - West
+[node name="Building_Time" type="StaticBody3D" parent="." groups=["buildings", "lifeskills"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Time"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_LifeSkills")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Time"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Time"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 0)
+
+; ===== CREATIVE RING (radius 65) =====
+; Visual Arts (VA) - NE
+[node name="Building_Arts" type="StaticBody3D" parent="." groups=["buildings", "creative"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3, -46)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Arts"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Arts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Arts"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Arts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 6)
+
+; Music (MP) - SE
+[node name="Building_Music" type="StaticBody3D" parent="." groups=["buildings", "creative"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3, 46)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Music"]
+mesh = SubResource("BoxMesh_building")
+surface_material_override/0 = SubResource("Mat_Music")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Music"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Music"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6)
+
+; ===== SHOP (Special Building) =====
+[node name="Building_Shop" type="StaticBody3D" parent="." groups=["buildings", "special"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_Shop"]
+mesh = SubResource("BoxMesh_building_large")
+surface_material_override/0 = SubResource("Mat_Shop")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_Shop"]
+shape = SubResource("BoxShape3D_building_large")
+
+[node name="NPCSpawn" type="Marker3D" parent="Building_Shop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -4, 0)
+
+; ===== DECORATIVE TREES =====
+[node name="Trees" type="Node3D" parent="."]
+
+[node name="Tree1" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("Mat_Trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("CylinderMesh_tree")
+surface_material_override/0 = SubResource("Mat_Tree")
+
+[node name="Tree2" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 12)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("Mat_Trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("CylinderMesh_tree")
+surface_material_override/0 = SubResource("Mat_Tree")
+
+[node name="Tree3" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -12)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("Mat_Trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("CylinderMesh_tree")
+surface_material_override/0 = SubResource("Mat_Tree")
+
+[node name="Tree4" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -12)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("CylinderMesh_trunk")
+surface_material_override/0 = SubResource("Mat_Trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("CylinderMesh_tree")
+surface_material_override/0 = SubResource("Mat_Tree")
+
+; ===== SPAWN POINT & PLAYER =====
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+
+; ===== UI LAYERS =====
+[node name="DialoguePanel" parent="." instance=ExtResource("5_dialogue")]
+
+[node name="QuestUI" parent="." instance=ExtResource("6_questui")]
+
+; ===== NPCs =====
+[node name="NPC_Literacy" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
+npc_name = "Ignavarr the Dragon"
+npc_color = Color(0.9, 0.7, 0.4, 1)
+primary_category = "L"
+greeting = "Greetings, young adventurer! I am Ignavarr, Guardian of Words!"
+quest_offer = "Ready to embark on a literacy quest? Knowledge awaits!"
+quest_complete = "Magnificent! Your mastery of letters grows stronger!"
+no_quests = "You have completed all my quests for now. Return tomorrow!"
+
+[node name="NPC_Math" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0, -11.7)
+npc_name = "Numerius the Wizard"
+npc_color = Color(0.4, 0.6, 0.9, 1)
+primary_category = "M"
+greeting = "Ah, a seeker of numerical wisdom! I am Numerius!"
+quest_offer = "Numbers dance at my command. Shall I teach you their secrets?"
+quest_complete = "Your calculations are precise! The numbers approve!"
+no_quests = "You've mastered today's equations. Rest your mind!"
+
+[node name="NPC_Physical" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -38)
+npc_name = "Titan the Champion"
+npc_color = Color(0.9, 0.4, 0.3, 1)
+primary_category = "PF"
+greeting = "HOHO! Ready to train that body, young warrior?"
+quest_offer = "Physical strength builds mental fortitude! Let's move!"
+quest_complete = "INCREDIBLE! You're getting stronger every day!"
+no_quests = "Rest those muscles! Champions need recovery too!"
+
+; ===== ACADEMIC NPCs =====
+[node name="NPC_Science" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 0)
+npc_name = "Eureka the Explorer"
+npc_color = Color(0.4, 0.9, 0.5, 1)
+primary_category = "S"
+greeting = "Greetings, young scientist! The universe holds so many mysteries!"
+quest_offer = "Shall we conduct an experiment together?"
+quest_complete = "Eureka! Your scientific method is impeccable!"
+no_quests = "The lab is resting. Come back for more discoveries!"
+
+[node name="NPC_Tech" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7, 0, 11.7)
+npc_name = "Byte the Robot"
+npc_color = Color(0.6, 0.6, 0.8, 1)
+primary_category = "T"
+greeting = "BEEP BOOP! Hello, young programmer!"
+quest_offer = "Want to learn the language of computers?"
+quest_complete = "CODE COMPILED SUCCESSFULLY! Great job!"
+no_quests = "System in standby mode. Return later!"
+
+[node name="NPC_History" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+npc_name = "Memoria the Timekeeper"
+npc_color = Color(0.7, 0.5, 0.3, 1)
+primary_category = "H"
+greeting = "Welcome, time traveler! The past has so much to teach us!"
+quest_offer = "Shall we journey through history together?"
+quest_complete = "You've honored the lessons of those who came before!"
+no_quests = "The archives are closed for now. Return tomorrow!"
+
+[node name="NPC_Language" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7, 0, 11.7)
+npc_name = "Silentius the Sage"
+npc_color = Color(0.9, 0.6, 0.7, 1)
+primary_category = "LC"
+greeting = "Words have power, young one. Let me share their secrets."
+quest_offer = "Ready to master the art of communication?"
+quest_complete = "Your voice carries wisdom beyond your years!"
+no_quests = "The library of languages rests. Return soon!"
+
+; ===== PHYSICAL NPCs =====
+[node name="NPC_Yoga" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8, 0, -25.8)
+npc_name = "Serene the Lotus"
+npc_color = Color(0.7, 0.5, 0.9, 1)
+primary_category = "YM"
+greeting = "Namaste, young one. Find your center with me."
+quest_offer = "Let's stretch our bodies and calm our minds."
+quest_complete = "Beautiful form! Your balance improves daily!"
+no_quests = "Rest in peaceful meditation. Return refreshed!"
+
+[node name="NPC_GrossMotor" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 0)
+npc_name = "Bounce the Kangaroo"
+npc_color = Color(0.9, 0.4, 0.3, 1)
+primary_category = "GM"
+greeting = "G'day mate! Ready to hop, skip, and jump?"
+quest_offer = "Let's get those big muscles moving!"
+quest_complete = "BOING! You're bouncing higher than ever!"
+no_quests = "Even kangaroos need to rest their legs!"
+
+[node name="NPC_FineMotor" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8, 0, 25.8)
+npc_name = "Nimble the Mouse"
+npc_color = Color(0.7, 0.5, 0.9, 1)
+primary_category = "FM"
+greeting = "Squeak! Precision is my specialty!"
+quest_offer = "Let's practice our careful, steady movements!"
+quest_complete = "Such dexterity! Your fingers are so nimble!"
+no_quests = "Time to rest those tiny muscles. Come back soon!"
+
+; ===== EMOTIONAL NPCs =====
+[node name="NPC_Emotional" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 39)
+npc_name = "Sage the Elder"
+npc_color = Color(0.9, 0.7, 0.8, 1)
+primary_category = "ER"
+greeting = "Hello, brave heart. Feelings are our greatest teachers."
+quest_offer = "Shall we explore the landscape of emotions?"
+quest_complete = "You handle your feelings with such wisdom!"
+no_quests = "Take time to feel. Return when you're ready!"
+
+[node name="NPC_Social" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8, 0, 25.8)
+npc_name = "Harmony the Bee"
+npc_color = Color(0.9, 0.8, 0.4, 1)
+primary_category = "SS"
+greeting = "Buzz buzz! Together we're stronger!"
+quest_offer = "Let's practice being a good friend!"
+quest_complete = "The hive celebrates your kindness!"
+no_quests = "The colony is resting. Buzz back later!"
+
+[node name="NPC_SelfCare" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 0)
+npc_name = "Sparkle the Star"
+npc_color = Color(0.9, 0.7, 0.8, 1)
+primary_category = "SC"
+greeting = "Shine bright, little one! Taking care of yourself is important!"
+quest_offer = "Ready to learn some healthy habits?"
+quest_complete = "You're glowing with good health!"
+no_quests = "Rest and recharge. Your sparkle will return!"
+
+[node name="NPC_Meditation" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8, 0, -25.8)
+npc_name = "Zen the Cloud"
+npc_color = Color(0.7, 0.5, 0.9, 1)
+primary_category = "MM"
+greeting = "Float with me... find your inner peace..."
+quest_offer = "Let's practice being still and calm."
+quest_complete = "Your mind is as clear as the sky!"
+no_quests = "Drift peacefully. Return when ready..."
+
+; ===== LIFE SKILLS NPCs =====
+[node name="NPC_Household" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -59)
+npc_name = "Tidy the Raccoon"
+npc_color = Color(0.6, 0.5, 0.4, 1)
+primary_category = "HS"
+greeting = "Hello helper! A clean space is a happy space!"
+quest_offer = "Ready to learn some household skills?"
+quest_complete = "Spotless! You're becoming a great helper!"
+no_quests = "The house is tidy! Enjoy your clean space!"
+
+[node name="NPC_Safety" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59, 0, 0)
+npc_name = "Shield the Owl"
+npc_color = Color(0.6, 0.5, 0.4, 1)
+primary_category = "SA"
+greeting = "Hoo-hoo! Stay safe, young one!"
+quest_offer = "Let me teach you how to stay protected!"
+quest_complete = "Wise choice! Safety first, always!"
+no_quests = "All is secure. Return for more wisdom!"
+
+[node name="NPC_Money" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 59)
+npc_name = "Penny the Piggy"
+npc_color = Color(0.6, 0.5, 0.4, 1)
+primary_category = "MR"
+greeting = "Oink oink! Every penny counts!"
+quest_offer = "Ready to learn about money and saving?"
+quest_complete = "Cha-ching! You're a smart saver!"
+no_quests = "The piggy bank is full! Come back tomorrow!"
+
+[node name="NPC_Time" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59, 0, 0)
+npc_name = "Tempo the Clock"
+npc_color = Color(0.6, 0.5, 0.4, 1)
+primary_category = "TM"
+greeting = "Tick tock! Time is precious!"
+quest_offer = "Let's learn to manage our time wisely!"
+quest_complete = "Right on time! Excellent planning!"
+no_quests = "Time for a break! Return when ready!"
+
+; ===== CREATIVE NPCs =====
+[node name="NPC_Arts" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, -40)
+npc_name = "Imaginara the Painter"
+npc_color = Color(0.9, 0.5, 0.9, 1)
+primary_category = "VA"
+greeting = "Welcome to my studio! Let your imagination run wild!"
+quest_offer = "Ready to create something beautiful?"
+quest_complete = "A masterpiece! Your creativity shines!"
+no_quests = "The muse rests. Return with fresh inspiration!"
+
+[node name="NPC_Music" parent="." instance=ExtResource("7_questgiver")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 40)
+npc_name = "Melody the Songbird"
+npc_color = Color(0.5, 0.8, 0.9, 1)
+primary_category = "MP"
+greeting = "Tweet tweet! Music fills the soul with joy!"
+quest_offer = "Shall we make some beautiful music together?"
+quest_complete = "Bravo! That was music to my ears!"
+no_quests = "The concert is over. Sing again tomorrow!"
+
+; ===== NEW UI LAYERS =====
+[node name="PlayerHUD" parent="." instance=ExtResource("8_playerhud")]
+
+[node name="QuestCompleteDialog" parent="." instance=ExtResource("9_questdialog")]
+
+[node name="MobileControls" parent="." instance=ExtResource("10_mobile")]
+
+[node name="CelebrationManager" parent="." instance=ExtResource("11_celebration")]
+
+[node name="ShopUI" parent="." instance=ExtResource("12_shop")]
+
+[node name="DailyProgressTracker" parent="." instance=ExtResource("13_progress")]
+
+; ===== SHOPKEEPER NPC =====
+[node name="NPC_Shopkeeper" parent="." instance=ExtResource("14_shopkeeper")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0)
+
+[node name="QuestTimer" parent="." instance=ExtResource("15_timer")]
+
+[node name="AchievementPopup" parent="." instance=ExtResource("16_achievement")]
+
+[node name="ParentDashboard" parent="." instance=ExtResource("17_parent")]
+
+; ===== COLLECTIBLES =====
+; Coins near spawn point
+[node name="Collectibles" type="Node3D" parent="."]
+
+[node name="Coin1" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 10)
+
+[node name="Coin2" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.5, 10)
+
+[node name="Coin3" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 15)
+
+[node name="Coin4" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 15)
+
+[node name="Coin5" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 20)
+
+; Coins around fountain
+[node name="Coin6" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 0)
+
+[node name="Coin7" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 0)
+
+[node name="Coin8" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
+
+[node name="Coin9" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
+
+; Coins along paths to buildings
+[node name="Coin10" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, -10)
+
+[node name="Coin11" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, -10)
+
+[node name="Coin12" parent="Collectibles" instance=ExtResource("18_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 5)
+
+; Hidden Dragon Ball 1 - behind a tree
+[node name="DragonBall1" parent="Collectibles" instance=ExtResource("19_dragonball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.3, 14)
+ball_number = 1
