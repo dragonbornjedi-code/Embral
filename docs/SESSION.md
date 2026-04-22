@@ -1,7 +1,5 @@
-# Embrace — Session Log
-# Updated at the END of every AI session. Never skip this.
-# This file is the shared memory between AI sessions.
-# Last updated: 2026-04-21
+# Embral — Session Log
+# Last updated: 2026-04-22
 
 ---
 
@@ -12,58 +10,45 @@
 
 ---
 
-## WHAT HAPPENED THIS SESSION
+## WHAT WAS VERIFIED THIS SESSION
 
-- **Massive Cleanup & Reorganization:**
-    - Emptied `embral_drop` (temp folder) and moved all assets/scenes to canonical locations.
-    - Moved audio files to `assets/audio/`.
-    - Moved models to `assets/models/`.
-    - Moved textures/shaders to `assets/textures/`.
-    - Moved UI scenes to `scenes/ui/`.
-    - Moved Hearthveil buildings to `scenes/overworld/hearthveil/`.
-    - Created `scenes/npcs/`, `scenes/player/`, and `scenes/entities/` and moved respective scenes there.
-    - Moved `gold-standard-quests.json` to `data/quests/hearthveil/`.
-- **Startup Error Fixes:**
-    - Verified `project.godot` is free of banned SQLite references.
-    - Deleted `addons/demo/` (LimboAI demo content) via `git rm` to resolve preload/parse errors.
-    - Removed `scripts/autoloads/sqlite_stub.gd` as per Law 3.
-- **Main Menu Fixes:**
-    - Fixed `@onready` parse errors in `scripts/ui/main_menu.gd`.
-    - Rebuilt `scenes/ui/main_menu.tscn` with a clean node structure (Control > CenterContainer > VBoxContainer).
-- **Verification:**
-    - Verified clean headless boot with `godot --headless --check-only`.
-- **Documentation Updates:**
-    - Updated `manifest.yaml` with all moved files and asset registrations.
-    - Updated `docs/roadmap.md` marking Phase 1 cleanup and 2.01 as DONE.
-    - Updated `docs/compatibility.md` reflecting SQLite removal and `addons/demo/` deletion.
+- Quest loading: VERIFIED (test_quest_01 loads)
+- DialogicStub: VERIFIED (Dialogic 2 detected, fallback works)
+- ProfileSystem: VERIFIED (create/select/quest/switch/delete all pass)
+- SaveManager: VERIFIED (write/read cycle works)
+- gd-agentic-skills: REMOVED from Godot project (was cloned inside repo by mistake)
+- Swap: expanded from 512MB to 4GB, permanent via /etc/fstab
+- Alias file: fixed at ~/.embral_aliases.sh
 
 ---
 
-## WHAT TO DO NEXT (Phase 2 Focus)
+## NEXT TASK (start here)
 
-1. **Verify end-to-end flow:** Boot → Main Menu → Profile Select (yet to be built).
-2. **Implement Profile System (2.03):** Create, select, and delete player profiles in `user://save/{profile_id}/`.
-3. **Implement PlayerProfile Data Class (2.04):** Level, XP, gold, etc.
-4. **Continue Hearthveil Hub setup:** Navigable white-box with portal placeholders.
+Roadmap item 2.02 — Wire profile system into main menu UI.
 
----
+scripts/ui/main_menu.gd needs:
+1. On start: if no profiles exist, show Create Profile screen
+2. If profiles exist, show list with name + last_played
+3. Select profile -> SaveManager.select_profile(id) -> load game
+4. New Profile button -> SaveManager.create_profile(player_name)
 
-## FILES MODIFIED THIS SESSION
-- `manifest.yaml`
-- `project.godot`
-- `scripts/ui/main_menu.gd`
-- `scenes/ui/main_menu.tscn`
-- `docs/roadmap.md`
-- `docs/compatibility.md`
-- `docs/SESSION.md`
-- Numerous files moved from `embral_drop/` to canonical locations (see git status).
+Do NOT touch: save_manager.gd, player_profile.gd (both verified stable)
 
 ---
 
-## KNOWN ISSUES (running list)
+## KNOWN ISSUES
 
-| Issue | Severity | File | Status |
-|-------|----------|------|--------|
-| Dialogic timeline end-to-end untested | MEDIUM | scripts/autoloads/dialogic_stub.gd | OPEN |
-| SaveManager/QuestManager persistence split | LOW | scripts/autoloads/save_manager.gd | OPEN |
-| Dialogic shutdown noise in headless (non-blocking) | LOW | addons/dialogic | KNOWN/ACCEPTED |
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Dialogic timeline end-to-end untested | MEDIUM | OPEN |
+| 26 resources leaked on headless exit | LOW | COSMETIC - ignore |
+| SESSION.md was stale from previous session | FIXED |
+
+---
+
+## HARDWARE ON CRUCIBLE
+- PS5 DualSense: detected (joy_id=0)
+- Wii: not connected
+- HA: not configured
+- GPU: AMD 4GB VRAM
+- RAM: 27GB with 4GB swap
