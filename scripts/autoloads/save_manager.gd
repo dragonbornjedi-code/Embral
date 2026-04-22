@@ -1,140 +1,192 @@
 extends Node
-## SaveManager — Handles game state persistence
-## Serializes quest progress, NPC mastery, inventory, and player stats.
-## Schema versioning: if a save's schema_version < CURRENT_SCHEMA_VERSION,
-## _migrate() is called. On unknown/corrupt version, save is quarantined (soft-fail).
+## SaveManager — Handles all game state persistence for multiple profiles.
+## Each profile has its own user://save/{profile_id}/ directory.
+##
+## Law 10: All saves go to user:// on the player's machine.
+## Law 11: Quests, NPC mastery, and player stats are saved locally only.
 
-const SAVE_PATH := "user://save_game.json"
-const CURRENT_SCHEMA_VERSION := 1
+const PROFILES_DIR := "user://save/"
+const PROFILES_LIST := "user://save/profiles.json"
+const PROFILE_FILE := "profile.json"
+const SCHEMA_VERSION := 1
 
-var _save_data: Dictionary = {}
+var PlayerProfileScript = load("res://scripts/models/player_profile.gd")
+
+signal profiles_updated
+signal active_profile_changed(profile_id)
+
+var active_profile: Resource = null
+var _profiles: Array = [] # List of {id: String, name: String, last_played: int}
 
 
 func _ready() -> void:
-	_load()
+	_ensure_save_dir()
+	_load_profile_list()
 
 
-func _load() -> void:
-	if not FileAccess.file_exists(SAVE_PATH):
-		_save_data = _default_save_data()
-		_save()
-		return
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if file == null:
-		push_error("[SaveManager] Could not open save file.")
-		return
-	var text := file.get_as_text()
+func _ensure_save_dir() -> void:
+	var dir = DirAccess.open("user://")
+	if not dir.dir_exists("save"):
+		dir.make_dir("save")
+
+
+# ───────────────────────────────────────────
+# PROFILE MANAGEMENT
+# ───────────────────────────────────────────
+
+func get_profile_list() -> Array:
+	return _profiles
+
+
+func create_profile(player_name: String) -> String:
+	var id = _generate_profile_id(player_name)
+	var profile_dir = PROFILES_DIR + id + "/"
+	
+	var dir = DirAccess.open("user://")
+	dir.make_dir_recursive(profile_dir)
+	
+	var profile = PlayerProfileScript.new()
+	profile.profile_id = id
+	profile.player_name = player_name
+	
+	_save_profile_file(profile)
+	
+	_profiles.append({
+		"id": id,
+		"name": player_name,
+		"last_played": profile.last_played_at
+	})
+	_save_profile_list()
+	
+	profiles_updated.emit()
+	return id
+
+
+func select_profile(profile_id: String) -> bool:
+	var path = PROFILES_DIR + profile_id + "/" + PROFILE_FILE
+	if not FileAccess.file_exists(path):
+		push_error("[SaveManager] Profile file not found: %s" % path)
+		return false
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	var parsed = JSON.parse_string(file.get_as_text())
 	file.close()
-	var parsed: Variant = JSON.parse_string(text)
-	if parsed == null or not parsed is Dictionary:
-		push_error("[SaveManager] Save file is invalid JSON. Starting fresh.")
-		_quarantine_save()
-		_save_data = _default_save_data()
-		_save()
-		return
-	_save_data = parsed
-	_check_schema_version()
+	
+	if not parsed is Dictionary:
+		push_error("[SaveManager] Invalid profile data for %s" % profile_id)
+		return false
+		
+	active_profile = PlayerProfileScript.from_dict(parsed)
+	active_profile.last_played_at = int(Time.get_unix_time_from_system())
+	_save_profile_file(active_profile)
+	
+	# Update last_played in profile list
+	for p in _profiles:
+		if p["id"] == profile_id:
+			p["last_played"] = active_profile.last_played_at
+			break
+	_save_profile_list()
+	
+	active_profile_changed.emit(profile_id)
+	print("[SaveManager] Profile selected: %s (%s)" % [active_profile.player_name, profile_id])
+	return true
 
 
-func _check_schema_version() -> void:
-	var version: int = int(_save_data.get("schema_version", 0))
-	if version == CURRENT_SCHEMA_VERSION:
-		return
-	if version == 0:
-		# Pre-versioning save — attempt migration to v1
-		push_warning("[SaveManager] Save has no schema_version. Migrating to v%d." % CURRENT_SCHEMA_VERSION)
-		_migrate_to_v1()
-		return
-	if version > CURRENT_SCHEMA_VERSION:
-		push_error("[SaveManager] Save schema_version %d is newer than engine supports (%d). Quarantining." % [version, CURRENT_SCHEMA_VERSION])
-		_quarantine_save()
-		_save_data = _default_save_data()
-		_save()
+func delete_profile(profile_id: String) -> void:
+	var profile_dir = PROFILES_DIR + profile_id + "/"
+	_delete_recursive(profile_dir)
+	
+	_profiles = _profiles.filter(func(p): return p["id"] != profile_id)
+	_save_profile_list()
+	
+	if active_profile and active_profile.profile_id == profile_id:
+		active_profile = null
+		active_profile_changed.emit("")
+		
+	profiles_updated.emit()
 
 
-func _migrate_to_v1() -> void:
-	# v0 → v1: add schema_version field. All other fields carry over as-is.
-	_save_data["schema_version"] = 1
-	_save()
-	print("[SaveManager] Migration to schema v1 complete.")
+# ───────────────────────────────────────────
+# DATA IO
+# ───────────────────────────────────────────
 
+func save_current_profile() -> void:
+	if active_profile:
+		_save_profile_file(active_profile)
 
-func _quarantine_save() -> void:
-	## Rename the corrupt/incompatible save so it is not lost but not loaded.
-	var timestamp := str(int(Time.get_unix_time_from_system()))
-	var quarantine_path := "user://save_game.quarantine." + timestamp + ".json"
-	var dir := DirAccess.open("user://")
-	if dir != null:
-		dir.rename(SAVE_PATH, quarantine_path)
-		push_warning("[SaveManager] Quarantined bad save to: %s" % quarantine_path)
-	else:
-		push_error("[SaveManager] Could not quarantine save — DirAccess failed.")
-
-
-func _save() -> void:
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file == null:
-		push_error("[SaveManager] Could not write save file.")
-		return
-	file.store_string(JSON.stringify(_save_data, "\t"))
-	file.close()
-
-
-func _default_save_data() -> Dictionary:
-	return {
-		"schema_version": CURRENT_SCHEMA_VERSION,
-		"quests": {},
-		"npcs": {},
-		"inventory": [],
-		"player": {
-			"level": 1,
-			"xp": 0,
-			"gold": 0
-		}
-	}
-
-
-# ═══════════════════════════════════════════
-# QUEST PERSISTENCE
-# ═══════════════════════════════════════════
 
 func mark_quest_complete(quest_id: String, score: float) -> void:
-	if not _save_data.has("quests"):
-		_save_data["quests"] = {}
-	_save_data["quests"][quest_id] = {
-		"completed": true,
-		"score": score,
-		"timestamp": Time.get_unix_time_from_system()
-	}
-	_save()
+	if active_profile:
+		active_profile.quest_completion[quest_id] = {
+			"completed": true,
+			"score": score,
+			"timestamp": int(Time.get_unix_time_from_system())
+		}
+		save_current_profile()
 
 
 func is_quest_complete(quest_id: String) -> bool:
-	var quests: Dictionary = _save_data.get("quests", {})
-	var quest: Dictionary = quests.get(quest_id, {})
-	return quest.get("completed", false)
+	if not active_profile: return false
+	return active_profile.quest_completion.get(quest_id, {}).get("completed", false)
 
 
-func get_quest_score(quest_id: String) -> float:
-	var quests: Dictionary = _save_data.get("quests", {})
-	var quest: Dictionary = quests.get(quest_id, {})
-	return float(quest.get("score", 0.0))
+# ───────────────────────────────────────────
+# INTERNAL
+# ───────────────────────────────────────────
+
+func _generate_profile_id(player_name: String) -> String:
+	var base = player_name.to_lower().replace(" ", "_")
+	var id = base
+	var count = 1
+	while _profile_exists(id):
+		id = base + "_" + str(count)
+		count += 1
+	return id
 
 
-func get_npc_mastery(npc_id: String) -> Dictionary:
-	var npcs: Dictionary = _save_data.get("npcs", {})
-	return npcs.get(npc_id, {"total_score": 0.0, "completed_quests": 0})
+func _profile_exists(id: String) -> bool:
+	for p in _profiles:
+		if p["id"] == id:
+			return true
+	return false
 
 
-# ═══════════════════════════════════════════
-# NPC MASTERY PERSISTENCE
-# ═══════════════════════════════════════════
+func _load_profile_list() -> void:
+	if not FileAccess.file_exists(PROFILES_LIST):
+		_profiles = []
+		return
+	var file = FileAccess.open(PROFILES_LIST, FileAccess.READ)
+	var parsed = JSON.parse_string(file.get_as_text())
+	file.close()
+	if parsed is Dictionary:
+		_profiles = parsed.get("profiles", [])
+	else:
+		_profiles = []
 
-func record_npc_score(npc_id: String, score: float) -> void:
-	if not _save_data.has("npcs"):
-		_save_data["npcs"] = {}
-	var npc_data: Dictionary = _save_data["npcs"].get(npc_id, {"total_score": 0.0, "completed_quests": 0})
-	npc_data["total_score"] += score
-	npc_data["completed_quests"] += 1
-	_save_data["npcs"][npc_id] = npc_data
-	_save()
+
+func _save_profile_list() -> void:
+	var file = FileAccess.open(PROFILES_LIST, FileAccess.WRITE)
+	var data = {"profiles": _profiles}
+	file.store_string(JSON.stringify(data, "\t"))
+	file.close()
+
+
+func _save_profile_file(profile: Resource) -> void:
+	var path = PROFILES_DIR + profile.profile_id + "/" + PROFILE_FILE
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(profile.to_dict(), "\t"))
+	file.close()
+
+
+func _delete_recursive(path: String) -> void:
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				_delete_recursive(path + file_name + "/")
+			else:
+				dir.remove(file_name)
+			file_name = dir.get_next()
+		DirAccess.remove_absolute(path)

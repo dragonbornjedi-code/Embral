@@ -39,8 +39,8 @@ func load_realm_quests(realm_id: String) -> void:
 
 ## Required fields per AGENTS.md Law 8
 const QUEST_REQUIRED_FIELDS := [
-	"quest_id", "research_basis", "developmental_target",
-	"age_range", "steps", "scaffolding", "npc_giver", "completion_reward"
+	"quest_id", "realm", "npc_giver", "research_basis",
+	"developmental_target", "age_range", "steps", "scaffolding"
 ]
 
 
