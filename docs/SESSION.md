@@ -12,15 +12,16 @@
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Roadmap 4.05 (Trials):** Created 6 Embral Trial scenes in `scenes/trials/`. Each uses `dungeon_base.gd` and includes Begin/Return buttons.
-- **Roadmap 4.06 (Trial Portals):** Updated `portal_marker.gd` to handle trial paths and discovery counting.
-- **System Integrity:** Verified all managers and successful boot.
+- **Roadmap 4.05 (Trials):** Created 6 Embral Trial scenes in `scenes/trials/`. 
+- **Roadmap 4.06 (Trial Portals):** Updated `portal_marker.gd` to handle trial portals with locking/unlocking and progress labels.
+- **Roadmap 3.14-3.16:** Finished NPC scene instances, Ignavarr position fixed, Builders Guild NPC stubbed and wired.
+- **System Integrity:** Verified clean boot and scene counts.
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 5.01 — Wisp data system implementation.
+Roadmap item 5.09 — Pet minigame stub.
 
 ---
 

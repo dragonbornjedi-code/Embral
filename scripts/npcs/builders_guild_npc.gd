@@ -1,13 +1,14 @@
 extends BaseNPC
 ## BuildersGuildNPC — Guides player to fulfill NPC home preferences.
 
+@export var home_data: NPCHomeData
+
 func interact() -> void:
-	super.interact()
 	var list := []
 	var npcs = get_tree().get_nodes_in_group("npcs")
 	
 	for n in npcs:
-		if n.get("home_data"):
+		if "home_data" in n and n.home_data:
 			if not n.home_data.validate(get_tree().current_scene):
 				list.append(n.display_name)
 	

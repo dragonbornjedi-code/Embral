@@ -12,6 +12,9 @@ func _ready() -> void:
 	add_to_group("teacher_npc")
 
 
+func interact() -> void:
+	_start_interaction()
+
 func _start_interaction() -> void:
 	_is_interacting = true
 	_interact_label.hide()

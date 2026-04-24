@@ -64,12 +64,9 @@ func _on_body_exited(body: Node3D) -> void:
 			_end_interaction()
 
 
-func _input(event: InputEvent) -> void:
-	if _player_in_range and event.is_action_pressed("interact") and not _is_interacting:
-		_start_interaction()
-
-
-func _start_interaction() -> void:
+func interact() -> void:
+	## Virtual method to be overridden by subclasses.
+	_start_interaction()
 	_is_interacting = true
 	_interact_label.hide()
 	EventBus.npc_dialogue_started.emit(npc_id)

@@ -88,13 +88,16 @@ func _create_whitebox_profile_ui():
     add_child(profile_container)
     
     # Center it
-    profile_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
     
     profile_list = VBoxContainer.new()
-    profile_list.name = "ProfileList"
-    profile_container.add_child(profile_list)
 
 func _set_initial_focus() -> void:
     var buttons = find_children("*", "Button", true, false)
     if buttons.size() > 0:
         buttons[0].grab_focus()
+    # Center it
+    profile_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+    
+    profile_list = VBoxContainer.new()
+    profile_list.name = "ProfileList"
+    profile_container.add_child(profile_list)

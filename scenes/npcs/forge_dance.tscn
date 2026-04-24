@@ -1,5 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://forge_dance"]
-
+[gd_scene load_steps=5 format=3 uid="uid://forge_dance"]
 [ext_resource type="Script" path="res://scripts/npcs/base_teacher_npc.gd" id="1_script"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mesh"]
@@ -20,7 +19,6 @@ script = ExtResource("1_script")
 npc_id = "forge_dance"
 display_name = "Sparky Step"
 realm = "forge_run"
-available_quests = ["FORGE_DANCE_001", "FORGE_DANCE_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")
@@ -28,8 +26,8 @@ mesh = SubResource("CapsuleMesh_mesh")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_player")
 
-[node name="ProximityZone" type="Area3D" parent="."]
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ProximityZone"]
+[node name="InteractionArea" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 shape = SubResource("SphereShape3D_prox")
 
 [node name="NameLabel" type="Label3D" parent="."]
