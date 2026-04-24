@@ -152,9 +152,16 @@ func mark_quest_complete(quest_id: String, score: float) -> void:
 		save_current_profile()
 
 
-func is_quest_complete(quest_id: String) -> bool:
-	if not active_profile: return false
-	return active_profile.quest_completion.get(quest_id, {}).get("completed", false)
+func get_raid_points() -> int:
+    if active_profile:
+        return active_profile.raid_points
+    return 0
+
+func add_raid_point() -> void:
+    if active_profile:
+        # Limit to 3 per week (stubbed: just add)
+        active_profile.raid_points += 1
+        save_current_profile()
 
 
 # ───────────────────────────────────────────

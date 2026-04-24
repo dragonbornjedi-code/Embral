@@ -543,3 +543,42 @@ scenes:
     life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
     vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
     creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
+
+# ═══════════════════════════════════════════
+# FAMILY SYSTEMS
+# ═══════════════════════════════════════════
+family_systems:
+  nightly_review:
+    path: scripts/family/nightly_review.gd
+    status: active
+  family_raid_manager:
+    path: scripts/family/family_raid_manager.gd
+    status: active
+  family_raid_shop:
+    path: scripts/family/family_raid_shop.gd
+    status: active
+  mini_game_manager:
+    path: scripts/family/mini_game_manager.gd
+    status: active
+
+  minigames:
+    wisp_match: {path: scripts/minigames/wisp_match.gd, status: active}
+    word_catch: {path: scripts/minigames/word_catch.gd, status: active}
+    number_race: {path: scripts/minigames/number_race.gd, status: active}
+    emotion_sort: {path: scripts/minigames/emotion_sort.gd, status: active}
+    balance_trial: {path: scripts/minigames/balance_trial.gd, status: active}
+    letter_bounce: {path: scripts/minigames/letter_bounce.gd, status: active}
+
+  family_systems:
+    nightly_review: {path: scripts/family/nightly_review.gd, status: active}
+    family_raid_manager: {path: scripts/family/family_raid_manager.gd, status: active}
+    family_raid_shop: {path: scripts/family/family_raid_shop.gd, status: active}
+    mini_game_manager: {path: scripts/family/mini_game_manager.gd, status: active}
+
+  minigames:
+    wisp_match: {path: scripts/minigames/wisp_match.gd, status: active}
+    word_catch: {path: scripts/minigames/word_catch.gd, status: active}
+    number_race: {path: scripts/minigames/number_race.gd, status: active}
+    emotion_sort: {path: scripts/minigames/emotion_sort.gd, status: active}
+    balance_trial: {path: scripts/minigames/balance_trial.gd, status: active}
+    letter_bounce: {path: scripts/minigames/letter_bounce.gd, status: active}
