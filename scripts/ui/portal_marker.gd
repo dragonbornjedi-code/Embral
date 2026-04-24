@@ -12,18 +12,15 @@ class_name PortalMarker
 
 func _ready() -> void:
     EventBus.realm_unlocked.connect(_on_realm_unlocked)
-    # Re-check when NPC mastery level increases
-    if EventBus.has_signal("npc_mastery_level_up"):
-        EventBus.npc_mastery_level_up.connect(func(_id, _lvl): _check_unlock())
     _check_unlock()
     interaction_area.body_entered.connect(_on_body_entered)
 
 func _check_unlock() -> void:
-    if not SaveManager.active_profile:
-        is_unlocked = false
-    else:
+    if SaveManager.active_profile:
         var discovery_count = QuestManager.get_npc_discovery_count(target_realm)
         is_unlocked = (discovery_count >= required_npc_discoveries and SaveManager.active_profile.level >= required_level)
+    else:
+        is_unlocked = false
     
     if is_unlocked:
         portal_label.text = "⚡ Trial Ready!" if is_trial_portal else target_realm.replace("_", " ").capitalize()

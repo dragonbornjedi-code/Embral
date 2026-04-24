@@ -5,25 +5,22 @@
 
 ## CURRENT STATE
 
-**Phase:** 4.00 Overworld Builds — COMPLETE
+**Phase:** 6.00 Embral's Trials — COMPLETE
 **Godot version:** 4.5.stable.official.876b29033
 
 ---
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Roadmap 4.04 (Portal Unlock Logic):**
-  - Added `get_npc_discovery_count(realm)` to `QuestManager`.
-  - Updated `portal_marker.gd` to use this count and level requirements.
-  - Added signal listener for `npc_mastery_level_up` to re-check unlock status dynamically.
-  - Implemented dynamic label text ("Trial Ready!" vs discovery progress) in `portal_marker.gd`.
-- **System Integrity:** Verified all managers and successful boot.
+- **Creature Systems (Phase 5):** Completed. Wisp data models, pet minigame, party manager, and Wisp capture flow verified.
+- **Embral's Trials (Phase 6):** Heart Trial, Word Surge, Forge Gauntlet, Vault Challenge implemented with correct game loop logic. Trial stubs for others deferred.
+- **System Integrity:** Headless boot verified clean (ignoring expected Dialogic leaks).
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 5.01 — Wisp data system implementation.
+Roadmap item 7.01 — Wisp battle UI (full implementation).
 
 ---
 
