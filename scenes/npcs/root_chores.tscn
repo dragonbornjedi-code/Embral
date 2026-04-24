@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "root_chores"
 display_name = "Helper Hedge"
 realm = "rootstead"
+available_quests = ["ROOT_CHORES_001", "ROOT_CHORES_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

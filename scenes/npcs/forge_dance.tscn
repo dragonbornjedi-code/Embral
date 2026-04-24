@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "forge_dance"
 display_name = "Sparky Step"
 realm = "forge_run"
+available_quests = ["FORGE_DANCE_001", "FORGE_DANCE_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

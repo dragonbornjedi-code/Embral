@@ -17,6 +17,10 @@ func _ready() -> void:
 	_check_unlock()
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
+	
+	var shape = interaction_area.get_node_or_null("CollisionShape3D")
+	if shape == null:
+		push_error("[PortalMarker] InteractionArea missing CollisionShape3D on %s" % name)
 
 func _check_unlock() -> void:
 	if not SaveManager.active_profile:

@@ -384,10 +384,18 @@ npc_system:
     realm: hearthveil
     status: active
 
-  npc_home_data:
-    path: scripts/models/npc_home_data.gd
-    purpose: NPC home preference data. terrain, facing, proximity preferences.
+  wisp_roster:
+    path: scripts/dungeon/wisp_roster.gd
+    purpose: Utility class to manage Wisp roster persistence.
     status: active
+
+  models:
+    player_profile: {path: scripts/models/player_profile.gd, status: active}
+    wisp_data: {path: scripts/models/wisp_data.gd, status: active}
+    pet_data: {path: scripts/models/pet_data.gd, status: active}
+    companion_data: {path: scripts/models/companion_data.gd, status: active}
+    npc_home_data: {path: scripts/models/npc_home_data.gd, status: active}
+    quest_data: {path: scripts/models/quest_data.gd, status: planned}
 
   dialogue_fallbacks:
     path: data/dialogue/{npc_id}_fallback.json
@@ -421,9 +429,15 @@ npc_system:
       - data/dialogue/drift_build_fallback.json
       - data/dialogue/ignavarr_fallback.json
 
-  quest_index:
-    path: data/quest_index.json
-    purpose: Cross-reference for quests by realm, npc, and subcategory.
+  wisp_encounter:
+    path: scripts/dungeon/wisp_encounter.gd
+    purpose: Handles trigger logic for Wisp battles.
+    status: active
+
+  wisp_entity:
+    path: scenes/npcs/wisp_entity.tscn
+    script: scripts/npcs/wisp_entity.gd
+    purpose: Visual representation of a Wisp in the overworld.
     status: active
 
   builders_guild_npc:
@@ -691,138 +705,31 @@ scenes:
     status: active
 
   npcs:
-    tide_word:
-      path: scenes/npcs/tide_word.tscn
-      status: active
-      path: scenes/npcs/tide_word.tscn
-      status: active
-    tide_story:
-      path: scenes/npcs/tide_story.tscn
-      status: active
-      path: scenes/npcs/tide_story.tscn
-      status: active
-    tide_sound:
-      path: scenes/npcs/tide_sound.tscn
-      status: active
-      path: scenes/npcs/tide_sound.tscn
-      status: active
-    tide_letter:
-      path: scenes/npcs/tide_letter.tscn
-      status: active
-      path: scenes/npcs/tide_letter.tscn
-      status: active
-    spire_weather:
-      path: scenes/npcs/spire_weather.tscn
-      status: active
-      path: scenes/npcs/spire_weather.tscn
-      status: active
-    spire_plants:
-      path: scenes/npcs/spire_plants.tscn
-      status: active
-      path: scenes/npcs/spire_plants.tscn
-      status: active
-    spire_numbers:
-      path: scenes/npcs/spire_numbers.tscn
-      status: active
-      path: scenes/npcs/spire_numbers.tscn
-      status: active
-    spire_math:
-      path: scenes/npcs/spire_math.tscn
-      status: active
-      path: scenes/npcs/spire_math.tscn
-      status: active
-    root_time:
-      path: scenes/npcs/root_time.tscn
-      status: active
-      path: scenes/npcs/root_time.tscn
-      status: active
-    root_hygiene:
-      path: scenes/npcs/root_hygiene.tscn
-      status: active
-      path: scenes/npcs/root_hygiene.tscn
-      status: active
-    root_food:
-      path: scenes/npcs/root_food.tscn
-      status: active
-      path: scenes/npcs/root_food.tscn
-      status: active
-    root_chores:
-      path: scenes/npcs/root_chores.tscn
-      status: active
-      path: scenes/npcs/root_chores.tscn
-      status: active
-    forge_throw:
-      path: scenes/npcs/forge_throw.tscn
-      status: active
-      path: scenes/npcs/forge_throw.tscn
-      status: active
-    forge_dance:
-      path: scenes/npcs/forge_dance.tscn
-      status: active
-      path: scenes/npcs/forge_dance.tscn
-      status: active
-    forge_build:
-      path: scenes/npcs/forge_build.tscn
-      status: active
-      path: scenes/npcs/forge_build.tscn
-      status: active
-    forge_balance:
-      path: scenes/npcs/forge_balance.tscn
-      status: active
-      path: scenes/npcs/forge_balance.tscn
-      status: active
-    ember_soothe:
-      path: scenes/npcs/ember_soothe.tscn
-      status: active
-      path: scenes/npcs/ember_soothe.tscn
-      status: active
-    ember_mirror:
-      path: scenes/npcs/ember_mirror.tscn
-      status: active
-      path: scenes/npcs/ember_mirror.tscn
-      status: active
-    ember_kind:
-      path: scenes/npcs/ember_kind.tscn
-      status: active
-      path: scenes/npcs/ember_kind.tscn
-      status: active
-    ember_ember:
-      path: scenes/npcs/ember_ember.tscn
-      status: active
-      path: scenes/npcs/ember_ember.tscn
-      status: active
-    drift_story:
-      path: scenes/npcs/drift_story.tscn
-      status: active
-      path: scenes/npcs/drift_story.tscn
-      status: active
-    drift_music:
-      path: scenes/npcs/drift_music.tscn
-      status: active
-      path: scenes/npcs/drift_music.tscn
-      status: active
-    drift_draw:
-      path: scenes/npcs/drift_draw.tscn
-      status: active
-      path: scenes/npcs/drift_draw.tscn
-      status: active
-    drift_build:
-      path: scenes/npcs/drift_build.tscn
-      status: active
-      path: scenes/npcs/drift_build.tscn
-      status: active
-    ignavarr:
-      path: scenes/npcs/Ignavarr.tscn
-      status: active
-    numerius:
-      path: scenes/npcs/Numerius.tscn
-      status: active
-    shopkeeper:
-      path: scenes/npcs/Shopkeeper.tscn
-      status: active
-    quest_giver_base:
-      path: scenes/npcs/QuestGiverBase.tscn
-      status: active
+    ignavarr: {path: scenes/npcs/ignavarr.tscn, status: active}
+    drift_build: {path: scenes/npcs/drift_build.tscn, status: active}
+    drift_draw: {path: scenes/npcs/drift_draw.tscn, status: active}
+    drift_music: {path: scenes/npcs/drift_music.tscn, status: active}
+    drift_story: {path: scenes/npcs/drift_story.tscn, status: active}
+    ember_ember: {path: scenes/npcs/ember_ember.tscn, status: active}
+    ember_kind: {path: scenes/npcs/ember_kind.tscn, status: active}
+    ember_mirror: {path: scenes/npcs/ember_mirror.tscn, status: active}
+    ember_soothe: {path: scenes/npcs/ember_soothe.tscn, status: active}
+    forge_balance: {path: scenes/npcs/forge_balance.tscn, status: active}
+    forge_build: {path: scenes/npcs/forge_build.tscn, status: active}
+    forge_dance: {path: scenes/npcs/forge_dance.tscn, status: active}
+    forge_throw: {path: scenes/npcs/forge_throw.tscn, status: active}
+    root_chores: {path: scenes/npcs/root_chores.tscn, status: active}
+    root_food: {path: scenes/npcs/root_food.tscn, status: active}
+    root_hygiene: {path: scenes/npcs/root_hygiene.tscn, status: active}
+    root_time: {path: scenes/npcs/root_time.tscn, status: active}
+    spire_math: {path: scenes/npcs/spire_math.tscn, status: active}
+    spire_numbers: {path: scenes/npcs/spire_numbers.tscn, status: active}
+    spire_plants: {path: scenes/npcs/spire_plants.tscn, status: active}
+    spire_weather: {path: scenes/npcs/spire_weather.tscn, status: active}
+    tide_letter: {path: scenes/npcs/tide_letter.tscn, status: active}
+    tide_sound: {path: scenes/npcs/tide_sound.tscn, status: active}
+    tide_story: {path: scenes/npcs/tide_story.tscn, status: active}
+    tide_word: {path: scenes/npcs/tide_word.tscn, status: active}
 
   entities:
     coin:

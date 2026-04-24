@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "spire_plants"
 display_name = "Flora Fly"
 realm = "the_spire"
+available_quests = ["SPIRE_PLANTS_001", "SPIRE_PLANTS_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

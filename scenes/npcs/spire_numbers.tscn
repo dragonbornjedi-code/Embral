@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "spire_numbers"
 display_name = "Count Cloud"
 realm = "the_spire"
+available_quests = ["SPIRE_NUMBERS_001", "SPIRE_NUMBERS_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

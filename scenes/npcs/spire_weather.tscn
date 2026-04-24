@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "spire_weather"
 display_name = "Windy Willow"
 realm = "the_spire"
+available_quests = ["SPIRE_WEATHER_001", "SPIRE_WEATHER_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

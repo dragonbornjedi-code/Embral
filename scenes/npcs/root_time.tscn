@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "root_time"
 display_name = "Tock Tulip"
 realm = "rootstead"
+available_quests = ["ROOT_TIME_001", "ROOT_TIME_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

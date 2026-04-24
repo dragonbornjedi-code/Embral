@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://wispentity"]
+
+[ext_resource type="Script" path="res://scripts/npcs/wisp_entity.gd" id="1_script"]
+
+[node name="WispEntity" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_9x0w3")
+
+[sub_resource type="SphereMesh" id="SphereMesh_9x0w3"]
+radius = 0.3
+height = 0.6

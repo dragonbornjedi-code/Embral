@@ -22,6 +22,7 @@ func _input(event: InputEvent) -> void:
 			push_error("[DungeonBase] Scene not found: %s" % scene_path)
 			TransitionManager.change_scene("res://scenes/overworld/hearthveil/hearthveil.tscn")
 
+## Coroutine — callers must use await complete_dungeon()
 func complete_dungeon() -> void:
 	EventBus.dungeon_completed.emit(dungeon_id)
 	EventBus.xp_gained.emit(50, "dungeon_clear")

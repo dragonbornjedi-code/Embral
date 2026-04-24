@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "ember_soothe"
 display_name = "Soothe"
 realm = "ember_hollow"
+available_quests = ["EMBER_SOOTHE_001", "EMBER_SOOTHE_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

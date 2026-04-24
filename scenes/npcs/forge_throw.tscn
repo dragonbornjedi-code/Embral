@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "forge_throw"
 display_name = "Aiming Ash"
 realm = "forge_run"
+available_quests = ["FORGE_THROW_001", "FORGE_THROW_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

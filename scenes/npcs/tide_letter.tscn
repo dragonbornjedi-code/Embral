@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 npc_id = "tide_letter"
 display_name = "Alphabet Alga"
 realm = "tidemark"
+available_quests = ["TIDE_LETTER_001", "TIDE_LETTER_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")

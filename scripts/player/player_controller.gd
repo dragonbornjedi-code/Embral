@@ -16,6 +16,20 @@ func _ready() -> void:
 		_camera = get_node(camera_rig)
 		# Detach camera so it follows with lerp
 		_camera.top_level = true
+	
+	_setup_active_wisp()
+
+func _setup_active_wisp() -> void:
+	if SaveManager.active_profile and not SaveManager.active_profile.active_wisp_slots.is_empty():
+		var slot_id = SaveManager.active_profile.active_wisp_slots[0]
+		var wisp_data = WispRoster.get_wisp(slot_id)
+		if wisp_data:
+			var wisp_scene = load("res://scenes/npcs/wisp_entity.tscn")
+			var wisp = wisp_scene.instantiate()
+			get_parent().add_child(wisp)
+			wisp.wisp_data_id = slot_id
+			wisp.follow_target = get_path()
+			wisp.update_from_wisp_data(wisp_data)
 
 
 func _physics_process(delta: float) -> void:
