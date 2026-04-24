@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ember_mirror"]
+[gd_scene load_steps=6 format=3 uid="uid://ember_mirror"]
+
 [ext_resource type="Script" path="res://scripts/npcs/base_teacher_npc.gd" id="1_script"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mesh"]
-radius = 0.5
-height = 2.0
+material = SubResource("StandardMaterial3D_mat")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mat"]
+albedo_color = Color(1.0, 0.3, 0.1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.5
 height = 2.0
 
@@ -15,20 +18,23 @@ radius = 2.5
 [node name="NPC" type="CharacterBody3D"]
 script = ExtResource("1_script")
 npc_id = "ember_mirror"
+display_name = "Mirror"
+realm = "ember_hollow"
+available_quests = ["EMBER_MIRROR_001", "EMBER_MIRROR_002"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_player")
+shape = SubResource("CapsuleShape3D_body")
 
-[node name="ProximityZone" type="Area3D" parent="."]
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ProximityZone"]
+[node name="InteractionArea" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 shape = SubResource("SphereShape3D_prox")
 
 [node name="NameLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
-text = "ember_mirror"
+text = "Mirror"
 
 [node name="InteractPrompt" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
