@@ -8,10 +8,14 @@ var _overlay: CanvasLayer
 var _rect: ColorRect
 
 func _ready() -> void:
+	super._ready()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_overlay = OVERLAY_SCENE.instantiate()
 	add_child(_overlay)
 	_rect = _overlay.get_node("ColorRect")
+	if _rect == null:
+		push_error("[TransitionManager] ColorRect node missing from overlay scene")
+		return
 
 
 ## Change scene with a smooth fade sequence.

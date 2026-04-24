@@ -20,6 +20,7 @@ func _ready() -> void:
 func open() -> void:
 	_load_settings()
 	$Control.show()
+	call_deferred("_set_initial_focus")
 
 
 func close() -> void:
@@ -89,6 +90,17 @@ func _on_set_pin_button_pressed() -> void:
 	# For white-box: simple placeholder for PIN input
 	# In real implementation, this would open a sub-popup
 	print("[Settings] Parent PIN entry requested.")
+
+
+func _set_initial_focus() -> void:
+	var buttons = find_children("*", "Button", true, false)
+	if buttons.size() > 0:
+		buttons[0].grab_focus()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		close()
 
 
 func _on_close_button_pressed() -> void:

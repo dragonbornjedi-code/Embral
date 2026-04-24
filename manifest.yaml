@@ -319,6 +319,16 @@ quest_system:
 # 2D platformer — separate from 3D overworld
 # ═══════════════════════════════════════════
 dungeon_system:
+  dungeon_base:
+    path: scripts/dungeon/dungeon_base.gd
+    status: active
+  dungeons:
+    mirror_maze: {path: scenes/dungeons/mirror_maze.tscn, status: active}
+    word_caverns: {path: scenes/dungeons/word_caverns.tscn, status: active}
+    obstacle_forge: {path: scenes/dungeons/obstacle_forge.tscn, status: active}
+    daily_tower: {path: scenes/dungeons/daily_tower.tscn, status: active}
+    gear_gauntlet: {path: scenes/dungeons/gear_gauntlet.tscn, status: active}
+    curiosity_cave: {path: scenes/dungeons/curiosity_cave.tscn, status: active}
   dungeon_manager:
     path: scripts/dungeon/dungeon_manager.gd
     purpose: 2D dungeon scene controller. Handles room transitions, enemy spawns.
@@ -414,6 +424,12 @@ npc_system:
   quest_index:
     path: data/quest_index.json
     purpose: Cross-reference for quests by realm, npc, and subcategory.
+    status: active
+
+  builders_guild_npc:
+    path: scenes/npcs/builders_guild_npc.tscn
+    script: scripts/npcs/builders_guild_npc.gd
+    purpose: Guides player to fulfill NPC home preferences.
     status: active
 
   teachers:
@@ -614,11 +630,9 @@ ui_system:
                teaching_style_effectiveness, session_timeline]
     status: active
 
-  player_hud:
-    path: scenes/ui/player_hud.tscn
-    script: scripts/ui/player_hud.gd
-    contains: [xp_bar, gold_display, active_quest, party_portrait_row,
-               emotional_checkin_trigger, notification_overlay]
+  portal_marker:
+    path: scripts/ui/portal_marker.gd
+    purpose: Manages realm portal interaction and transition logic.
     status: active
 
   emotional_checkin:
@@ -677,6 +691,126 @@ scenes:
     status: active
 
   npcs:
+    tide_word:
+      path: scenes/npcs/tide_word.tscn
+      status: active
+      path: scenes/npcs/tide_word.tscn
+      status: active
+    tide_story:
+      path: scenes/npcs/tide_story.tscn
+      status: active
+      path: scenes/npcs/tide_story.tscn
+      status: active
+    tide_sound:
+      path: scenes/npcs/tide_sound.tscn
+      status: active
+      path: scenes/npcs/tide_sound.tscn
+      status: active
+    tide_letter:
+      path: scenes/npcs/tide_letter.tscn
+      status: active
+      path: scenes/npcs/tide_letter.tscn
+      status: active
+    spire_weather:
+      path: scenes/npcs/spire_weather.tscn
+      status: active
+      path: scenes/npcs/spire_weather.tscn
+      status: active
+    spire_plants:
+      path: scenes/npcs/spire_plants.tscn
+      status: active
+      path: scenes/npcs/spire_plants.tscn
+      status: active
+    spire_numbers:
+      path: scenes/npcs/spire_numbers.tscn
+      status: active
+      path: scenes/npcs/spire_numbers.tscn
+      status: active
+    spire_math:
+      path: scenes/npcs/spire_math.tscn
+      status: active
+      path: scenes/npcs/spire_math.tscn
+      status: active
+    root_time:
+      path: scenes/npcs/root_time.tscn
+      status: active
+      path: scenes/npcs/root_time.tscn
+      status: active
+    root_hygiene:
+      path: scenes/npcs/root_hygiene.tscn
+      status: active
+      path: scenes/npcs/root_hygiene.tscn
+      status: active
+    root_food:
+      path: scenes/npcs/root_food.tscn
+      status: active
+      path: scenes/npcs/root_food.tscn
+      status: active
+    root_chores:
+      path: scenes/npcs/root_chores.tscn
+      status: active
+      path: scenes/npcs/root_chores.tscn
+      status: active
+    forge_throw:
+      path: scenes/npcs/forge_throw.tscn
+      status: active
+      path: scenes/npcs/forge_throw.tscn
+      status: active
+    forge_dance:
+      path: scenes/npcs/forge_dance.tscn
+      status: active
+      path: scenes/npcs/forge_dance.tscn
+      status: active
+    forge_build:
+      path: scenes/npcs/forge_build.tscn
+      status: active
+      path: scenes/npcs/forge_build.tscn
+      status: active
+    forge_balance:
+      path: scenes/npcs/forge_balance.tscn
+      status: active
+      path: scenes/npcs/forge_balance.tscn
+      status: active
+    ember_soothe:
+      path: scenes/npcs/ember_soothe.tscn
+      status: active
+      path: scenes/npcs/ember_soothe.tscn
+      status: active
+    ember_mirror:
+      path: scenes/npcs/ember_mirror.tscn
+      status: active
+      path: scenes/npcs/ember_mirror.tscn
+      status: active
+    ember_kind:
+      path: scenes/npcs/ember_kind.tscn
+      status: active
+      path: scenes/npcs/ember_kind.tscn
+      status: active
+    ember_ember:
+      path: scenes/npcs/ember_ember.tscn
+      status: active
+      path: scenes/npcs/ember_ember.tscn
+      status: active
+    drift_story:
+      path: scenes/npcs/drift_story.tscn
+      status: active
+      path: scenes/npcs/drift_story.tscn
+      status: active
+    drift_music:
+      path: scenes/npcs/drift_music.tscn
+      status: active
+      path: scenes/npcs/drift_music.tscn
+      status: active
+    drift_draw:
+      path: scenes/npcs/drift_draw.tscn
+      status: active
+      path: scenes/npcs/drift_draw.tscn
+      status: active
+    drift_build:
+      path: scenes/npcs/drift_build.tscn
+      status: active
+      path: scenes/npcs/drift_build.tscn
+      status: active
     ignavarr:
       path: scenes/npcs/Ignavarr.tscn
       status: active
@@ -764,6 +898,12 @@ scenes:
     curiosity_cave:  {path: scenes/dungeons/curiosity_cave.tscn, realm: the_drift,    status: planned}
 
   embral_trials:
+    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
+    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
+    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
+    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
+    word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
+    heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
     heart_trial:      {path: scenes/trials/heart_trial.tscn,     realm: ember_hollow, status: planned}
     word_surge:       {path: scenes/trials/word_surge.tscn,       realm: tidemark,     status: planned}
     forge_gauntlet:   {path: scenes/trials/forge_gauntlet.tscn,   realm: forge_run,    status: planned}

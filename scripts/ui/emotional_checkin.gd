@@ -22,6 +22,7 @@ func _ready() -> void:
 
 func show_checkin() -> void:
 	$Control.show()
+	call_deferred("_set_initial_focus")
 
 
 func hide_checkin() -> void:
@@ -55,6 +56,17 @@ func _log_emotion(emotion: String) -> void:
 
 func _on_timer_timeout() -> void:
 	show_checkin()
+
+
+func _set_initial_focus() -> void:
+	var buttons = find_children("*", "Button", true, false)
+	if buttons.size() > 0:
+		buttons[0].grab_focus()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		hide_checkin()
 
 
 func _on_close_pressed() -> void:

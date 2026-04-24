@@ -13,6 +13,7 @@ func _ready() -> void:
 
 
 func interact() -> void:
+	super.interact()
 	if not QuestManager.is_quest_completed("hv_ignavarr_tutorial_01"):
 		# Start tutorial if not done
 		QuestManager.start_quest("hv_ignavarr_tutorial_01")
@@ -24,5 +25,6 @@ func interact() -> void:
 
 func _on_tutorial_complete() -> void:
 	# Unlock all realm portals
-	for i in range(1, 7):
-		EventBus.realm_unlocked.emit("realm_%d" % i)
+	var realm_ids = ["realm_1","realm_2","realm_3","realm_4","realm_5","realm_6"]
+	for rid in realm_ids:
+		EventBus.realm_unlocked.emit(rid)

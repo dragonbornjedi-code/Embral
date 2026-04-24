@@ -97,9 +97,9 @@
 - [x] **3.11** Write 2 quests per starter NPC (minimum 48 total quests). Each quest must have all 8 required fields, research_basis citation, and scaffolding. Reviewed by parent before committing.
 - [x] **3.12** Write fallback dialogue JSON for all starter NPCs (24 files in `data/dialogue/`).
 - [x] **3.13** Write Ignavarr fallback dialogue for all tutorial stages and nightly review prompts.
-- [ ] **3.14** NPC home preference side quests: Builder's Guild NPC in Hearthveil. At least 3 NPCs have home preferences defined and fulfillable.
-- [ ] **3.15** Quest cross-reference table: for each subcategory, list all quest IDs that address it. Stored in `data/quest_index.json`. Used by parent dashboard.
-- [ ] **3.16** Verify quest loading for all 48+ quests in headless: no validation errors, all fields present, all quests loadable.
+- [x] **3.14** NPC home preference side quests: Builder's Guild NPC in Hearthveil. At least 3 NPCs have home preferences defined and fulfillable.
+- [x] **3.15** Quest cross-reference table: for each subcategory, list all quest IDs that address it. Stored in `data/quest_index.json`. Used by parent dashboard.
+- [x] **3.16** Verify quest loading for all 48+ quests in headless: no validation errors, all fields present, all quests loadable.
 
 ---
 

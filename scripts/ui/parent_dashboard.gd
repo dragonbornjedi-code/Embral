@@ -27,6 +27,7 @@ func open() -> void:
 		# In a stricter version, we might skip PIN entry entirely
 	else:
 		pin_notice.text = "Enter your 4-digit Parent PIN"
+	call_deferred("_set_initial_focus")
 
 
 func close() -> void:
@@ -48,6 +49,12 @@ func _on_pin_input_text_submitted(new_text: String) -> void:
 	else:
 		error_label.text = "Incorrect PIN. Try again."
 		pin_input.text = ""
+
+
+func _set_initial_focus() -> void:
+	var pin_input = find_child("PINInput", true, false)
+	if pin_input:
+		pin_input.grab_focus()
 
 
 func _show_dashboard() -> void:
@@ -88,6 +95,11 @@ func _load_emotional_checkins() -> void:
 		var emotion = entry.get("emotion", "unknown")
 		label.text = "%s — %s" % [time, emotion.capitalize()]
 		checkin_list.add_child(label)
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		close()
 
 
 func _on_close_button_pressed() -> void:

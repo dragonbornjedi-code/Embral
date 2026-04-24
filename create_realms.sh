@@ -1,0 +1,66 @@
+#!/bin/bash
+REALMS=("hearthveil:Color(0.6, 0.5, 0.3)" "ember_hollow:Color(0.4, 0.1, 0.05)" "tidemark:Color(0.1, 0.3, 0.5)" "forge_run:Color(0.5, 0.5, 0.6)" "rootstead:Color(0.3, 0.5, 0.2)" "the_spire:Color(0.2, 0.2, 0.35)" "the_drift:Color(0.6, 0.4, 0.6)")
+
+for r in "${REALMS[@]}"; do
+  IFS=":" read -r name color <<< "$r"
+  mkdir -p scenes/overworld/$name
+  cat << TSCN > scenes/overworld/$name/$name.tscn
+[gd_scene load_steps=3 format=3 uid="uid://$name"]
+
+[node name="$name" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="NPCSpawns" type="Node3D" parent="."]
+[node name="NPC_Spawn_1" type="Node3D" parent="NPCSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+[node name="NPC_Spawn_2" type="Node3D" parent="NPCSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+[node name="NPC_Spawn_3" type="Node3D" parent="NPCSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -8)
+[node name="NPC_Spawn_4" type="Node3D" parent="NPCSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -5)
+
+[node name="PortalMarkers" type="Node3D" parent="."]
+[node name="Portal_0" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -10)
+[node name="Portal_1" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -20)
+[node name="Portal_2" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -24)
+[node name="Portal_3" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -24)
+[node name="Portal_4" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -20)
+[node name="Portal_5" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -10)
+[node name="Portal_6" type="Node3D" parent="PortalMarkers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 5)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 8, 12)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(100, 100)
+material = SubResource("StandardMaterial3D_ground")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = $color
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(100, 1, 100)
+TSCN
+done

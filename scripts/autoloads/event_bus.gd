@@ -20,8 +20,13 @@ signal level_up(new_level: int)
 # ═══════════════════════════════════════════
 signal player_entered_realm(realm_id: String)
 signal player_exited_realm(realm_id: String)
+signal realm_unlocked(realm_id: String)
 signal player_entered_dungeon(dungeon_id: String)
 signal player_exited_dungeon(dungeon_id: String)
+signal dungeon_entered(dungeon_id: String)
+signal dungeon_completed(dungeon_id: String)
+signal battle_started(player_wisp: String, enemy_wisp: String)
+signal battle_ended(victory: bool, xp_gained: int)
 signal party_changed()
 signal scene_changed(path: String, data: Dictionary)
 

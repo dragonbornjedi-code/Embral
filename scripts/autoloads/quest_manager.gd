@@ -212,8 +212,31 @@ func _check_mastery_level_up(npc_id: String) -> void:
 		EventBus.npc_mastery_level_up.emit(npc_id, current_level + 1)
 
 
-func get_npc_mastery_level(npc_id: String) -> int:
-	return _npc_mastery.get(npc_id, {}).get("level", 1)
+## Get number of NPCs discovered in a realm
+func get_npc_discovery_count(realm: String) -> int:
+	var count := 0
+	for npc_id in _npc_mastery:
+		# We need a way to look up the realm for an NPC_ID.
+		# Since we don't have a direct map, we can infer it if we had a registry, 
+		# but for now we'll assume we can load the NPC yaml to check its realm.
+		# A better approach would be caching this map at start.
+		# For now, implementing as requested:
+		if _get_npc_realm(npc_id) == realm:
+			count += 1
+	return count
+
+func _get_npc_realm(npc_id: String) -> String:
+	var path = "data/npcs/%s.yaml" % npc_id
+	if not FileAccess.file_exists(path):
+		return ""
+	var file = FileAccess.open(path, FileAccess.READ)
+	var content = file.get_as_text()
+	file.close()
+	var lines = content.split("\n")
+	for line in lines:
+		if line.begins_with("realm:"):
+			return line.split(":")[1].strip_edges()
+	return ""
 
 
 func _load_npc_mastery() -> void:

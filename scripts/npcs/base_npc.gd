@@ -22,12 +22,20 @@ var _interact_label: Label3D = null
 
 
 func _ready() -> void:
-	add_to_group("npc")
+	add_to_group("npcs")
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_body_entered)
 		interaction_area.body_exited.connect(_on_body_exited)
 	
 	_create_whitebox_ui()
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(interaction_area):
+		if interaction_area.body_entered.is_connected(_on_body_entered):
+			interaction_area.body_entered.disconnect(_on_body_entered)
+		if interaction_area.body_exited.is_connected(_on_body_exited):
+			interaction_area.body_exited.disconnect(_on_body_exited)
 
 
 func _create_whitebox_ui() -> void:

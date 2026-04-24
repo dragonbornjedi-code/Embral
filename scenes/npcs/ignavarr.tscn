@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/npcs/base_npc.gd" id="1_npc"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.5
+height = 2.0
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.5
 height = 2.0
@@ -20,6 +24,9 @@ emission_energy_multiplier = 0.3
 radius = 0.4
 height = 0.8
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_prox"]
+radius = 2.5
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_interact"]
 radius = 4.0
 
@@ -33,7 +40,7 @@ greeting_dialogue = "ignavarr_greeting"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_body")
+shape = SubResource("CapsuleShape3D_player")
 
 [node name="Mesh" type="Node3D" parent="."]
 
