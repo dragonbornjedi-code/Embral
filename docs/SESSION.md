@@ -5,24 +5,22 @@
 
 ## CURRENT STATE
 
-**Phase:** 5.00 Creature System — COMPLETE
+**Phase:** 4.00 Overworld Builds — COMPLETE
 **Godot version:** 4.5.stable.official.876b29033
 
 ---
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Creature Systems (5.01-5.05):** Implemented data models (`WispData`, `PetData`, `CompanionData`, `PlayerProfile`) and `WispRoster` utility.
-- **Wisp Encounters (5.06):** Created `wisp_encounter.gd` with capture and XP logic.
-- **Wisp Entity (5.07):** Created `wisp_entity.gd` and scene; supports overworld following.
-- **Integration (5.08):** Wired Wisp Slot 1 into `player_controller.gd`.
+- **Roadmap 4.05 (Trials):** Created 6 Embral Trial scenes in `scenes/trials/`. Each uses `dungeon_base.gd` and includes Begin/Return buttons.
+- **Roadmap 4.06 (Trial Portals):** Updated `portal_marker.gd` to handle trial paths and discovery counting.
 - **System Integrity:** Verified all managers and successful boot.
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 5.09 — Pet minigame stub.
+Roadmap item 5.01 — Wisp data system implementation.
 
 ---
 

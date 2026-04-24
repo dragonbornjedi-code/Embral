@@ -55,3 +55,14 @@ albedo_color = Color(0.6, 0.4, 0.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
 size = Vector3(100, 1, 100)
+
+[node name="TrialPortal" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+script = ExtResource("1_portal")
+target_realm = "trial_the_drift"
+is_trial_portal = true
+required_npc_discoveries = 3
+
+[node name="PortalLabel" type="Label3D" parent="TrialPortal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+text = "⚡ Trial Portal"

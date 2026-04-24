@@ -7,6 +7,7 @@ class_name PortalMarker
 @export var required_level: int = 1
 @export var required_npc_discoveries: int = 0
 @export var is_unlocked: bool = false
+@export var is_trial_portal: bool = false
 
 @onready var portal_label: Label3D = $PortalLabel
 @onready var interaction_area: Area3D = $InteractionArea
@@ -31,10 +32,16 @@ func _check_unlock() -> void:
 		is_unlocked = (discovery_count >= required_npc_discoveries and player_level >= required_level)
 	
 	if is_unlocked:
-		portal_label.text = target_realm.replace("_", " ").capitalize()
+		if is_trial_portal:
+			portal_label.text = "⚡ Trial Ready!"
+		else:
+			portal_label.text = target_realm.replace("_", " ").capitalize()
 		portal_label.modulate = Color.WHITE
 	else:
-		portal_label.text = "Locked"
+		if is_trial_portal:
+			portal_label.text = "Trial: %d/3 friends found" % QuestManager.get_npc_discovery_count(target_realm)
+		else:
+			portal_label.text = "Locked"
 		portal_label.modulate = Color.GRAY
 
 func _on_realm_unlocked(realm_id: String) -> void:
@@ -53,7 +60,12 @@ func _on_body_exited(body: Node3D) -> void:
 
 func interact() -> void:
 	if is_unlocked:
-		var path = "res://scenes/overworld/%s/%s.tscn" % [target_realm, target_realm]
+		var path = ""
+		if is_trial_portal:
+			path = "res://scenes/trials/%s.tscn" % target_realm
+		else:
+			path = "res://scenes/overworld/%s/%s.tscn" % [target_realm, target_realm]
+			
 		if ResourceLoader.exists(path):
 			TransitionManager.change_scene(path)
 		else:

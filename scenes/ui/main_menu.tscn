@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://h32aurhq3sh3" path="res://scripts/ui/main_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" uid="uid://settingsmenu" path="res://scenes/ui/settings_menu.tscn" id="2_settings"]
-[ext_resource type="PackedScene" uid="uid://parentdashboard" path="res://scenes/ui/parent_dashboard.tscn" id="3_dashboard"]
+[ext_resource type="PackedScene" uid="uid://dsx7ptpfhqibt" path="res://scenes/ui/parent_dashboard.tscn" id="3_dashboard"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3

@@ -57,15 +57,6 @@ static func from_dict(data: Dictionary) -> PlayerProfile:
 	profile.last_played_timestamp = data.get("last_played_timestamp", 0)
 	profile.created_timestamp = data.get("created_timestamp", 0)
 	return profile
-	raid_points = data.get("raid_points", 0)
-	play_points = data.get("play_points", 0)
-	quest_completion = data.get("quest_completion", {})
-	realm_seals = data.get("realm_seals", [])
-	active_wisp_slots = data.get("active_wisp_slots", [])
-	companion_id = data.get("companion_id", "")
-	total_play_time_seconds = data.get("total_play_time_seconds", 0)
-	last_played_timestamp = data.get("last_played_timestamp", 0)
-	created_timestamp = data.get("created_timestamp", 0)
 
 func gain_xp(amount: int) -> bool:
 	xp += amount

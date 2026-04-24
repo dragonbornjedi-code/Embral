@@ -811,6 +811,12 @@ scenes:
     forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
     word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
     heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
+    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
+    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
+    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
+    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
+    word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
+    heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
     heart_trial:      {path: scenes/trials/heart_trial.tscn,     realm: ember_hollow, status: planned}
     word_surge:       {path: scenes/trials/word_surge.tscn,       realm: tidemark,     status: planned}
     forge_gauntlet:   {path: scenes/trials/forge_gauntlet.tscn,   realm: forge_run,    status: planned}

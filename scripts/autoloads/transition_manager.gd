@@ -8,7 +8,6 @@ var _overlay: CanvasLayer
 var _rect: ColorRect
 
 func _ready() -> void:
-	super._ready()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_overlay = OVERLAY_SCENE.instantiate()
 	add_child(_overlay)
