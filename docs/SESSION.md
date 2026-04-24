@@ -5,23 +5,24 @@
 
 ## CURRENT STATE
 
-**Phase:** 4.00 Overworld Builds — COMPLETE
+**Phase:** 5.00 Creature System — COMPLETE
 **Godot version:** 4.5.stable.official.876b29033
 
 ---
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Roadmap 4.05 (Trials):** Created 6 Embral Trial scenes in `scenes/trials/`. 
-- **Roadmap 4.06 (Trial Portals):** Updated `portal_marker.gd` to handle trial portals with locking/unlocking and progress labels.
-- **Roadmap 3.14-3.16:** Finished NPC scene instances, Ignavarr position fixed, Builders Guild NPC stubbed and wired.
-- **System Integrity:** Verified clean boot and scene counts.
+- **Roadmap 5.09 (Pet Minigame Stub):** Created `pet_minigame.gd` and `pet_minigame.tscn`. Logic implemented for feeding, playing, and happiness tracking.
+- **Roadmap 5.10 (Pet Sanctuary):** Created `pet_sanctuary.tscn` and `pet_sanctuary.gd`. Scene structure includes pet slots and entrance triggers.
+- **Roadmap 5.11 (Wisp Capture Flow):** Verified `WispData` and `EventBus` signals for capture flow in `wisp_encounter.gd`.
+- **Roadmap 5.12 (Companion System):** Created `party_manager.gd` for managing party slots (player/companion wisps).
+- **System Integrity:** Verified all systems via headless boot.
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 5.09 — Pet minigame stub.
+Roadmap item 6.01 — Heart Trial (Ember Hollow). Build real mechanics replacing the stub.
 
 ---
 

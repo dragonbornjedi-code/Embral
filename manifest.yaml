@@ -644,9 +644,10 @@ ui_system:
                teaching_style_effectiveness, session_timeline]
     status: active
 
-  portal_marker:
-    path: scripts/ui/portal_marker.gd
-    purpose: Manages realm portal interaction and transition logic.
+  pet_minigame:
+    path: scenes/ui/pet_minigame.tscn
+    script: scripts/ui/pet_minigame.gd
+    purpose: Interactive pet care area.
     status: active
 
   pet_sanctuary:
