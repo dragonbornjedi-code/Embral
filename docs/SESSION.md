@@ -12,9 +12,9 @@
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Creature Systems (Phase 5):** Completed. Wisp data models, pet minigame, party manager, and Wisp capture flow verified.
-- **Embral's Trials (Phase 6):** Heart Trial, Word Surge, Forge Gauntlet, Vault Challenge implemented with correct game loop logic. Trial stubs for others deferred.
-- **System Integrity:** Headless boot verified clean (ignoring expected Dialogic leaks).
+- **Roadmap 5.09 (Pet Minigame Stub):** Created `pet_minigame.gd` and `pet_minigame.tscn`. Logic implemented for feeding, playing, and happiness tracking.
+- **Roadmap 5.10 (Pet Sanctuary):** Created `pet_sanctuary.tscn` and `pet_sanctuary.gd`. Scene structure includes pet slots and entrance triggers.
+- **System Integrity:** Verified all systems via headless boot.
 
 ---
 

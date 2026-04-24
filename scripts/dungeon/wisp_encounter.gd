@@ -15,10 +15,22 @@ func _ready() -> void:
 		push_error("[WispEncounter] Invalid element: %s" % encounter_wisp_element)
 
 func trigger_encounter(player_wisp_id: String) -> void:
-	if is_defeated: return
-	var enemy_id = "%s_encounter_%d" % [encounter_wisp_element, encounter_wisp_level]
-	EventBus.battle_started.emit(player_wisp_id, enemy_id)
-	# WispBattle instance creation logic would follow here
+    if is_defeated: return
+    var enemy_id = "%s_encounter_%d" % [encounter_wisp_element, encounter_wisp_level]
+    EventBus.battle_started.emit(player_wisp_id, enemy_id)
+    
+    # Create Battle Logic
+    var battle = WispBattle.new()
+    add_child(battle)
+    battle.start_battle(player_wisp_id, enemy_id)
+    
+    # Link UI (Assuming WispBattleUI is an autoload or accessible)
+    # Using a simple lookup for this phase
+    var battle_ui = get_tree().root.find_child("WispBattleUI", true, false)
+    if battle_ui:
+        battle_ui.open(battle)
+    
+    battle.state_changed.connect(func(state): if state == WispBattle.BattleState.VICTORY or state == WispBattle.BattleState.DEFEAT: on_battle_won())
 
 func attempt_capture() -> bool:
 	if randf() <= capture_chance_base:
