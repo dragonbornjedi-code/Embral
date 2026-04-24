@@ -411,6 +411,8 @@ ui_system:
 
   portal_marker:
     path: scripts/ui/portal_marker.gd
+    status: active
+    path: scripts/ui/portal_marker.gd
     purpose: Manages realm portal interaction and transition logic.
     status: active
 
