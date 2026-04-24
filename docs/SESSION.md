@@ -5,21 +5,25 @@
 
 ## CURRENT STATE
 
-**Phase:** 4.00 Overworld Builds — IN PROGRESS
+**Phase:** 4.00 Overworld Builds — COMPLETE
 **Godot version:** 4.5.stable.official.876b29033
 
 ---
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Phase 3 Completion (NPC System):** NPC scenes instanced, Main.tscn Ignavarr placement verified, Builder's Guild NPC functionality implemented and registered.
+- **Roadmap 4.04 (Portal Unlock Logic):**
+  - Added `get_npc_discovery_count(realm)` to `QuestManager`.
+  - Updated `portal_marker.gd` to use this count and level requirements.
+  - Added signal listener for `npc_mastery_level_up` to re-check unlock status dynamically.
+  - Implemented dynamic label text ("Trial Ready!" vs discovery progress) in `portal_marker.gd`.
 - **System Integrity:** Verified all managers and successful boot.
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 3.17 — Realm Overworld Scenes. Build placeholder geometry for all 7 realms.
+Roadmap item 5.01 — Wisp data system implementation.
 
 ---
 
