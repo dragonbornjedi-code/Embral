@@ -1,0 +1,179 @@
+[gd_scene load_steps=2 format=3 uid="uid://settingsmenu"]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_script"]
+
+[node name="SettingsMenu" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_script")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="Control/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="AudioSection" type="VBoxContainer" parent="Control/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/AudioSection"]
+layout_mode = 2
+text = "Audio"
+
+[node name="SFXRow" type="HBoxContainer" parent="Control/Panel/VBox/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/AudioSection/SFXRow"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="Control/Panel/VBox/AudioSection/SFXRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="MusicRow" type="HBoxContainer" parent="Control/Panel/VBox/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/AudioSection/MusicRow"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Control/Panel/VBox/AudioSection/MusicRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="DisplaySection" type="HBoxContainer" parent="Control/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/DisplaySection"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="FullscreenCheck" type="CheckBox" parent="Control/Panel/VBox/DisplaySection"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HardwareSection" type="VBoxContainer" parent="Control/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/HardwareSection"]
+layout_mode = 2
+text = "Hardware Expansion"
+
+[node name="Grid" type="GridContainer" parent="Control/Panel/VBox/HardwareSection"]
+layout_mode = 2
+columns = 2
+
+[node name="PS5Check" type="CheckBox" parent="Control/Panel/VBox/HardwareSection/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PS5 Controller"
+
+[node name="WiiCheck" type="CheckBox" parent="Control/Panel/VBox/HardwareSection/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Wii Hardware"
+
+[node name="HACheck" type="CheckBox" parent="Control/Panel/VBox/HardwareSection/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Home Assistant"
+
+[node name="CheckinSection" type="HBoxContainer" parent="Control/Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Panel/VBox/CheckinSection"]
+layout_mode = 2
+text = "Check-in Frequency"
+
+[node name="FrequencyDropdown" type="OptionButton" parent="Control/Panel/VBox/CheckinSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 4
+selected = 1
+popup/item_0/text = "Every 15 min"
+popup/item_0/id = 0
+popup/item_1/text = "Every 30 min"
+popup/item_1/id = 1
+popup/item_2/text = "Every 60 min"
+popup/item_2/id = 2
+popup/item_3/text = "Off"
+popup/item_3/id = 3
+
+[node name="PINSection" type="HBoxContainer" parent="Control/Panel/VBox"]
+layout_mode = 2
+
+[node name="SetPINButton" type="Button" parent="Control/Panel/VBox/PINSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Set Parent PIN"
+
+[node name="CloseButton" type="Button" parent="Control/Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Close"
+
+[connection signal="value_changed" from="Control/Panel/VBox/AudioSection/SFXRow/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="Control/Panel/VBox/AudioSection/MusicRow/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="toggled" from="Control/Panel/VBox/DisplaySection/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="toggled" from="Control/Panel/VBox/HardwareSection/Grid/PS5Check" to="." method="_on_ps5_check_toggled"]
+[connection signal="toggled" from="Control/Panel/VBox/HardwareSection/Grid/WiiCheck" to="." method="_on_wii_check_toggled"]
+[connection signal="toggled" from="Control/Panel/VBox/HardwareSection/Grid/HACheck" to="." method="_on_ha_check_toggled"]
+[connection signal="item_selected" from="Control/Panel/VBox/CheckinSection/FrequencyDropdown" to="." method="_on_frequency_dropdown_item_selected"]
+[connection signal="pressed" from="Control/Panel/VBox/PINSection/SetPINButton" to="." method="_on_set_pin_button_pressed"]
+[connection signal="pressed" from="Control/Panel/VBox/CloseButton" to="." method="_on_close_button_pressed"]

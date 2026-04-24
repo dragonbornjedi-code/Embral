@@ -1,0 +1,186 @@
+[gd_scene load_steps=2 format=3 uid="uid://parentdashboard"]
+
+[ext_resource type="Script" path="res://scripts/ui/parent_dashboard.gd" id="1_script"]
+
+[node name="ParentDashboard" type="CanvasLayer"]
+layer = 15
+script = ExtResource("1_script")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+
+[node name="PINPanel" type="Panel" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Control/PINPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="PINNotice" type="Label" parent="Control/PINPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enter your 4-digit Parent PIN"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PINInput" type="LineEdit" parent="Control/PINPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "####"
+alignment = 1
+max_length = 4
+secret = true
+virtual_keyboard_type = 2
+
+[node name="ErrorLabel" type="Label" parent="Control/PINPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.309804, 0.309804, 1)
+text = "Incorrect PIN."
+horizontal_alignment = 1
+
+[node name="DashboardPanel" type="Panel" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Control/DashboardPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Control/DashboardPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Parent Dashboard"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="Control/DashboardPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 2
+
+[node name="QuestData" type="VBoxContainer" parent="Control/DashboardPanel/VBox/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/DashboardPanel/VBox/Grid/QuestData"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Quest Completion"
+
+[node name="Placeholder" type="Label" parent="Control/DashboardPanel/VBox/Grid/QuestData"]
+layout_mode = 2
+text = "Quest data will appear here"
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+
+[node name="EmotionData" type="VBoxContainer" parent="Control/DashboardPanel/VBox/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/DashboardPanel/VBox/Grid/EmotionData"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Emotional Check-ins"
+
+[node name="CheckinList" type="VBoxContainer" parent="Control/DashboardPanel/VBox/Grid/EmotionData"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="XPData" type="VBoxContainer" parent="Control/DashboardPanel/VBox/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/DashboardPanel/VBox/Grid/XPData"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "XP by Realm"
+
+[node name="Placeholder" type="Label" parent="Control/DashboardPanel/VBox/Grid/XPData"]
+layout_mode = 2
+text = "Realm XP data will appear here"
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+
+[node name="MasteryData" type="VBoxContainer" parent="Control/DashboardPanel/VBox/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/DashboardPanel/VBox/Grid/MasteryData"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "NPC Mastery"
+
+[node name="Placeholder" type="Label" parent="Control/DashboardPanel/VBox/Grid/MasteryData"]
+layout_mode = 2
+text = "Mastery data will appear here"
+theme_override_colors/font_color = Color(0.65, 0.65, 0.65, 1)
+
+[node name="CloseButton" type="Button" parent="Control/DashboardPanel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(150, 40)
+text = "Close"
+
+[connection signal="text_submitted" from="Control/PINPanel/VBox/PINInput" to="." method="_on_pin_input_text_submitted"]
+[connection signal="pressed" from="Control/DashboardPanel/VBox/CloseButton" to="." method="_on_close_button_pressed"]

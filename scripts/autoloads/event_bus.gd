@@ -23,6 +23,7 @@ signal player_exited_realm(realm_id: String)
 signal player_entered_dungeon(dungeon_id: String)
 signal player_exited_dungeon(dungeon_id: String)
 signal party_changed()
+signal scene_changed(path: String, data: Dictionary)
 
 # ═══════════════════════════════════════════
 # NPC SIGNALS

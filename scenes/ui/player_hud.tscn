@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://playerhud"]
+
+[ext_resource type="Script" path="res://scripts/ui/player_hud.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://settingsmenu" path="res://scenes/ui/settings_menu.tscn" id="2_settings"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopLeft" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 86.0
+
+[node name="NameLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 2
+text = "Explorer"
+
+[node name="GoldLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 2
+text = "Gold: 0"
+
+[node name="TopRight" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 120.0
+grow_horizontal = 0
+
+[node name="XPLabel" type="Label" parent="Control/TopRight"]
+layout_mode = 2
+text = "Experience"
+horizontal_alignment = 2
+
+[node name="XPBar" type="ProgressBar" parent="Control/TopRight"]
+layout_mode = 2
+value = 50.0
+
+[node name="SettingsButton" type="Button" parent="Control/TopRight"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings / Pause"
+
+[node name="BottomLeft" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = 420.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="QuestTitle" type="Label" parent="Control/BottomLeft"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Active Quest"
+
+[node name="QuestObjective" type="Label" parent="Control/BottomLeft"]
+layout_mode = 2
+text = "Current Objective"
+autowrap_mode = 3
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_settings")]
+unique_name_in_owner = true

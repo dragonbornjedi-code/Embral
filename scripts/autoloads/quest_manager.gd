@@ -12,9 +12,46 @@ var _active_quest: String = ""
 var _active_step: int = 0
 var _npc_mastery: Dictionary = {}     # npc_id → {level, scores[]}
 
+## Required fields per AGENTS.md Law 8
+const QUEST_REQUIRED_FIELDS := [
+	"quest_id", "realm", "npc_giver", "research_basis",
+	"developmental_target", "age_range", "steps", "scaffolding"
+]
+
 
 func _ready() -> void:
 	_load_npc_mastery()
+	# Pre-load Hearthveil quests for the tutorial flow
+	load_realm_quests("hearthveil")
+
+
+# ───────────────────────────────────────────
+# DATA IO — Self-Healing Logic
+# ───────────────────────────────────────────
+
+func _safe_file_access(path: String, mode: FileAccess.ModeFlags, content: String = "") -> Variant:
+	var retries := 3
+	var last_err := OK
+	while retries > 0:
+		var file = FileAccess.open(path, mode)
+		if file:
+			if mode == FileAccess.WRITE:
+				file.store_string(content)
+				file.close()
+				return true
+			elif mode == FileAccess.READ:
+				var text = file.get_as_text()
+				file.close()
+				return text
+		
+		last_err = FileAccess.get_open_error()
+		retries -= 1
+		push_warning("[QuestManager] File access failed (%d): %s. Retries left: %d" % [last_err, path, retries])
+		if retries > 0:
+			OS.delay_msec(100)
+	
+	push_error("[QuestManager] Fatal file error after 3 retries: %s (Error %d)" % [path, last_err])
+	return null
 
 
 # ───────────────────────────────────────────
@@ -37,20 +74,11 @@ func load_realm_quests(realm_id: String) -> void:
 	dir.list_dir_end()
 
 
-## Required fields per AGENTS.md Law 8
-const QUEST_REQUIRED_FIELDS := [
-	"quest_id", "realm", "npc_giver", "research_basis",
-	"developmental_target", "age_range", "steps", "scaffolding"
-]
-
-
 func _load_quest_file(full_path: String) -> void:
-	var file := FileAccess.open(full_path, FileAccess.READ)
-	if file == null:
-		push_error("[QuestManager] Cannot open quest file: %s" % full_path)
+	var text = _safe_file_access(full_path, FileAccess.READ)
+	if text == null:
 		return
-	var text := file.get_as_text()
-	file.close()
+		
 	var parsed: Variant = JSON.parse_string(text)
 	if parsed == null or not parsed is Dictionary:
 		push_error("[QuestManager] Invalid JSON in quest file: %s" % full_path)
@@ -191,11 +219,12 @@ func get_npc_mastery_level(npc_id: String) -> int:
 func _load_npc_mastery() -> void:
 	if not FileAccess.file_exists(NPC_MASTERY_SAVE):
 		return
-	var file := FileAccess.open(NPC_MASTERY_SAVE, FileAccess.READ)
-	if file == null:
+		
+	var text = _safe_file_access(NPC_MASTERY_SAVE, FileAccess.READ)
+	if text == null:
 		return
-	var parsed: Variant = JSON.parse_string(file.get_as_text())
-	file.close()
+		
+	var parsed: Variant = JSON.parse_string(text)
 	if not parsed is Dictionary:
 		push_error("[QuestManager] NPC mastery file is invalid JSON. Resetting.")
 		return
@@ -216,12 +245,10 @@ func _save_npc_mastery() -> void:
 	var dir := DirAccess.open("user://")
 	if not dir.dir_exists("save"):
 		dir.make_dir("save")
-	var file := FileAccess.open(NPC_MASTERY_SAVE, FileAccess.WRITE)
-	if file == null:
-		return
+		
 	var payload := {
 		"schema_version": NPC_MASTERY_SCHEMA_VERSION,
 		"data": _npc_mastery
 	}
-	file.store_string(JSON.stringify(payload, "\t"))
-	file.close()
+	var content = JSON.stringify(payload, "\t")
+	_safe_file_access(NPC_MASTERY_SAVE, FileAccess.WRITE, content)

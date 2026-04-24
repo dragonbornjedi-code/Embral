@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cignavarrnpc"]
 
-[ext_resource type="Script" path="res://scripts/npc/BaseNPC.gd" id="1_npc"]
+[ext_resource type="Script" path="res://scripts/npcs/base_npc.gd" id="1_npc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.5

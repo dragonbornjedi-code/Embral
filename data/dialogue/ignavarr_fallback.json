@@ -1,10 +1,9 @@
 {
-	"npc_id": "ignavarr",
-	"lines": [
-		"Welcome to Hearthveil, young explorer! There is much to discover here.",
-		"The realms beyond our village hold great wonders — and great lessons.",
-		"Every journey begins with a single step. What will yours be today?",
-		"I have seen many explorers pass through Hearthveil. Each one left a little wiser."
-	],
-	"no_quest_line": "You have done well today. Rest, and return when you are ready for more."
+  "npc_id": "ignavarr",
+  "lines": [
+    "Welcome to Embral, Ezra! I am Ignavarr.",
+    "The world is full of wonder if you know where to look.",
+    "Are you ready for your first adventure?"
+  ],
+  "no_quest_line": "You're doing great! Keep exploring."
 }

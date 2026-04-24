@@ -1,6 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3vxpwqq1t8l"]
+[gd_scene load_steps=8 format=3 uid="uid://c3vxpwqq1t8l"]
 
 [ext_resource type="PackedScene" uid="uid://bqxqwc6nxvxs6" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://cignavarrnpc" path="res://scenes/npcs/Ignavarr.tscn" id="2_ignavarr"]
+[ext_resource type="PackedScene" uid="uid://coin_collectible" path="res://scenes/entities/Coin.tscn" id="3_coin"]
+[ext_resource type="PackedScene" uid="uid://playerhud" path="res://scenes/ui/player_hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://emotionalcheckin" path="res://scenes/ui/emotional_checkin.tscn" id="5_checkin"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(50, 1, 50)
@@ -70,3 +74,13 @@ shape = SubResource("BoxShape3D_platform")
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+
+[node name="Ignavarr" parent="." instance=ExtResource("2_ignavarr")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -3, 0, 2)
+
+[node name="TutorialCoin" parent="." instance=ExtResource("3_coin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, 0)
+
+[node name="PlayerHUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="EmotionalCheckin" parent="." instance=ExtResource("5_checkin")]

@@ -259,7 +259,12 @@ quest_system:
     base_path: data/quests/{realm}/
     naming: "{realm_prefix}_{category}_{###}.json"
     example: "EH_EMO_001.json"
-    status: empty_structure_ready
+    status: tutorial_active
+    files:
+      - hearthveil/hv_ignavarr_tutorial_01.json
+
+  world_scripts:
+    coin: {path: scripts/world/coin.gd, status: active}
 
 # ═══════════════════════════════════════════
 # DUNGEON SYSTEM
@@ -462,6 +467,17 @@ hardware_system:
     status: planned
 
 # ═══════════════════════════════════════════
+# HARDWARE TESTS
+# ═══════════════════════════════════════════
+hardware_tests:
+  rp2040_oled:
+    path: scripts/hardware/rp2040_oled/
+    files:
+      - ssd1306.py: "MicroPython driver for SSD1306 OLED displays."
+      - main.py: "Ezra's Quest test script for RP2040-Zero."
+    status: development
+
+# ═══════════════════════════════════════════
 # UI SYSTEM
 # ═══════════════════════════════════════════
 ui_system:
@@ -497,8 +513,14 @@ ui_system:
     path: scenes/ui/MobileControls.tscn
     status: active
 
+  settings_menu:
+    path: scenes/ui/settings_menu.tscn
+    script: scripts/ui/settings_menu.gd
+    purpose: Global settings (audio, display, hardware overrides).
+    status: active
+
   parent_dashboard:
-    path: scenes/ui/ParentDashboard.tscn
+    path: scenes/ui/parent_dashboard.tscn
     script: scripts/ui/parent_dashboard.gd
     access: PIN_gated
     contains: [xp_history, quest_completion, npc_mastery_levels,
@@ -507,10 +529,16 @@ ui_system:
     status: active
 
   player_hud:
-    path: scenes/ui/PlayerHUD.tscn
+    path: scenes/ui/player_hud.tscn
     script: scripts/ui/player_hud.gd
     contains: [xp_bar, gold_display, active_quest, party_portrait_row,
                emotional_checkin_trigger, notification_overlay]
+    status: active
+
+  emotional_checkin:
+    path: scenes/ui/emotional_checkin.tscn
+    script: scripts/ui/emotional_checkin.gd
+    purpose: Periodic emotional self-reflection popup.
     status: active
 
   quest_list_panel:
@@ -553,6 +581,9 @@ scenes:
       status: active
     quest_complete_dialog:
       path: scenes/effects/QuestCompleteDialog.tscn
+      status: active
+    transition_overlay:
+      path: scenes/effects/transition_overlay.tscn
       status: active
 
   player:
@@ -797,6 +828,11 @@ level_milestones:
 npc_dungeon_unlock: 3_npcs_discovered_per_realm
 companion_home_capacity:
   formula: "1 + floor(player_level / 25)"
+  level_1: 1
+  level_25: 2
+  level_50: 3
+  level_100: 5
+/ 25)"
   level_1: 1
   level_25: 2
   level_50: 3

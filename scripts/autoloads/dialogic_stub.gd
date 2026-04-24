@@ -83,7 +83,12 @@ func _start_dialogic_timeline(npc_id: String, line: String) -> bool:
 
 
 func _build_timeline_text(npc_id: String, line: String) -> String:
-	return '%s says: %s' % [_prettify_npc_id(npc_id), line.replace("\n", " ")]
+	var player_name = "Explorer"
+	if SaveManager.active_profile:
+		player_name = SaveManager.active_profile.player_name
+	
+	var final_line = line.replace("{player}", player_name)
+	return '%s says: %s' % [_prettify_npc_id(npc_id), final_line.replace("\n", " ")]
 
 
 func _prettify_npc_id(npc_id: String) -> String:

@@ -71,11 +71,11 @@
 - [ ] **2.11** Hearthveil portal markers: each portal shows realm name and lock state. Locked portals show requirement text.
 - [ ] **2.12** `QuestManager` end-to-end test: load quest JSON, run steps, record score, grant rewards, verify NPC mastery updates.
 - [ ] **2.13** `SaveManager` end-to-end test: save game state after quest completion, reload, verify all data intact.
-- [ ] **2.14** HUD scene: XP bar, gold counter, active quest name, party portrait row (player + companion slot + wisp slot 1). No art needed.
-- [ ] **2.15** Emotional check-in: pop-up at game start and every 30 minutes. Four modes (face, color, number, weather). Reward identical regardless of answer. Stores to `user://save/parent_dashboard.json`.
-- [ ] **2.16** Settings menu: volume sliders, fullscreen toggle, hardware expansion enables/disables, emotional check-in frequency, parent PIN setup.
-- [ ] **2.17** Parent dashboard stub: PIN entry screen, placeholder panels for each tracked metric. No data yet — just structure and navigation.
-- [ ] **2.18** Integrate Phantom Camera for smooth 3D overworld camera transitions.
+- [x] **2.14** HUD scene: XP bar, gold counter, active quest name, party portrait row (player + companion slot + wisp slot 1). No art needed.
+- [x] **2.15** Emotional check-in: pop-up at game start and every 30 minutes. Four modes (face, color, number, weather). Reward identical regardless of answer. Stores to `user://save/parent_dashboard.json`.
+- [x] **2.16** Settings menu: volume sliders, fullscreen toggle, hardware expansion enables/disables, emotional check-in frequency, parent PIN setup.
+- [x] **2.17** Parent dashboard stub: PIN entry screen, placeholder panels for each tracked metric. No data yet — just structure and navigation.
+- [x] **2.18** Simple follow camera implemented in PlayerController (lerp-based, no Phantom Camera dependency).
 - [ ] **2.19** Scene transition system: loading screen between overworld/dungeon with realm-appropriate placeholder art.
 - [ ] **2.20** Verify entire flow headless: boot → main menu → profile select → hearthveil → talk to Ignavarr → receive quest → complete quest → XP granted → save.
 

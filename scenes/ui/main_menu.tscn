@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6afghlobgs8q"]
+[gd_scene load_steps=4 format=3 uid="uid://b6afghlobgs8q"]
 
 [ext_resource type="Script" uid="uid://h32aurhq3sh3" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" uid="uid://settingsmenu" path="res://scenes/ui/settings_menu.tscn" id="2_settings"]
+[ext_resource type="PackedScene" uid="uid://parentdashboard" path="res://scenes/ui/parent_dashboard.tscn" id="3_dashboard"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -35,6 +37,16 @@ text = "Start Game"
 layout_mode = 2
 text = "Options"
 
+[node name="ParentDashboardButton" type="Button" parent="MainContainer/MainVBox"]
+layout_mode = 2
+text = "Parent Dashboard"
+
 [node name="QuitButton" type="Button" parent="MainContainer/MainVBox"]
 layout_mode = 2
 text = "Quit"
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_settings")]
+unique_name_in_owner = true
+
+[node name="ParentDashboard" parent="." instance=ExtResource("3_dashboard")]
+unique_name_in_owner = true

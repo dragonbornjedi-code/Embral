@@ -110,6 +110,32 @@ func delete_profile(profile_id: String) -> void:
 # DATA IO
 # ───────────────────────────────────────────
 
+## 3 Max Retries on File Access — Self-Healing Logic
+func _safe_file_access(path: String, mode: FileAccess.ModeFlags, content: String = "") -> Variant:
+	var retries := 3
+	var last_err := OK
+	while retries > 0:
+		var file = FileAccess.open(path, mode)
+		if file:
+			if mode == FileAccess.WRITE:
+				file.store_string(content)
+				file.close()
+				return true
+			elif mode == FileAccess.READ:
+				var text = file.get_as_text()
+				file.close()
+				return text
+		
+		last_err = FileAccess.get_open_error()
+		retries -= 1
+		push_warning("[SaveManager] File access failed (%d): %s. Retries left: %d" % [last_err, path, retries])
+		if retries > 0:
+			OS.delay_msec(100)
+	
+	push_error("[SaveManager] Fatal file error after 3 retries: %s (Error %d)" % [path, last_err])
+	return null
+
+
 func save_current_profile() -> void:
 	if active_profile:
 		_save_profile_file(active_profile)
@@ -135,7 +161,7 @@ func is_quest_complete(quest_id: String) -> bool:
 # ───────────────────────────────────────────
 
 func _generate_profile_id(player_name: String) -> String:
-	var base = player_name.to_lower().replace(" ", "_")
+	var base = player_name.to_lower().strip_edges().replace(" ", "_")
 	var id = base
 	var count = 1
 	while _profile_exists(id):
@@ -155,9 +181,13 @@ func _load_profile_list() -> void:
 	if not FileAccess.file_exists(PROFILES_LIST):
 		_profiles = []
 		return
-	var file = FileAccess.open(PROFILES_LIST, FileAccess.READ)
-	var parsed = JSON.parse_string(file.get_as_text())
-	file.close()
+	
+	var text = _safe_file_access(PROFILES_LIST, FileAccess.READ)
+	if text == null:
+		_profiles = []
+		return
+		
+	var parsed = JSON.parse_string(text)
 	if parsed is Dictionary:
 		_profiles = parsed.get("profiles", [])
 	else:
@@ -165,17 +195,15 @@ func _load_profile_list() -> void:
 
 
 func _save_profile_list() -> void:
-	var file = FileAccess.open(PROFILES_LIST, FileAccess.WRITE)
 	var data = {"profiles": _profiles}
-	file.store_string(JSON.stringify(data, "\t"))
-	file.close()
+	var content = JSON.stringify(data, "\t")
+	_safe_file_access(PROFILES_LIST, FileAccess.WRITE, content)
 
 
 func _save_profile_file(profile: Resource) -> void:
 	var path = PROFILES_DIR + profile.profile_id + "/" + PROFILE_FILE
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	file.store_string(JSON.stringify(profile.to_dict(), "\t"))
-	file.close()
+	var content = JSON.stringify(profile.to_dict(), "\t")
+	_safe_file_access(path, FileAccess.WRITE, content)
 
 
 func _delete_recursive(path: String) -> void:

@@ -1,0 +1,27 @@
+{
+  "quest_id": "hv_ignavarr_tutorial_01",
+  "realm": "realm_0",
+  "npc_giver": "ignavarr",
+  "title": "A Dragon's Welcome",
+  "story": "Ignavarr the Dragon greets you with a warm rumble. 'Welcome to Embral, {player}! I've been waiting for a brave explorer. Before we begin our big adventures, could you help me find the glowing coin near the platforms? It helps me keep the Hearthveil lights bright!'",
+  "research_basis": "Vygotsky's Zone of Proximal Development — scaffolding basic navigation before complex tasks.",
+  "developmental_target": "spatial_navigation_and_interaction",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "instruction": "Walk to the brown platform near the center.",
+      "target_node": "Platform1",
+      "timer": 0
+    },
+    {
+      "instruction": "Pick up the glowing coin!",
+      "target_node": "Coin",
+      "timer": 0
+    }
+  ],
+  "scaffolding": "If stuck, a golden trail will appear leading to the coin. Ignavarr will whistle if you're going the wrong way.",
+  "completion_reward": {
+    "xp": 50,
+    "gold": 10
+  }
+}
