@@ -7,5 +7,11 @@ const ABILITIES = {
     "earth_shake": {"name": "Earth Shake", "dmg": 15, "element": "earth"}
 }
 
-func get_ability_data(id: String) -> Dictionary:
-    return ABILITIES.get(id, {})
+func get_ability_effect(id: String, attacker: WispData, defender: WispData) -> Dictionary:
+    var ability = get_ability_data(id)
+    if ability.is_empty(): return {"type": "none", "value": 0}
+    
+    var mult = CrystalSystem.get_multiplier(ability.element, defender.element)
+    var val = int(ability.get("dmg", 0) * mult)
+    
+    return {"type": "damage", "value": val, "text": CrystalSystem.get_advantage_text(ability.element, defender.element)}

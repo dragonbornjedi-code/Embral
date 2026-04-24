@@ -275,17 +275,10 @@ dungeon_system:
     status: active
   ability_system:
     path: scripts/dungeon/ability_system.gd
-    status: active
-  wisp_battle_manager:
-    path: scripts/dungeon/wisp_battle_manager.gd
-    status: active
-  ability_system:
-    path: scripts/dungeon/ability_system.gd
-    status: active
-    path: scenes/dungeons/wisp_battle_ui.tscn
-    script: scripts/dungeon/wisp_battle_ui.gd
-    purpose: Interactive combat UI for Wisp battles.
-    status: active
+    battle_sfx_manager:
+      path: scripts/dungeon/battle_sfx_manager.gd
+      status: active
+
 
   crystal_system:
     path: scripts/dungeon/crystal_system.gd
@@ -529,7 +522,21 @@ scenes:
       path: scenes/overworld/Minimal.tscn
       status: active
 
+  dungeons:
+    mirror_maze:     {path: scenes/dungeons/mirror_maze.tscn,    realm: ember_hollow, status: active}
+    word_caverns:    {path: scenes/dungeons/word_caverns.tscn,   realm: tidemark,     status: active}
+    obstacle_forge:  {path: scenes/dungeons/obstacle_forge.tscn, realm: forge_run,    status: active}
+    daily_tower:     {path: scenes/dungeons/daily_tower.tscn,    realm: rootstead,    status: active}
+    gear_gauntlet:   {path: scenes/dungeons/gear_gauntlet.tscn,  realm: the_spire,    status: active}
+    curiosity_cave:  {path: scenes/dungeons/curiosity_cave.tscn, realm: the_drift,    status: active}
 
+  embral_trials:
+    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
+    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
+    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
+    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
+    word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
+    heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
     heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
     word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
     forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
