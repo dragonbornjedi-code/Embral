@@ -16,7 +16,8 @@ func _ready() -> void:
 	add_to_group("companion_npc")
 	
 	# Connect to controller signals if they exist
-	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+	if Input.has_signal("joy_connection_changed"):
+		Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	
 	# Set follow target to player by default
 	_find_player()

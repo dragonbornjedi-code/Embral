@@ -88,7 +88,8 @@ func select_profile(profile_id: String) -> bool:
 	_save_profile_list()
 	
 	active_profile_changed.emit(profile_id)
-	print("[SaveManager] Profile selected: %s (%s)" % [active_profile.player_name, profile_id])
+	if active_profile != null:
+		print("[SaveManager] Profile selected: %s (%s)" % [active_profile.player_name, profile_id])
 	return true
 
 
@@ -96,7 +97,7 @@ func delete_profile(profile_id: String) -> void:
 	var profile_dir = PROFILES_DIR + profile_id + "/"
 	_delete_recursive(profile_dir)
 	
-	_profiles = _profiles.filter(func(p): return p["id"] != profile_id)
+	_profiles = _profiles.filter(func(p: Dictionary) -> bool: return p["id"] != profile_id)
 	_save_profile_list()
 	
 	if active_profile and active_profile.profile_id == profile_id:

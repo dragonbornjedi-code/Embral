@@ -17,7 +17,8 @@ func _ready() -> void:
 	_clear_quest_info()
 	
 	_connect_signals()
-	settings_button.pressed.connect(func(): settings_menu.open())
+	if is_instance_valid(settings_button):
+		settings_button.pressed.connect(func() -> void: settings_menu.open())
 
 
 func _connect_signals() -> void:
@@ -33,7 +34,8 @@ func _connect_signals() -> void:
 		EventBus.quest_step_completed.connect(_on_quest_step_completed)
 	
 	# Listen for profile changes to update name
-	SaveManager.active_profile_changed.connect(func(_id): _update_player_name())
+	if SaveManager.has_signal("active_profile_changed"):
+		SaveManager.active_profile_changed.connect(func(_id: String) -> void: _update_player_name())
 
 
 func _update_player_name() -> void:
