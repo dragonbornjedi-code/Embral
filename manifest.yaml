@@ -185,10 +185,10 @@ player_system:
       + 3 companion wisps. World renders max 4 entities simultaneously.
     status: planned
 
-  player_controller:
-    path: scripts/player/player_controller.gd
-    purpose: Input handling. Reads from HardwareManager. Never detects hardware directly.
-    status: planned
+  party_manager:
+    path: scripts/player/party_manager.gd
+    purpose: Manages the player's traveling party (Wisps/Companion).
+    status: active
 
 # ═══════════════════════════════════════════
 # CREATURE SYSTEM
@@ -629,10 +629,10 @@ ui_system:
     path: scenes/ui/MobileControls.tscn
     status: active
 
-  settings_menu:
-    path: scenes/ui/settings_menu.tscn
-    script: scripts/ui/settings_menu.gd
-    purpose: Global settings (audio, display, hardware overrides).
+  pet_minigame:
+    path: scenes/ui/pet_minigame.tscn
+    script: scripts/ui/pet_minigame.gd
+    purpose: Interactive pet care area.
     status: active
 
   parent_dashboard:
@@ -649,10 +649,10 @@ ui_system:
     purpose: Manages realm portal interaction and transition logic.
     status: active
 
-  emotional_checkin:
-    path: scenes/ui/emotional_checkin.tscn
-    script: scripts/ui/emotional_checkin.gd
-    purpose: Periodic emotional self-reflection popup.
+  pet_sanctuary:
+    path: scenes/overworld/hearthveil/pet_sanctuary.tscn
+    script: scripts/npcs/pet_sanctuary.gd
+    purpose: Pet care hub.
     status: active
 
   quest_list_panel:

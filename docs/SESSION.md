@@ -12,9 +12,10 @@
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Roadmap 5.06 (Wisp Encounter System):** Created `scripts/dungeon/wisp_encounter.gd`. Implemented battle trigger, capture logic, and XP reward emission.
-- **Roadmap 5.07 (Wisp Entity):** Created `scripts/npcs/wisp_entity.gd` and `scenes/npcs/wisp_entity.tscn`. Implemented overworld following logic.
-- **Roadmap 5.08 (Wire Wisp Slot 1):** Updated `scripts/player/player_controller.gd` to instance and follow the active Wisp from `SaveManager.active_profile`.
+- **Creature Systems (5.01-5.05):** Implemented data models (`WispData`, `PetData`, `CompanionData`, `PlayerProfile`) and `WispRoster` utility.
+- **Wisp Encounters (5.06):** Created `wisp_encounter.gd` with capture and XP logic.
+- **Wisp Entity (5.07):** Created `wisp_entity.gd` and scene; supports overworld following.
+- **Integration (5.08):** Wired Wisp Slot 1 into `player_controller.gd`.
 - **System Integrity:** Verified all managers and successful boot.
 
 ---

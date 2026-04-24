@@ -23,13 +23,16 @@ func trigger_encounter(player_wisp_id: String) -> void:
 func attempt_capture() -> bool:
 	if randf() <= capture_chance_base:
 		var wisp = WispData.new()
-		wisp.wisp_id = "%s_%d" % [encounter_wisp_element, Time.get_unix_time_from_system()]
+		wisp.wisp_id = "%s_%d_%d" % [encounter_wisp_element, encounter_wisp_level, Time.get_unix_time_from_system()]
 		wisp.element = encounter_wisp_element
 		wisp.level = encounter_wisp_level
 		WispRoster.add_wisp(wisp)
 		EventBus.wisp_captured.emit(wisp.wisp_id)
 		return true
 	return false
+
+func get_capture_chance_display() -> String:
+	return "%.0f%%" % (capture_chance_base * 100)
 
 func on_battle_won() -> void:
 	is_defeated = true

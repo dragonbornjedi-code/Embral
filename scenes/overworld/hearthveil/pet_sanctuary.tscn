@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://petsanctuary"]
+
+[ext_resource type="Script" path="res://scripts/npcs/pet_sanctuary.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://petminigame" path="res://scenes/ui/pet_minigame.tscn" id="2_ui"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.2, 0.6, 0.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_entrance"]
+size = Vector3(2, 2, 2)
+
+[node name="PetSanctuary" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_ground")
+
+[node name="PetSlots" type="Node3D" parent="."]
+
+[node name="PetSlot_1" type="Node3D" parent="PetSlots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="PetSlot_2" type="Node3D" parent="PetSlots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="PetSlot_3" type="Node3D" parent="PetSlots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="SanctuaryEntrance" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SanctuaryEntrance"]
+shape = SubResource("BoxShape3D_entrance")
+
+[node name="PetMinigame" parent="." instance=ExtResource("2_ui")]
+visible = false
