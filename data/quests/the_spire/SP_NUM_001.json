@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_NUM_001",
+  "realm": "realm_5",
+  "npc_giver": "spire_numbers",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "number_sense",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 3 cloud-sheep hiding in the mist",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The cloud-sheep are white and very fluffy!"
+}

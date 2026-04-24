@@ -1,0 +1,12 @@
+npc_id: tide_letter
+display_name: "Alphabet Alga"
+realm: tidemark
+subcategory: letter_recognition
+npc_type: teacher
+description: "A friendly piece of seaweed that loves identifying floating letters"
+fallback_lines:
+  - "Can you see that letter floating over there, {player}?"
+  - "Every letter tells a story! Which one shall we find today?"
+no_quest_line: "Your letter-finding skills are amazing, {player}!"
+preferred_terrain: "sandy_shallows"
+unlock_requirement: "realm_2_entered"

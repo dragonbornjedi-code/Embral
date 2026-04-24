@@ -1,0 +1,12 @@
+{
+  "npc_id": "forge_balance",
+  "lines": [
+    "Can you balance on one foot like a mountain, {player}?",
+    "The ground is steady when we find our center.",
+    "Stand tall and strong, just like me, {player}!"
+  ],
+  "no_quest_line": "Your balance is as solid as stone, {player}!",
+  "quest_offer_line": "I'm testing how steady these logs are. Will you help me check them, {player}?",
+  "quest_progress_line": "Slow and steady wins the race! You're doing it, {player}!",
+  "quest_complete_line": "Outstanding balance, {player}! You're as steady as a mountain peak."
+}

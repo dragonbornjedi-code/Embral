@@ -1,0 +1,17 @@
+{
+  "quest_id": "RS_CHO_001",
+  "realm": "realm_4",
+  "npc_giver": "root_chores",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "household_chores",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Hedge by tidying up 3 scattered toys",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The toys are on the path leading to the village."
+}

@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_STR_001",
+  "realm": "realm_6",
+  "npc_giver": "drift_story",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "storytelling_comics",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 3 silly cloud-shapes for the story",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "One looks like a cat, one like a hat, and one like a bat!"
+}

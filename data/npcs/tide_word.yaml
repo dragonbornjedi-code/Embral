@@ -1,0 +1,12 @@
+npc_id: tide_word
+display_name: "Sight-Word Seahorse"
+realm: tidemark
+subcategory: sight_words
+npc_type: teacher
+description: "A fast-swimming seahorse that helps with tricky words"
+fallback_lines:
+  - "Look! I found a 'the' hiding in the kelp, {player}!"
+  - "Words are everywhere if you know where to swim."
+no_quest_line: "You're catching so many words, {player}!"
+preferred_terrain: "kelp_forest"
+unlock_requirement: "realm_2_entered"

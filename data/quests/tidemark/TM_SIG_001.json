@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_SIG_001",
+  "realm": "realm_2",
+  "npc_giver": "tide_word",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "sight_words",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Catch the 'the' word jumping in the waves",
+      "objective_type": "collect",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "It's the most common word in the sea! It's small and green."
+}

@@ -1,0 +1,12 @@
+{
+  "npc_id": "ember_mirror",
+  "lines": [
+    "How do you think your friend feels right now, {player}?",
+    "The world looks different from every angle. Let's see together!",
+    "It's so kind of you to think about others, {player}."
+  ],
+  "no_quest_line": "Your heart is so open to others, {player}!",
+  "quest_offer_line": "I'm trying to understand someone's feelings. Will you help me, {player}?",
+  "quest_progress_line": "You're doing a great job seeing through others' eyes, {player}!",
+  "quest_complete_line": "Thank you, {player}! Now I understand much better."
+}

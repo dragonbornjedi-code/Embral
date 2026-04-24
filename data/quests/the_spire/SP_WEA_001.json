@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_WEA_001",
+  "realm": "realm_5",
+  "npc_giver": "spire_weather",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "weather_earth_science",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 2 wind-vanes to see which way the air blows",
+      "objective_type": "interact",
+      "objective_value": 2
+    }
+  ],
+  "scaffolding": "The wind-vanes have little roosters on top and spin around."
+}

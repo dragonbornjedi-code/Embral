@@ -1,0 +1,12 @@
+{
+  "npc_id": "drift_draw",
+  "lines": [
+    "Can you draw a circle with me, {player}?",
+    "Art is just a way to show what you're thinking.",
+    "Your imagination is your most colorful tool, {player}!"
+  ],
+  "no_quest_line": "Your drawings are full of magic, {player}!",
+  "quest_offer_line": "I've lost some of my magic colors in the mist. Will you help me find them, {player}?",
+  "quest_progress_line": "A splash of red, a dash of blue... you're a brilliant artist, {player}!",
+  "quest_complete_line": "Now my palette is full again! Thank you for bringing back the color, {player}."
+}

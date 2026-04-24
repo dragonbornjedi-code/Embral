@@ -1,0 +1,12 @@
+npc_id: forge_build
+display_name: "Construction Coal"
+realm: forge_run
+subcategory: fine_motor_building
+npc_type: teacher
+description: "A small piece of coal who loves putting things together"
+fallback_lines:
+  - "One block at a time, {player}! What shall we build?"
+  - "Building is like a puzzle for your hands."
+no_quest_line: "You're a master builder, {player}!"
+preferred_terrain: "workshop_floor"
+unlock_requirement: "realm_3_entered"

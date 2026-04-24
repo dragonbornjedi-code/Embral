@@ -1,0 +1,12 @@
+{
+  "npc_id": "spire_plants",
+  "lines": [
+    "Plants need sun and water to grow big and strong, {player}.",
+    "Every leaf has a secret! Shall we find one?",
+    "I love watching things grow with you, {player}!"
+  ],
+  "no_quest_line": "You have a green thumb for sky-plants, {player}!",
+  "quest_offer_line": "My sky-garden needs some special seeds. Would you help me find them, {player}?",
+  "quest_progress_line": "Look at that little sprout! You're a great gardener, {player}!",
+  "quest_complete_line": "Everything is growing so beautifully now. Thank you for your help, {player}."
+}

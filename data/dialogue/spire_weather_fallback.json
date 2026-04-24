@@ -1,0 +1,12 @@
+{
+  "npc_id": "spire_weather",
+  "lines": [
+    "Can you feel the breeze changing direction, {player}?",
+    "Rain makes the world fresh and new. I love the smell!",
+    "The sky has so many different moods, doesn't it, {player}?"
+  ],
+  "no_quest_line": "You're a master of the sky's moods, {player}!",
+  "quest_offer_line": "The clouds are looking a bit confused. Will you help me predict the weather, {player}?",
+  "quest_progress_line": "Windy today, sunny tomorrow... you're a great weather watcher, {player}!",
+  "quest_complete_line": "Clear skies ahead! Thank you for helping me understand the weather, {player}."
+}

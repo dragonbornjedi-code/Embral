@@ -1,0 +1,12 @@
+npc_id: tide_sound
+display_name: "Phonic Pearl"
+realm: tidemark
+subcategory: phonics_letter_sound
+npc_type: teacher
+description: "A shimmering oyster that teaches the sounds of the sea"
+fallback_lines:
+  - "Listen closely, {player}. What sound does the 'B' make?"
+  - "Sounds are the music of words! Let's sing them together."
+no_quest_line: "You have a great ear for sounds, {player}!"
+preferred_terrain: "coral_reef"
+unlock_requirement: "realm_2_entered"

@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_REG_001",
+  "realm": "realm_1",
+  "npc_giver": "ember_soothe",
+  "research_basis": "Polyvagal Theory",
+  "developmental_target": "self_regulation",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Soothe by finding 2 slow-cool stones",
+      "objective_type": "collect",
+      "objective_value": 2
+    }
+  ],
+  "scaffolding": "Slow-cool stones are deep purple and don't wiggle at all."
+}

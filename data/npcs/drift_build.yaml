@@ -1,0 +1,12 @@
+npc_id: drift_build
+display_name: "Maker Mist"
+realm: the_drift
+subcategory: building_construction
+npc_type: teacher
+description: "A busy mist that loves creating and inventing"
+fallback_lines:
+  - "Shall we build a bridge to the next island, {player}?"
+  - "Anything is possible when we work together!"
+no_quest_line: "You're an amazing inventor, {player}!"
+preferred_terrain: "creation_station"
+unlock_requirement: "realm_6_entered"

@@ -1,0 +1,12 @@
+npc_id: drift_draw
+display_name: "Sketchy Smoke"
+realm: the_drift
+subcategory: visual_art_drawing
+npc_type: teacher
+description: "A wispy cloud who loves drawing shapes in the air"
+fallback_lines:
+  - "Can you draw a circle with me, {player}?"
+  - "Art is just a way to show what you're thinking."
+no_quest_line: "Your drawings are full of magic, {player}!"
+preferred_terrain: "misty_canvas"
+unlock_requirement: "realm_6_entered"

@@ -32,7 +32,7 @@ func _ready() -> void:
 
 func _create_whitebox_ui() -> void:
 	_interact_label = Label3D.new()
-	_interact_label.text = "[ E ] Interact"
+	_interact_label.text = "Press E to talk"
 	_interact_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	_interact_label.position.y = 2.5
 	_interact_label.no_depth_test = true

@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_EMP_001",
+  "realm": "realm_1",
+  "npc_giver": "ember_mirror",
+  "research_basis": "Narrative Context",
+  "developmental_target": "empathy_perspective",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the sad wisp and bring it a warm sun-flower",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The sad wisp is hiding behind the grey rocks. Sun-flowers are bright orange."
+}

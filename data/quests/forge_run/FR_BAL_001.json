@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_BAL_001",
+  "realm": "realm_3",
+  "npc_giver": "forge_balance",
+  "research_basis": "Polyvagal Theory",
+  "developmental_target": "gross_motor_balance",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Balance on the 3 narrow logs without falling",
+      "objective_type": "interact",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "Keep your eyes on the end of the log to stay steady!"
+}

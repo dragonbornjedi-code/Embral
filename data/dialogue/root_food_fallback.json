@@ -1,0 +1,12 @@
+{
+  "npc_id": "root_food",
+  "lines": [
+    "What's your favorite vegetable today, {player}?",
+    "Eating colorful food makes your body happy and strong.",
+    "Healthy food is delicious fuel for your adventures, {player}!"
+  ],
+  "no_quest_line": "You know so much about good food, {player}!",
+  "quest_offer_line": "I'm preparing a big healthy feast. Will you help me gather some ingredients, {player}?",
+  "quest_progress_line": "Yum! Those look delicious. Just a few more to find, {player}!",
+  "quest_complete_line": "What a wonderful harvest! This feast will be so healthy and yummy. Thanks, {player}!"
+}

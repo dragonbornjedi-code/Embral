@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_EMO_001",
+  "realm": "realm_1",
+  "npc_giver": "ember_ember",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "emotion_identification",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the happy fire crystal near the lava pool",
+      "objective_type": "collect",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Look for the crystal that is bright yellow and jumping with joy!"
+}

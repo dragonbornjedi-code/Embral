@@ -1,0 +1,17 @@
+{
+  "quest_id": "RS_HYG_001",
+  "realm": "realm_4",
+  "npc_giver": "root_hygiene",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "personal_hygiene",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 3 sparkly soap-bubbles in the stream",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The soap-bubbles are clear and float above the water."
+}

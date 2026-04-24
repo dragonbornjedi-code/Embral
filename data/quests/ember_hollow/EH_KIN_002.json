@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_KIN_002",
+  "realm": "realm_1",
+  "npc_giver": "ember_kind",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "kindness_cooperation",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the broken toy and bring it to the Builder Wisp",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The broken toy is near the playground. The Builder Wisp wears a yellow hat."
+}

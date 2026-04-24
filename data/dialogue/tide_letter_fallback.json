@@ -1,0 +1,12 @@
+{
+  "npc_id": "tide_letter",
+  "lines": [
+    "Can you see that letter floating over there, {player}?",
+    "Every letter tells a story! Which one shall we find today?",
+    "Letters are like little puzzle pieces, aren't they, {player}?"
+  ],
+  "no_quest_line": "Your letter-finding skills are amazing, {player}!",
+  "quest_offer_line": "Oh no! Some of my favorite letters drifted away. Will you help me find them, {player}?",
+  "quest_progress_line": "You're a great letter explorer! Just a few more to go, {player}!",
+  "quest_complete_line": "Hooraay! You found them all, {player}. My alphabet is complete again!"
+}

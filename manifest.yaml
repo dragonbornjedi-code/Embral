@@ -262,6 +262,54 @@ quest_system:
     status: tutorial_active
     files:
       - hearthveil/hv_ignavarr_tutorial_01.json
+      - ember_hollow/EH_EMO_001.json
+      - ember_hollow/EH_EMO_002.json
+      - ember_hollow/EH_REG_001.json
+      - ember_hollow/EH_REG_002.json
+      - ember_hollow/EH_EMP_001.json
+      - ember_hollow/EH_EMP_002.json
+      - ember_hollow/EH_KIN_001.json
+      - ember_hollow/EH_KIN_002.json
+      - tidemark/TM_LET_001.json
+      - tidemark/TM_LET_002.json
+      - tidemark/TM_PHO_001.json
+      - tidemark/TM_PHO_002.json
+      - tidemark/TM_SIG_001.json
+      - tidemark/TM_SIG_002.json
+      - tidemark/TM_STR_001.json
+      - tidemark/TM_STR_002.json
+      - forge_run/FR_BAL_001.json
+      - forge_run/FR_BAL_002.json
+      - forge_run/FR_THR_001.json
+      - forge_run/FR_THR_002.json
+      - forge_run/FR_BLD_001.json
+      - forge_run/FR_BLD_002.json
+      - forge_run/FR_DAN_001.json
+      - forge_run/FR_DAN_002.json
+      - rootstead/RS_HYG_001.json
+      - rootstead/RS_HYG_002.json
+      - rootstead/RS_FOO_001.json
+      - rootstead/RS_FOO_002.json
+      - rootstead/RS_CHO_001.json
+      - rootstead/RS_CHO_002.json
+      - rootstead/RS_TIM_001.json
+      - rootstead/RS_TIM_002.json
+      - the_spire/SP_NUM_001.json
+      - the_spire/SP_NUM_002.json
+      - the_spire/SP_MAT_001.json
+      - the_spire/SP_MAT_002.json
+      - the_spire/SP_PLT_001.json
+      - the_spire/SP_PLT_002.json
+      - the_spire/SP_WEA_001.json
+      - the_spire/SP_WEA_002.json
+      - the_drift/DR_ART_001.json
+      - the_drift/DR_ART_002.json
+      - the_drift/DR_MUS_001.json
+      - the_drift/DR_MUS_002.json
+      - the_drift/DR_STR_001.json
+      - the_drift/DR_STR_002.json
+      - the_drift/DR_BLD_001.json
+      - the_drift/DR_BLD_002.json
 
   world_scripts:
     coin: {path: scripts/world/coin.gd, status: active}
@@ -324,7 +372,7 @@ npc_system:
     path: scripts/npcs/teachers/ignavarr.gd
     role: main_narrator_mayor
     realm: hearthveil
-    status: planned
+    status: active
 
   npc_home_data:
     path: scripts/models/npc_home_data.gd
@@ -335,7 +383,38 @@ npc_system:
     path: data/dialogue/{npc_id}_fallback.json
     purpose: Fallback dialogue when Dialogic unavailable or timeline missing.
     format: '{"npc_id":"...","lines":["..."],"no_quest_line":"..."}'
-    status: format_defined
+    status: active
+    files:
+      - data/dialogue/ember_ember_fallback.json
+      - data/dialogue/ember_soothe_fallback.json
+      - data/dialogue/ember_mirror_fallback.json
+      - data/dialogue/ember_kind_fallback.json
+      - data/dialogue/tide_letter_fallback.json
+      - data/dialogue/tide_sound_fallback.json
+      - data/dialogue/tide_word_fallback.json
+      - data/dialogue/tide_story_fallback.json
+      - data/dialogue/forge_balance_fallback.json
+      - data/dialogue/forge_throw_fallback.json
+      - data/dialogue/forge_build_fallback.json
+      - data/dialogue/forge_dance_fallback.json
+      - data/dialogue/root_hygiene_fallback.json
+      - data/dialogue/root_food_fallback.json
+      - data/dialogue/root_chores_fallback.json
+      - data/dialogue/root_time_fallback.json
+      - data/dialogue/spire_numbers_fallback.json
+      - data/dialogue/spire_math_fallback.json
+      - data/dialogue/spire_plants_fallback.json
+      - data/dialogue/spire_weather_fallback.json
+      - data/dialogue/drift_draw_fallback.json
+      - data/dialogue/drift_music_fallback.json
+      - data/dialogue/drift_story_fallback.json
+      - data/dialogue/drift_build_fallback.json
+      - data/dialogue/ignavarr_fallback.json
+
+  quest_index:
+    path: data/quest_index.json
+    purpose: Cross-reference for quests by realm, npc, and subcategory.
+    status: active
 
   teachers:
     hearthveil:
@@ -397,6 +476,13 @@ npc_system:
       npc_count: 12
       starter_npcs: 4
       status: design_phase
+
+  npc_definitions:
+    ember_hollow:
+      - data/npcs/ember_ember.yaml
+      - data/npcs/ember_soothe.yaml
+      - data/npcs/ember_mirror.yaml
+      - data/npcs/ember_kind.yaml
 
 # ═══════════════════════════════════════════
 # FAMILY SYSTEMS

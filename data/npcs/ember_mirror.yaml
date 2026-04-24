@@ -1,0 +1,12 @@
+npc_id: ember_mirror
+display_name: "Mirror"
+realm: ember_hollow
+subcategory: empathy_perspective
+npc_type: teacher
+description: "A shimmering smoke wisp who helps Ezra see through others' eyes"
+fallback_lines:
+  - "How do you think your friend feels right now, {player}?"
+  - "The world looks different from every angle. Let's see together!"
+no_quest_line: "Your heart is so open to others, {player}!"
+preferred_terrain: "obsidian_glass"
+unlock_requirement: "realm_1_entered"

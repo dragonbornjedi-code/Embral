@@ -1,0 +1,12 @@
+{
+  "npc_id": "root_chores",
+  "lines": [
+    "Shall we tidy up the garden tools, {player}?",
+    "Many hands make the work fly by like a breeze.",
+    "Helping out makes the whole village happy, {player}!"
+  ],
+  "no_quest_line": "The village looks so neat because of you, {player}!",
+  "quest_offer_line": "There's been a little mess in the square. Could you help me tidy it up, {player}?",
+  "quest_progress_line": "A little bit here, a little bit there... You're a great helper, {player}!",
+  "quest_complete_line": "Look how neat everything is! You're a true champion of chores, {player}."
+}

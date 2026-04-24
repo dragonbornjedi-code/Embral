@@ -1,0 +1,12 @@
+npc_id: drift_story
+display_name: "Comic Cloud"
+realm: the_drift
+subcategory: storytelling_comics
+npc_type: teacher
+description: "A funny cloud that loves making up silly stories"
+fallback_lines:
+  - "And then... what happens next, {player}?"
+  - "Stories are like dreams we share with our friends."
+no_quest_line: "You're a master of imagination, {player}!"
+preferred_terrain: "dream_fields"
+unlock_requirement: "realm_6_entered"

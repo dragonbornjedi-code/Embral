@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_BLD_001",
+  "realm": "realm_6",
+  "npc_giver": "drift_build",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "building_construction",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 5 dream-blocks for the new bridge",
+      "objective_type": "collect",
+      "objective_value": 5
+    }
+  ],
+  "scaffolding": "Dream-blocks are translucent and sparkle like stars."
+}

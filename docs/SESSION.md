@@ -5,30 +5,29 @@
 
 ## CURRENT STATE
 
-**Phase:** 2.00 Reliability — Active
+**Phase:** 3.00 NPC System — IN PROGRESS
 **Godot version:** 4.5.stable.official.876b29033
 
 ---
 
 ## WHAT WAS VERIFIED THIS SESSION
 
-- **Verified Clean Boot:** Confirmed `SaveManager` and `QuestManager` are active.
-- **Roadmap 2.16 (Settings Menu):** Created `settings_menu.tscn` and `settings_menu.gd`. Integrated into Main Menu and Player HUD. Support for Audio, Display, Hardware overrides, and Check-in frequency.
-- **Roadmap 2.17 (Parent Dashboard):** Created `parent_dashboard.tscn` and `parent_dashboard.gd`. PIN-gated access. Displays live emotional check-in history.
-- **Roadmap 2.18 (Follow Camera):** Created `player_controller.gd` with a smooth lerp follow camera (5 units back, 3 units up, speed 5.0). Updated `Player.tscn` to use the new script.
-- **Integration:** Wired all new UI components into `main_menu.gd` and `player_hud.gd`.
-- **Clean Boot Verified:** Headless Godot boot verified SUCCESSFUL after fixing a parse error in `main_menu.gd`.
+- **Roadmap 3.11 (Fallback Dialogue):** Created 25 fallback dialogue JSON files (24 NPCs + Ignavarr) in `data/dialogue/`. All use `{player}` placeholder.
+- **Roadmap 3.12 (Quest Index):** Created `data/quest_index.json` by parsing all quest files. Verified valid JSON.
+- **Roadmap 3.13 (Ignavarr Script):** Created `scripts/npcs/teachers/ignavarr.gd`. Implemented quest gating and portal unlocking logic.
+- **Registration:** All files registered in `manifest.yaml`.
+- **System Integrity:** Verified via `godot --headless` (all core managers [OK]).
 
 ---
 
 ## NEXT TASK (start here)
 
-Roadmap item 2.19 — Scene transition system: loading screen between overworld/dungeon with realm-appropriate placeholder art.
+Roadmap item 3.14 — NPC home preference side quests & Builder's Guild integration.
 
-The transition system should:
-1. Provide a `TransitionManager` autoload.
-2. Show a progress bar or "Loading..." text.
-3. Fade out current scene, load new scene, fade in.
+Implement:
+1. `NPCHomeData` usage in NPC classes.
+2. Building an interaction for the Builder's Guild NPC in Hearthveil.
+3. Verify at least 3 NPCs have fulfillable home preferences.
 
 ---
 
@@ -36,15 +35,6 @@ The transition system should:
 
 | Issue | Severity | Status |
 |-------|----------|--------|
-| Parent PIN hashing is currently a direct string match | LOW | SECURITY-DEBT |
-| Camera rotation does not follow player rotation yet | LOW | DESIGN-CHOICE |
-| Settings Menu PIN entry is just a print statement | LOW | UI-PENDING |
-
----
-
-## HARDWARE ON CRUCIBLE
-- PS5 DualSense: detected (joy_id=0)
-- Wii: not connected
-- HA: not configured
-- RP2040-Zero: Verified test driver.
-- SSD1306 OLED: Verified test driver.
+| Quest loading warnings in headless log (gold-standard-quests.json) | LOW | INVESTIGATING |
+| HUD XP bar max_value is hardcoded to 100 | LOW | PENDING LVL SYSTEM |
+| Emotional check-in timer runs in background always | LOW | OPTIMIZE LATER |

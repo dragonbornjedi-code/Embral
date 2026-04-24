@@ -1,0 +1,12 @@
+{
+  "npc_id": "spire_numbers",
+  "lines": [
+    "How many birds can you see from up here, {player}?",
+    "Counting is like building a ladder to the stars!",
+    "Numbers are like a secret language of the sky, {player}."
+  ],
+  "no_quest_line": "Your number skills are reaching the sky, {player}!",
+  "quest_offer_line": "Some of my cloud-sheep have wandered off. Can you help me count them back, {player}?",
+  "quest_progress_line": "One, two, three... you're a natural at counting, {player}!",
+  "quest_complete_line": "All present and accounted for! You're a master counter, {player}."
+}

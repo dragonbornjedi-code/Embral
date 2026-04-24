@@ -1,0 +1,12 @@
+npc_id: root_time
+display_name: "Tock Tulip"
+realm: rootstead
+subcategory: time_routines
+npc_type: teacher
+description: "A tulip that opens and closes with the sun"
+fallback_lines:
+  - "What time is it in our village, {player}?"
+  - "Routines help us know what's coming next in our day."
+no_quest_line: "You're a master of your daily routine, {player}!"
+preferred_terrain: "clock_square"
+unlock_requirement: "realm_4_entered"

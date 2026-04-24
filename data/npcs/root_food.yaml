@@ -1,0 +1,12 @@
+npc_id: root_food
+display_name: "Berry Bite"
+realm: rootstead
+subcategory: nutrition_food
+npc_type: teacher
+description: "A round berry who knows everything about healthy eating"
+fallback_lines:
+  - "What's your favorite vegetable today, {player}?"
+  - "Eating colorful food makes your body happy and strong."
+no_quest_line: "You know so much about good food, {player}!"
+preferred_terrain: "rich_soil"
+unlock_requirement: "realm_4_entered"

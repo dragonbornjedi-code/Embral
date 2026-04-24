@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_BLD_002",
+  "realm": "realm_6",
+  "npc_giver": "drift_build",
+  "research_basis": "Narrative Context",
+  "developmental_target": "building_construction",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Build fix the maker-station",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Look for the gears that aren't turning yet."
+}

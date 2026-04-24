@@ -1,0 +1,12 @@
+{
+  "npc_id": "forge_throw",
+  "lines": [
+    "Ready... set... aim! Can you reach that target, {player}?",
+    "It's not about how hard you throw, but where you aim.",
+    "Keep your eye on the goal, {player}!"
+  ],
+  "no_quest_line": "Your aim is getting sharper every day, {player}!",
+  "quest_offer_line": "I need some help hitting these distant targets. Are you a good aim, {player}?",
+  "quest_progress_line": "Almost there! Adjust your aim just a little bit, {player}!",
+  "quest_complete_line": "Bullseye! You've got a sharp eye and a steady hand, {player}."
+}

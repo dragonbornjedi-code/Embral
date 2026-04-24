@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_KIN_001",
+  "realm": "realm_1",
+  "npc_giver": "ember_kind",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "kindness_cooperation",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Kind by gathering 5 share-berries for the feast",
+      "objective_type": "collect",
+      "objective_value": 5
+    }
+  ],
+  "scaffolding": "Share-berries grow in big bunches on the green bushes."
+}

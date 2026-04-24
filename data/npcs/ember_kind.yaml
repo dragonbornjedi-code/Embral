@@ -1,0 +1,12 @@
+npc_id: ember_kind
+display_name: "Kind"
+realm: ember_hollow
+subcategory: kindness_cooperation
+npc_type: teacher
+description: "A dancing flame who celebrates helping and sharing"
+fallback_lines:
+  - "Small acts of kindness light up the whole world, {player}!"
+  - "Helping a friend is the best adventure of all."
+no_quest_line: "The world is brighter because of you, {player}!"
+preferred_terrain: "glowing_moss"
+unlock_requirement: "realm_1_entered"

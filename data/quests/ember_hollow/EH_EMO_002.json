@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_EMO_002",
+  "realm": "realm_1",
+  "npc_giver": "ember_ember",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "emotion_identification",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 3 blue calm-embers from the quiet cave",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The quiet cave is where the music is soft and slow."
+}

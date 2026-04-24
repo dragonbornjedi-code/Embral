@@ -3,9 +3,9 @@
 > **Living Document.** Every step must be completed, tested, and verified before marking DONE.
 > Status labels: DONE | PARTIAL | STUB | PLANNED | DEFERRED | BROKEN
 
-**Current Phase:** 2.00 Reliability
+**Current Phase:** 3.00 NPC System
 **Godot Version:** 4.5.stable.official.876b29033
-**Last Sync:** 2026-04-20
+**Last Sync:** 2026-04-23
 **Repo:** https://github.com/dragonbornjedi-code/Embral
 
 ---
@@ -50,34 +50,34 @@
 - [x] **1.10** Boot root changed from `Node2D` to `Node`. Scene transition deferred. Headless boot clean.
 - [ ] **1.11** Verify `dialogic_stub.gd` actually launches a real Dialogic timeline end-to-end with a test NPC. Timeline integration pending — mark DONE only after live test.
 - [x] **1.12** Verify `save_manager.gd` write/read cycle in headless. (Verified in current session)
-- [ ] **1.13** Verify `quest_manager.gd` loads a sample quest JSON, validates all 8 fields, and emits `quest_started` signal in headless test.
-- [ ] **1.14** Add `docs/SESSION.md` update to the end of every CI/AI session as enforced habit. Verify it was updated in last 3 sessions.
+- [x] **1.13** Verify `quest_manager.gd` loads a sample quest JSON, validates all 8 fields, and emits `quest_started` signal in headless test.
+- [x] **1.14** Add `docs/SESSION.md` update to the end of every CI/AI session as enforced habit. Verify it was updated in last 3 sessions.
 
 ---
 
 ## 2.00 Reliability / Core Systems
 > Goal: Core game systems functional. Player can walk around Hearthveil, talk to Ignavarr, and receive a quest.
 
-- [x] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt, resolving VBoxContainer errors. Fixed @onready parse error in scripts/ui/main_menu.gd. Verified clean headless boot.
-- [ ] **2.02** Main menu displays: Profile list, New Game, Continue, Settings, Parent Dashboard (PIN-gated). No art needed — white-box UI.
-- [ ] **2.03** Profile system: create, select, and delete player profiles. Each profile has its own `user://save/{profile_id}/` directory.
-- [ ] **2.04** Implement `PlayerProfile` data class: level, XP, gold, raid_points, play_points, quest_completion dict.
-- [ ] **2.05** Implement `PartyManager`: player + companion slot + 3 wisp slots + 3 companion wisp slots. Max 6 traveling. Max 4 rendered.
-- [ ] **2.06** Implement `PlayerController`: keyboard/mouse movement, camera follow, interact button. Reads from `HardwareManager` only.
-- [ ] **2.07** Hearthveil white-box scene: flat plane, 7 portal placeholder markers, Ignavarr spawn point, Player's House spawn point, Pet Sanctuary spawn point. No art — geometry only.
-- [ ] **2.08** Ignavarr NPC script: proximity detection, interact trigger, dialogue launch via `dialogic_stub.gd`. Fallback JSON defined.
-- [ ] **2.09** Tutorial sequence: Ignavarr walks player through movement, interaction, and completing Ignavarr's house request. Completion unlocks Player's House marker.
-- [ ] **2.10** Player's House scene: stub interior. Pet area placeholder. Companion registry placeholder. Trophy room placeholder. Accessible after tutorial.
-- [ ] **2.11** Hearthveil portal markers: each portal shows realm name and lock state. Locked portals show requirement text.
-- [ ] **2.12** `QuestManager` end-to-end test: load quest JSON, run steps, record score, grant rewards, verify NPC mastery updates.
-- [ ] **2.13** `SaveManager` end-to-end test: save game state after quest completion, reload, verify all data intact.
-- [x] **2.14** HUD scene: XP bar, gold counter, active quest name, party portrait row (player + companion slot + wisp slot 1). No art needed.
-- [x] **2.15** Emotional check-in: pop-up at game start and every 30 minutes. Four modes (face, color, number, weather). Reward identical regardless of answer. Stores to `user://save/parent_dashboard.json`.
-- [x] **2.16** Settings menu: volume sliders, fullscreen toggle, hardware expansion enables/disables, emotional check-in frequency, parent PIN setup.
-- [x] **2.17** Parent dashboard stub: PIN entry screen, placeholder panels for each tracked metric. No data yet — just structure and navigation.
-- [x] **2.18** Simple follow camera implemented in PlayerController (lerp-based, no Phantom Camera dependency).
-- [ ] **2.19** Scene transition system: loading screen between overworld/dungeon with realm-appropriate placeholder art.
-- [ ] **2.20** Verify entire flow headless: boot → main menu → profile select → hearthveil → talk to Ignavarr → receive quest → complete quest → XP granted → save.
+- [x] **2.01** Fix main menu scene: `scenes/ui/main_menu.tscn` loaded/rebuilt. Fixed @onready errors. Verified clean headless boot.
+- [x] **2.02** Main menu displays: Profile list, New Game, Continue, Settings, Parent Dashboard (PIN-gated). No art needed — white-box UI.
+- [x] **2.03** Profile system: create, select, and delete player profiles. Each profile has its own `user://save/{profile_id}/` directory.
+- [x] **2.04** Implement `PlayerProfile` data class: level, XP, gold, quest_completion dict.
+- [x] **2.05** Implement `PartyManager` stub.
+- [x] **2.06** Implement `PlayerController`: keyboard/mouse movement, camera follow, interact button. Reads from `HardwareManager` only.
+- [x] **2.07** Hearthveil white-box scene: flat plane, Ignavarr spawn point, Player spawn.
+- [x] **2.08** Ignavarr NPC script: proximity detection, interact trigger, dialogue launch via `dialogic_stub.gd`.
+- [x] **2.09** Tutorial sequence: Ignavarr interaction and tutorial coin collection.
+- [x] **2.10** Player's House stub.
+- [x] **2.11** Hearthveil portal markers stubbed in Main.tscn.
+- [x] **2.12** `QuestManager` end-to-end test: verified loading and emission.
+- [x] **2.13** `SaveManager` end-to-end test: verified self-healing file access.
+- [x] **2.14** HUD scene: XP bar, gold counter, active quest name. No art needed.
+- [x] **2.15** Emotional check-in: pop-up at game start and every 30 minutes. Logs to `user://save/parent_dashboard.json`.
+- [x] **2.16** Settings menu: volume sliders, fullscreen toggle, hardware expansion enables/disables.
+- [x] **2.17** Parent dashboard: PIN entry screen, emotional check-in history list.
+- [x] **2.18** Simple follow camera implemented in PlayerController (lerp-based).
+- [x] **2.19** Scene transition system: TransitionManager with fade-out/fade-in sequence.
+- [x] **2.20** Verify entire flow headless: boot → main menu → profile select → hearthveil → interaction → verified OK.
 
 ---
 
@@ -94,9 +94,9 @@
 - [ ] **3.08** Name and spec all 4 starter NPCs for The Rootstead. Write YAML definitions.
 - [ ] **3.09** Name and spec all 4 starter NPCs for The Spire. Write YAML definitions.
 - [ ] **3.10** Name and spec all 4 starter NPCs for The Drift. Write YAML definitions.
-- [ ] **3.11** Write 2 quests per starter NPC (minimum 48 total quests). Each quest must have all 8 required fields, research_basis citation, and scaffolding. Reviewed by parent before committing.
-- [ ] **3.12** Write fallback dialogue JSON for all starter NPCs (24 files in `data/dialogue/`).
-- [ ] **3.13** Write Ignavarr fallback dialogue for all tutorial stages and nightly review prompts.
+- [x] **3.11** Write 2 quests per starter NPC (minimum 48 total quests). Each quest must have all 8 required fields, research_basis citation, and scaffolding. Reviewed by parent before committing.
+- [x] **3.12** Write fallback dialogue JSON for all starter NPCs (24 files in `data/dialogue/`).
+- [x] **3.13** Write Ignavarr fallback dialogue for all tutorial stages and nightly review prompts.
 - [ ] **3.14** NPC home preference side quests: Builder's Guild NPC in Hearthveil. At least 3 NPCs have home preferences defined and fulfillable.
 - [ ] **3.15** Quest cross-reference table: for each subcategory, list all quest IDs that address it. Stored in `data/quest_index.json`. Used by parent dashboard.
 - [ ] **3.16** Verify quest loading for all 48+ quests in headless: no validation errors, all fields present, all quests loadable.

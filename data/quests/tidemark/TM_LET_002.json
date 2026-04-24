@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_LET_002",
+  "realm": "realm_2",
+  "npc_giver": "tide_letter",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "letter_recognition",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 3 'S' shells from the sand",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The 'S' shells are curly like a little snake."
+}

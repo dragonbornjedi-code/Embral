@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_EMP_002",
+  "realm": "realm_1",
+  "npc_giver": "ember_mirror",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "empathy_perspective",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Collect 4 friendship mirrors from around the village",
+      "objective_type": "collect",
+      "objective_value": 4
+    }
+  ],
+  "scaffolding": "Mirrors shine like the sun when you get close to them!"
+}

@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_PLT_001",
+  "realm": "realm_5",
+  "npc_giver": "spire_plants",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "plants_botany",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 3 sun-seeds for the garden",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "Sun-seeds are bright yellow and feel warm to the touch."
+}

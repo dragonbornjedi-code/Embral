@@ -1,0 +1,12 @@
+npc_id: spire_math
+display_name: "Plus Pixie"
+realm: the_spire
+subcategory: addition_subtraction
+npc_type: teacher
+description: "A tiny pixie who loves putting numbers together"
+fallback_lines:
+  - "If we add one more star, how many will we have, {player}?"
+  - "Taking away is just finding what's left behind."
+no_quest_line: "You're a master of math magic, {player}!"
+preferred_terrain: "starry_bridge"
+unlock_requirement: "realm_5_entered"

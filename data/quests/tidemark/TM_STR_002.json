@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_STR_002",
+  "realm": "realm_2",
+  "npc_giver": "tide_story",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "storytelling",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help the turtle find her lost ending",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The ending is where the sun sets on the water."
+}

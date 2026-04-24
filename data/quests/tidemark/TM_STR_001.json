@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_STR_001",
+  "realm": "realm_2",
+  "npc_giver": "tide_story",
+  "research_basis": "Narrative Context",
+  "developmental_target": "storytelling",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the beginning of the crab's story",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The story begins near the big red anchor."
+}

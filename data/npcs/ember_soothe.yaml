@@ -1,0 +1,12 @@
+npc_id: ember_soothe
+display_name: "Soothe"
+realm: ember_hollow
+subcategory: self_regulation
+npc_type: teacher
+description: "A gentle glowing coal who teaches deep breathing and calm"
+fallback_lines:
+  - "Breathe in with me, {player}. Deep and slow."
+  - "When things feel too fast, we can find our calm center."
+no_quest_line: "You are a master of calm, {player}!"
+preferred_terrain: "soft_ash"
+unlock_requirement: "realm_1_entered"

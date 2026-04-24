@@ -1,0 +1,12 @@
+npc_id: forge_balance
+display_name: "Steady Stone"
+realm: forge_run
+subcategory: gross_motor_balance
+npc_type: teacher
+description: "A heavy boulder who teaches how to stand tall and strong"
+fallback_lines:
+  - "Can you balance on one foot like a mountain, {player}?"
+  - "The ground is steady when we find our center."
+no_quest_line: "Your balance is as solid as stone, {player}!"
+preferred_terrain: "stable_rocks"
+unlock_requirement: "realm_3_entered"

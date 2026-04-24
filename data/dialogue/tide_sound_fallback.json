@@ -1,0 +1,12 @@
+{
+  "npc_id": "tide_sound",
+  "lines": [
+    "Listen closely, {player}. What sound does the 'B' make?",
+    "Sounds are the music of words! Let's sing them together.",
+    "The ocean has so many beautiful sounds, {player}."
+  ],
+  "no_quest_line": "You have a great ear for sounds, {player}!",
+  "quest_offer_line": "I'm trying to match these sounds to their letters. Can you help me, {player}?",
+  "quest_progress_line": "Listen... do you hear that? You're doing great, {player}!",
+  "quest_complete_line": "That's exactly right! You've got a wonderful ear for sounds, {player}."
+}

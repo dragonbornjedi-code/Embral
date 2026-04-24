@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_BAL_002",
+  "realm": "realm_3",
+  "npc_giver": "forge_balance",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "gross_motor_balance",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 2 wobbly stones and stand still on each",
+      "objective_type": "interact",
+      "objective_value": 2
+    }
+  ],
+  "scaffolding": "The wobbly stones are bright orange and vibrate a little bit."
+}

@@ -1,0 +1,12 @@
+npc_id: spire_plants
+display_name: "Flora Fly"
+realm: the_spire
+subcategory: plants_botany
+npc_type: teacher
+description: "A winged seed that knows every plant in the sky"
+fallback_lines:
+  - "Plants need sun and water to grow big and strong, {player}."
+  - "Every leaf has a secret! Shall we find one?"
+no_quest_line: "You have a green thumb for sky-plants, {player}!"
+preferred_terrain: "hanging_gardens"
+unlock_requirement: "realm_5_entered"

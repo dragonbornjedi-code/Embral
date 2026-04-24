@@ -1,0 +1,12 @@
+{
+  "npc_id": "ember_kind",
+  "lines": [
+    "Small acts of kindness light up the whole world, {player}!",
+    "Helping a friend is the best adventure of all.",
+    "You have such a kind spirit, {player}!"
+  ],
+  "no_quest_line": "The world is brighter because of you, {player}!",
+  "quest_offer_line": "I have a special mission of kindness for you, {player}. Are you in?",
+  "quest_progress_line": "Every little bit helps! Keep being kind, {player}!",
+  "quest_complete_line": "You're a true kindness hero, {player}! Look how everything sparkles now."
+}

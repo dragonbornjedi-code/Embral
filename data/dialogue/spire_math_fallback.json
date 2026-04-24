@@ -1,0 +1,12 @@
+{
+  "npc_id": "spire_math",
+  "lines": [
+    "If we add one more star, how many will we have, {player}?",
+    "Taking away is just finding what's left behind.",
+    "Math is like magic when you know the rules, {player}!"
+  ],
+  "no_quest_line": "You're a master of math magic, {player}!",
+  "quest_offer_line": "I'm trying to solve this starry puzzle. Will you help me with the numbers, {player}?",
+  "quest_progress_line": "Plus this, minus that... you're doing great, {player}!",
+  "quest_complete_line": "Puzzle solved! Your math magic is truly impressive, {player}."
+}

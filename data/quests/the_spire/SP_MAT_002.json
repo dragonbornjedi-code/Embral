@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_MAT_002",
+  "realm": "realm_5",
+  "npc_giver": "spire_math",
+  "research_basis": "Polyvagal Theory",
+  "developmental_target": "addition_subtraction",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Take away 3 rocks to fix the path",
+      "objective_type": "interact",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The rocks are blocking the way to the pixie house."
+}

@@ -1,0 +1,12 @@
+{
+  "npc_id": "forge_dance",
+  "lines": [
+    "Move to the beat, {player}! Can you jump and spin?",
+    "Your body is a dancing flame. Let's move together!",
+    "I love your rhythm, {player}!"
+  ],
+  "no_quest_line": "You've got the rhythm in your heart, {player}!",
+  "quest_offer_line": "The fire-drums are beating! Will you dance with me, {player}?",
+  "quest_progress_line": "Jump! Spin! Clap! You're a great dancer, {player}!",
+  "quest_complete_line": "What a performance! You've got so much energy and grace, {player}."
+}

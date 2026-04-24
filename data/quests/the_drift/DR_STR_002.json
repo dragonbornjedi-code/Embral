@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_STR_002",
+  "realm": "realm_6",
+  "npc_giver": "drift_story",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "storytelling_comics",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Story find the lost punchline",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "It's hiding behind the giggling cloud."
+}

@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_SIG_002",
+  "realm": "realm_2",
+  "npc_giver": "tide_word",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "sight_words",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find 2 'and' starfish hiding in the rocks",
+      "objective_type": "collect",
+      "objective_value": 2
+    }
+  ],
+  "scaffolding": "Starfish are orange and have five points."
+}

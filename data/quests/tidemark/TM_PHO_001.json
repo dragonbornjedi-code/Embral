@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_PHO_001",
+  "realm": "realm_2",
+  "npc_giver": "tide_sound",
+  "research_basis": "Narrative Context",
+  "developmental_target": "phonics_letter_sound",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the bubble that makes the 'P' sound",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Listen for the sound like a little 'pop'!"
+}

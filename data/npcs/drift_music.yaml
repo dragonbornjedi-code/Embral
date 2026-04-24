@@ -1,0 +1,12 @@
+npc_id: drift_music
+display_name: "Rhythm Rain"
+realm: the_drift
+subcategory: music_rhythm_beat
+npc_type: teacher
+description: "A musical cloud that pitter-patters with a beat"
+fallback_lines:
+  - "Clap along with the raindrops, {player}!"
+  - "Music is the heartbeat of our world."
+no_quest_line: "You have a wonderful sense of rhythm, {player}!"
+preferred_terrain: "echo_valley"
+unlock_requirement: "realm_6_entered"

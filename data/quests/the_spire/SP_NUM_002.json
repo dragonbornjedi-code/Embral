@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_NUM_002",
+  "realm": "realm_5",
+  "npc_giver": "spire_numbers",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "number_sense",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Count the 5 sky-stars on the bridge",
+      "objective_type": "interact",
+      "objective_value": 5
+    }
+  ],
+  "scaffolding": "Each star will light up when you touch it!"
+}

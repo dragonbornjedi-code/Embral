@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_MAT_001",
+  "realm": "realm_5",
+  "npc_giver": "spire_math",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "addition_subtraction",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find 2 red berries and 2 blue berries",
+      "objective_type": "collect",
+      "objective_value": 4
+    }
+  ],
+  "scaffolding": "Two plus two makes four berries in total!"
+}

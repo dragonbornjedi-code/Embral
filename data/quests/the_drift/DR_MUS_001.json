@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_MUS_001",
+  "realm": "realm_6",
+  "npc_giver": "drift_music",
+  "research_basis": "Polyvagal Theory",
+  "developmental_target": "music_rhythm_beat",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Clap 4 times with the rhythm-drums",
+      "objective_type": "interact",
+      "objective_value": 4
+    }
+  ],
+  "scaffolding": "Wait for the drum to flash before you clap!"
+}

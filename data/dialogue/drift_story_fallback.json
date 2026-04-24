@@ -1,0 +1,12 @@
+{
+  "npc_id": "drift_story",
+  "lines": [
+    "And then... what happens next, {player}?",
+    "Stories are like dreams we share with our friends.",
+    "Tell me a story about your adventures, {player}."
+  ],
+  "no_quest_line": "You're a master of imagination, {player}!",
+  "quest_offer_line": "I'm writing a new comic book but I'm stuck on a page. Will you help me, {player}?",
+  "quest_progress_line": "Kaboom! Zap! This is getting exciting! Keep going, {player}!",
+  "quest_complete_line": "A masterpiece! You're a brilliant storyteller and illustrator, {player}."
+}

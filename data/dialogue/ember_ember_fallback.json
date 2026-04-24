@@ -1,0 +1,12 @@
+{
+  "npc_id": "ember_ember",
+  "lines": [
+    "Hello {player}! Can you tell me how you're feeling today?",
+    "Every feeling has a name. Let's find yours!",
+    "I'm so glad you came to visit me, {player}."
+  ],
+  "no_quest_line": "You're doing amazing with your feelings, {player}!",
+  "quest_offer_line": "I need your help with something important, {player}. Are you ready?",
+  "quest_progress_line": "You're getting so close! Keep going, {player}!",
+  "quest_complete_line": "You did it, {player}! I knew you could!"
+}

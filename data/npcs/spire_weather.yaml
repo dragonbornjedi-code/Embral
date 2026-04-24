@@ -1,0 +1,12 @@
+npc_id: spire_weather
+display_name: "Windy Willow"
+realm: the_spire
+subcategory: weather_earth_science
+npc_type: teacher
+description: "A tree that sways with the clouds and rain"
+fallback_lines:
+  - "Can you feel the breeze changing direction, {player}?"
+  - "Rain makes the world fresh and new. I love the smell!"
+no_quest_line: "You're a master of the sky's moods, {player}!"
+preferred_terrain: "windy_peak"
+unlock_requirement: "realm_5_entered"

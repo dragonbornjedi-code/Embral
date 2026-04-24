@@ -1,0 +1,17 @@
+{
+  "quest_id": "RS_FOO_002",
+  "realm": "realm_4",
+  "npc_giver": "root_food",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "nutrition_food",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Sort the 4 vegetables into the harvest basket",
+      "objective_type": "interact",
+      "objective_value": 4
+    }
+  ],
+  "scaffolding": "Vegetables grow in the dirt! Look for the green tops."
+}

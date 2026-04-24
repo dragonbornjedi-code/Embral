@@ -1,0 +1,12 @@
+npc_id: spire_numbers
+display_name: "Count Cloud"
+realm: the_spire
+subcategory: number_sense
+npc_type: teacher
+description: "A fluffy cloud that loves counting passing birds"
+fallback_lines:
+  - "How many birds can you see from up here, {player}?"
+  - "Counting is like building a ladder to the stars!"
+no_quest_line: "Your number skills are reaching the sky, {player}!"
+preferred_terrain: "floating_platforms"
+unlock_requirement: "realm_5_entered"

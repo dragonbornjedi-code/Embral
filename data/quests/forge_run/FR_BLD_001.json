@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_BLD_001",
+  "realm": "realm_3",
+  "npc_giver": "forge_build",
+  "research_basis": "Narrative Context",
+  "developmental_target": "fine_motor_building",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Build by stacking 5 stone blocks",
+      "objective_type": "interact",
+      "objective_value": 5
+    }
+  ],
+  "scaffolding": "Place each block carefully on top of the one below."
+}

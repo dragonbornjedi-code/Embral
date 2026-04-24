@@ -1,0 +1,12 @@
+npc_id: ember_ember
+display_name: "Ember"
+realm: ember_hollow
+subcategory: emotion_identification
+npc_type: teacher
+description: "A warm fire wisp who helps children name what they feel"
+fallback_lines:
+  - "Hello {player}! Can you tell me how you're feeling today?"
+  - "Every feeling is valid. Let's explore them together!"
+no_quest_line: "You're doing so well with your feelings, {player}!"
+preferred_terrain: "warm_stone"
+unlock_requirement: "realm_1_entered"

@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_THR_001",
+  "realm": "realm_3",
+  "npc_giver": "forge_throw",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "gross_motor_throwing",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Toss the 3 ash-balls into the giant bucket",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The bucket is near the smoking chimney. Aim for the center!"
+}

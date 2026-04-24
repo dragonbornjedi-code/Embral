@@ -1,0 +1,17 @@
+{
+  "quest_id": "RS_TIM_001",
+  "realm": "realm_4",
+  "npc_giver": "root_time",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "time_routines",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the morning sun-clock to wake up the village",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The sun-clock is at the very top of the hill."
+}

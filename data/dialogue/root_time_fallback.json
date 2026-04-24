@@ -1,0 +1,12 @@
+{
+  "npc_id": "root_time",
+  "lines": [
+    "What time is it in our village, {player}?",
+    "Routines help us know what's coming next in our day.",
+    "Time flies when you're having fun with friends, {player}!"
+  ],
+  "no_quest_line": "You're a master of your daily routine, {player}!",
+  "quest_offer_line": "The village clocks are acting silly. Will you help me set them right, {player}?",
+  "quest_progress_line": "Tick-tock, tick-tock! You're getting the hang of it, {player}!",
+  "quest_complete_line": "Perfect timing! Now the whole village knows exactly what to do. Thank you, {player}."
+}

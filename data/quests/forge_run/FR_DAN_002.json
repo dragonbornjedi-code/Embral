@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_DAN_002",
+  "realm": "realm_3",
+  "npc_giver": "forge_dance",
+  "research_basis": "Polyvagal Theory",
+  "developmental_target": "dance_movement",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Keep dancing until the fire-drums stop beating",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Listen to the fast rhythm and keep your feet moving!"
+}

@@ -1,0 +1,12 @@
+{
+  "npc_id": "drift_music",
+  "lines": [
+    "Clap along with the raindrops, {player}!",
+    "Music is the heartbeat of our world.",
+    "You have a song in your step today, {player}!"
+  ],
+  "no_quest_line": "You have a wonderful sense of rhythm, {player}!",
+  "quest_offer_line": "I'm trying to compose a new melody. Will you help me find the missing notes, {player}?",
+  "quest_progress_line": "Do-re-mi... you've got a great ear for music, {player}!",
+  "quest_complete_line": "What a beautiful song we've made! Thank you for the music, {player}."
+}

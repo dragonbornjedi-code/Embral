@@ -1,0 +1,12 @@
+{
+  "npc_id": "ember_soothe",
+  "lines": [
+    "Breathe in with me, {player}. Deep and slow.",
+    "When things feel too fast, we can find our calm center.",
+    "You're doing such a good job of staying calm, {player}."
+  ],
+  "no_quest_line": "You are a master of calm, {player}!",
+  "quest_offer_line": "Could you help me find some peaceful things, {player}?",
+  "quest_progress_line": "Take a deep breath and keep going, {player}. You've got this!",
+  "quest_complete_line": "That was wonderful, {player}. I feel so much calmer now!"
+}

@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_PLT_002",
+  "realm": "realm_5",
+  "npc_giver": "spire_plants",
+  "research_basis": "Narrative Context",
+  "developmental_target": "plants_botany",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help the flower open by bringing it a raindrop",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Raindrops are caught in the big leaves near the waterfall."
+}

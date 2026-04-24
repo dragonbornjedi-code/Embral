@@ -1,0 +1,12 @@
+npc_id: tide_story
+display_name: "Narrative Nautilus"
+realm: tidemark
+subcategory: storytelling
+npc_type: teacher
+description: "A wise shell who remembers all the ocean's tales"
+fallback_lines:
+  - "Once upon a time, there was a brave explorer named {player}..."
+  - "Tell me, what happens next in our big adventure?"
+no_quest_line: "You're a master storyteller, {player}!"
+preferred_terrain: "deep_blue"
+unlock_requirement: "realm_2_entered"

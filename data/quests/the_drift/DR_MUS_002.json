@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_MUS_002",
+  "realm": "realm_6",
+  "npc_giver": "drift_music",
+  "research_basis": "Narrative Context",
+  "developmental_target": "music_rhythm_beat",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 2 musical notes from the high ledge",
+      "objective_type": "collect",
+      "objective_value": 2
+    }
+  ],
+  "scaffolding": "The notes are glowing white and make a sweet sound."
+}

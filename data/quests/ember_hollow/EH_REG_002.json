@@ -1,0 +1,17 @@
+{
+  "quest_id": "EH_REG_002",
+  "realm": "realm_1",
+  "npc_giver": "ember_soothe",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "self_regulation",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the humming bell to wake up the sleepy embers",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "Listen for the gentle 'ding' sound near the tall rocks."
+}

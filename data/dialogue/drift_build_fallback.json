@@ -1,0 +1,12 @@
+{
+  "npc_id": "drift_build",
+  "lines": [
+    "Shall we build a bridge to the next island, {player}?",
+    "Anything is possible when we work together!",
+    "You're a very clever inventor, {player}!"
+  ],
+  "no_quest_line": "You're an amazing inventor, {player}!",
+  "quest_offer_line": "My maker-station is all out of gizmos. Could you help me find some more, {player}?",
+  "quest_progress_line": "One gizmo here, two gadgets there... you're doing great, {player}!",
+  "quest_complete_line": "Fantastic! Now I can finish my latest invention. Thank you, {player}!"
+}

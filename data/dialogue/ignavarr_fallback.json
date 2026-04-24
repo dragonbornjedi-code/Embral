@@ -1,9 +1,17 @@
 {
   "npc_id": "ignavarr",
   "lines": [
-    "Welcome to Embral, Ezra! I am Ignavarr.",
-    "The world is full of wonder if you know where to look.",
-    "Are you ready for your first adventure?"
+    "Welcome to Hearthveil, the heart of our world, {player}!",
+    "I am Ignavarr, and I have seen many explorers, but none quite like you.",
+    "There are seven realms to explore, each with its own wonders and lessons.",
+    "Your dragon companion is waiting for you. Are you ready for adventure?",
+    "Remember, {player}, even the smallest step is part of a great journey.",
+    "Wisdom is found in the questions we ask, not just the answers we find.",
+    "The portals are humming with energy. Which realm calls to you today?",
+    "Hearthveil will always be here to welcome you home, {player}."
   ],
-  "no_quest_line": "You're doing great! Keep exploring."
+  "no_quest_line": "You're doing wonderfully, {player}! Keep exploring and learning.",
+  "quest_offer_line": "I have an important task that only a brave explorer like you can handle, {player}.",
+  "quest_progress_line": "You're making great progress! Hearthveil is proud of you, {player}.",
+  "quest_complete_line": "Magnificent work, {player}! You've truly earned your place among our legends."
 }

@@ -1,0 +1,17 @@
+{
+  "quest_id": "RS_FOO_001",
+  "realm": "realm_4",
+  "npc_giver": "root_food",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "nutrition_food",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Gather 5 red apples from the high branches",
+      "objective_type": "collect",
+      "objective_value": 5
+    }
+  ],
+  "scaffolding": "Look for the trees with the bright red spots in the leaves."
+}

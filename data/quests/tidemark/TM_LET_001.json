@@ -1,0 +1,17 @@
+{
+  "quest_id": "TM_LET_001",
+  "realm": "realm_2",
+  "npc_giver": "tide_letter",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "letter_recognition",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the floating 'A' near the lighthouse",
+      "objective_type": "collect",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The 'A' looks like a little tent with a belt!"
+}

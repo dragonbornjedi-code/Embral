@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_ART_002",
+  "realm": "realm_6",
+  "npc_giver": "drift_draw",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "visual_art_drawing",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Help Draw by finding the lost paintbrush",
+      "objective_type": "interact",
+      "objective_value": 1
+    }
+  ],
+  "scaffolding": "The paintbrush is near the big rainbow arch."
+}

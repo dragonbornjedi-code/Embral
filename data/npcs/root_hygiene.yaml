@@ -1,0 +1,12 @@
+npc_id: root_hygiene
+display_name: "Sparkle Sprout"
+realm: rootstead
+subcategory: personal_hygiene
+npc_type: teacher
+description: "A very clean sprout who loves washing and brushing"
+fallback_lines:
+  - "Did you wash your hands after exploring, {player}?"
+  - "Brushing is like giving your teeth a little spa day!"
+no_quest_line: "You're as clean and bright as a new leaf, {player}!"
+preferred_terrain: "sunny_garden"
+unlock_requirement: "realm_4_entered"

@@ -1,0 +1,12 @@
+{
+  "npc_id": "root_hygiene",
+  "lines": [
+    "Did you wash your hands after exploring, {player}?",
+    "Brushing is like giving your teeth a little spa day!",
+    "You look so fresh and clean today, {player}!"
+  ],
+  "no_quest_line": "You're as clean and bright as a new leaf, {player}!",
+  "quest_offer_line": "Oh dear, some bubbles have escaped! Will you help me catch them, {player}?",
+  "quest_progress_line": "Sparkle, sparkle! You're a master of cleanliness, {player}!",
+  "quest_complete_line": "All clean! Thank you for helping me keep everything sparkly, {player}."
+}

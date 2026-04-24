@@ -1,0 +1,17 @@
+{
+  "quest_id": "SP_WEA_002",
+  "realm": "realm_5",
+  "npc_giver": "spire_weather",
+  "research_basis": "Vygotsky ZPD",
+  "developmental_target": "weather_earth_science",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Catch 3 snowflakes before they melt",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "Snowflakes are white and fall slowly from the high clouds."
+}

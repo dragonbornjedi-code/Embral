@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_THR_002",
+  "realm": "realm_3",
+  "npc_giver": "forge_throw",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "gross_motor_throwing",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Hit the 4 moving targets with your ember-seeds",
+      "objective_type": "collect",
+      "objective_value": 4
+    }
+  ],
+  "scaffolding": "Watch where the targets go before you throw!"
+}

@@ -1,0 +1,12 @@
+{
+  "npc_id": "forge_build",
+  "lines": [
+    "One block at a time, {player}! What shall we build?",
+    "Building is like a puzzle for your hands.",
+    "You're making something amazing, {player}!"
+  ],
+  "no_quest_line": "You're a master builder, {player}!",
+  "quest_offer_line": "This machine is missing some parts. Could you help me put it back together, {player}?",
+  "quest_progress_line": "Click, clack! It's starting to look great! Keep going, {player}!",
+  "quest_complete_line": "It's perfect! You're a natural-born builder, {player}. Look at it go!"
+}

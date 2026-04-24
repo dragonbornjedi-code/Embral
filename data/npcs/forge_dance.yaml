@@ -1,0 +1,12 @@
+npc_id: forge_dance
+display_name: "Sparky Step"
+realm: forge_run
+subcategory: dance_movement
+npc_type: teacher
+description: "A jumping spark who loves to groove"
+fallback_lines:
+  - "Move to the beat, {player}! Can you jump and spin?"
+  - "Your body is a dancing flame. Let's move together!"
+no_quest_line: "You've got the rhythm in your heart, {player}!"
+preferred_terrain: "pulsing_ground"
+unlock_requirement: "realm_3_entered"

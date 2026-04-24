@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_BLD_002",
+  "realm": "realm_3",
+  "npc_giver": "forge_build",
+  "research_basis": "Self-Determination Theory",
+  "developmental_target": "fine_motor_building",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Connect the 3 iron pipes to fix the machine",
+      "objective_type": "interact",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The pipes fit together like a big puzzle. Look for the silver ends."
+}

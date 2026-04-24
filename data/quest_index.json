@@ -1,0 +1,270 @@
+{
+  "version": "1.0.0",
+  "by_realm": {
+    "realm_0": [
+      "hv_ignavarr_tutorial_01"
+    ],
+    "realm_1": [
+      "EH_EMO_001",
+      "EH_EMO_002",
+      "EH_EMP_001",
+      "EH_EMP_002",
+      "EH_KIN_001",
+      "EH_KIN_002",
+      "EH_REG_001",
+      "EH_REG_002"
+    ],
+    "realm_2": [
+      "TM_LET_001",
+      "TM_LET_002",
+      "TM_PHO_001",
+      "TM_PHO_002",
+      "TM_SIG_001",
+      "TM_SIG_002",
+      "TM_STR_001",
+      "TM_STR_002"
+    ],
+    "realm_3": [
+      "FR_BAL_001",
+      "FR_BAL_002",
+      "FR_BLD_001",
+      "FR_BLD_002",
+      "FR_DAN_001",
+      "FR_DAN_002",
+      "FR_THR_001",
+      "FR_THR_002"
+    ],
+    "realm_4": [
+      "RS_CHO_001",
+      "RS_CHO_002",
+      "RS_FOO_001",
+      "RS_FOO_002",
+      "RS_HYG_001",
+      "RS_HYG_002",
+      "RS_TIM_001",
+      "RS_TIM_002"
+    ],
+    "realm_5": [
+      "SP_MAT_001",
+      "SP_MAT_002",
+      "SP_NUM_001",
+      "SP_NUM_002",
+      "SP_PLT_001",
+      "SP_PLT_002",
+      "SP_WEA_001",
+      "SP_WEA_002"
+    ],
+    "realm_6": [
+      "DR_ART_001",
+      "DR_ART_002",
+      "DR_BLD_001",
+      "DR_BLD_002",
+      "DR_MUS_001",
+      "DR_MUS_002",
+      "DR_STR_001",
+      "DR_STR_002"
+    ]
+  },
+  "by_subcategory": {
+    "emotion_identification": [
+      "EH_EMO_001",
+      "EH_EMO_002"
+    ],
+    "empathy_perspective": [
+      "EH_EMP_001",
+      "EH_EMP_002"
+    ],
+    "kindness_cooperation": [
+      "EH_KIN_001",
+      "EH_KIN_002"
+    ],
+    "self_regulation": [
+      "EH_REG_001",
+      "EH_REG_002"
+    ],
+    "letter_recognition": [
+      "TM_LET_001",
+      "TM_LET_002"
+    ],
+    "phonics_letter_sound": [
+      "TM_PHO_001",
+      "TM_PHO_002"
+    ],
+    "sight_words": [
+      "TM_SIG_001",
+      "TM_SIG_002"
+    ],
+    "storytelling": [
+      "TM_STR_001",
+      "TM_STR_002"
+    ],
+    "gross_motor_balance": [
+      "FR_BAL_001",
+      "FR_BAL_002"
+    ],
+    "fine_motor_building": [
+      "FR_BLD_001",
+      "FR_BLD_002"
+    ],
+    "dance_movement": [
+      "FR_DAN_001",
+      "FR_DAN_002"
+    ],
+    "gross_motor_throwing": [
+      "FR_THR_001",
+      "FR_THR_002"
+    ],
+    "household_chores": [
+      "RS_CHO_001",
+      "RS_CHO_002"
+    ],
+    "nutrition_food": [
+      "RS_FOO_001",
+      "RS_FOO_002"
+    ],
+    "personal_hygiene": [
+      "RS_HYG_001",
+      "RS_HYG_002"
+    ],
+    "time_routines": [
+      "RS_TIM_001",
+      "RS_TIM_002"
+    ],
+    "addition_subtraction": [
+      "SP_MAT_001",
+      "SP_MAT_002"
+    ],
+    "number_sense": [
+      "SP_NUM_001",
+      "SP_NUM_002"
+    ],
+    "plants_botany": [
+      "SP_PLT_001",
+      "SP_PLT_002"
+    ],
+    "weather_earth_science": [
+      "SP_WEA_001",
+      "SP_WEA_002"
+    ],
+    "visual_art_drawing": [
+      "DR_ART_001",
+      "DR_ART_002"
+    ],
+    "building_construction": [
+      "DR_BLD_001",
+      "DR_BLD_002"
+    ],
+    "music_rhythm_beat": [
+      "DR_MUS_001",
+      "DR_MUS_002"
+    ],
+    "storytelling_comics": [
+      "DR_STR_001",
+      "DR_STR_002"
+    ],
+    "spatial_navigation_and_interaction": [
+      "hv_ignavarr_tutorial_01"
+    ]
+  },
+  "by_npc": {
+    "ember_ember": [
+      "EH_EMO_001",
+      "EH_EMO_002"
+    ],
+    "ember_mirror": [
+      "EH_EMP_001",
+      "EH_EMP_002"
+    ],
+    "ember_kind": [
+      "EH_KIN_001",
+      "EH_KIN_002"
+    ],
+    "ember_soothe": [
+      "EH_REG_001",
+      "EH_REG_002"
+    ],
+    "tide_letter": [
+      "TM_LET_001",
+      "TM_LET_002"
+    ],
+    "tide_sound": [
+      "TM_PHO_001",
+      "TM_PHO_002"
+    ],
+    "tide_word": [
+      "TM_SIG_001",
+      "TM_SIG_002"
+    ],
+    "tide_story": [
+      "TM_STR_001",
+      "TM_STR_002"
+    ],
+    "forge_balance": [
+      "FR_BAL_001",
+      "FR_BAL_002"
+    ],
+    "forge_build": [
+      "FR_BLD_001",
+      "FR_BLD_002"
+    ],
+    "forge_dance": [
+      "FR_DAN_001",
+      "FR_DAN_002"
+    ],
+    "forge_throw": [
+      "FR_THR_001",
+      "FR_THR_002"
+    ],
+    "root_chores": [
+      "RS_CHO_001",
+      "RS_CHO_002"
+    ],
+    "root_food": [
+      "RS_FOO_001",
+      "RS_FOO_002"
+    ],
+    "root_hygiene": [
+      "RS_HYG_001",
+      "RS_HYG_002"
+    ],
+    "root_time": [
+      "RS_TIM_001",
+      "RS_TIM_002"
+    ],
+    "spire_math": [
+      "SP_MAT_001",
+      "SP_MAT_002"
+    ],
+    "spire_numbers": [
+      "SP_NUM_001",
+      "SP_NUM_002"
+    ],
+    "spire_plants": [
+      "SP_PLT_001",
+      "SP_PLT_002"
+    ],
+    "spire_weather": [
+      "SP_WEA_001",
+      "SP_WEA_002"
+    ],
+    "drift_draw": [
+      "DR_ART_001",
+      "DR_ART_002"
+    ],
+    "drift_build": [
+      "DR_BLD_001",
+      "DR_BLD_002"
+    ],
+    "drift_music": [
+      "DR_MUS_001",
+      "DR_MUS_002"
+    ],
+    "drift_story": [
+      "DR_STR_001",
+      "DR_STR_002"
+    ],
+    "ignavarr": [
+      "hv_ignavarr_tutorial_01"
+    ]
+  }
+}

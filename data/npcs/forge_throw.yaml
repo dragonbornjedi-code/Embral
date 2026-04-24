@@ -1,0 +1,12 @@
+npc_id: forge_throw
+display_name: "Aiming Ash"
+realm: forge_run
+subcategory: gross_motor_throwing
+npc_type: teacher
+description: "A puff of ash that helps with aim and focus"
+fallback_lines:
+  - "Ready... set... aim! Can you reach that target, {player}?"
+  - "It's not about how hard you throw, but where you aim."
+no_quest_line: "Your aim is getting sharper every day, {player}!"
+preferred_terrain: "dusty_plains"
+unlock_requirement: "realm_3_entered"

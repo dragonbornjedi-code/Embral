@@ -1,0 +1,17 @@
+{
+  "quest_id": "FR_DAN_001",
+  "realm": "realm_3",
+  "npc_giver": "forge_dance",
+  "research_basis": "Multi-Sensory Encoding",
+  "developmental_target": "dance_movement",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Follow the dance steps: jump, clap, spin",
+      "objective_type": "interact",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "Watch the patterns on the ground for when to move!"
+}

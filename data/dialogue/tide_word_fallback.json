@@ -1,0 +1,12 @@
+{
+  "npc_id": "tide_word",
+  "lines": [
+    "Look! I found a 'the' hiding in the kelp, {player}!",
+    "Words are everywhere if you know where to swim.",
+    "Don't let the tricky words get away, {player}!"
+  ],
+  "no_quest_line": "You're catching so many words, {player}!",
+  "quest_offer_line": "I'm making a word-collection. Would you like to help me find some, {player}?",
+  "quest_progress_line": "You're a very fast word-catcher, {player}! Keep it up!",
+  "quest_complete_line": "Perfect! These words will look so nice in my collection. Thank you, {player}!"
+}

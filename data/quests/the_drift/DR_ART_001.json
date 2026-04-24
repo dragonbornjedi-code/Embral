@@ -1,0 +1,17 @@
+{
+  "quest_id": "DR_ART_001",
+  "realm": "realm_6",
+  "npc_giver": "drift_draw",
+  "research_basis": "Spaced Repetition",
+  "developmental_target": "visual_art_drawing",
+  "age_range": "4-8",
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Find the 3 hidden colors in the mist",
+      "objective_type": "collect",
+      "objective_value": 3
+    }
+  ],
+  "scaffolding": "The colors are bright red, blue, and yellow."
+}

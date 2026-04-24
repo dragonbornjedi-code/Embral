@@ -1,0 +1,12 @@
+{
+  "npc_id": "tide_story",
+  "lines": [
+    "Once upon a time, there was a brave explorer named {player}...",
+    "Tell me, what happens next in our big adventure?",
+    "Every story needs a hero like you, {player}."
+  ],
+  "no_quest_line": "You're a master storyteller, {player}!",
+  "quest_offer_line": "I've lost the middle of my favorite tale! Could you help me find it, {player}?",
+  "quest_progress_line": "And then... and then...? You're doing so well, {player}!",
+  "quest_complete_line": "What a wonderful ending! You're a brilliant storyteller, {player}."
+}

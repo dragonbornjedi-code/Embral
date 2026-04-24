@@ -1,0 +1,12 @@
+npc_id: root_chores
+display_name: "Helper Hedge"
+realm: rootstead
+subcategory: household_chores
+npc_type: teacher
+description: "A tidy little hedge who loves helping around the house"
+fallback_lines:
+  - "Shall we tidy up the garden tools, {player}?"
+  - "Many hands make the work fly by like a breeze."
+no_quest_line: "The village looks so neat because of you, {player}!"
+preferred_terrain: "tidy_path"
+unlock_requirement: "realm_4_entered"
