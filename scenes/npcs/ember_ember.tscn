@@ -2,10 +2,8 @@
 [ext_resource type="Script" path="res://scripts/npcs/base_teacher_npc.gd" id="1_script"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mesh"]
-material = SubResource("StandardMaterial3D_mat")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mat"]
-albedo_color = Color(1.0, 0.3, 0.1)
+radius = 0.5
+height = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.5
@@ -17,8 +15,6 @@ radius = 2.5
 [node name="NPC" type="CharacterBody3D"]
 script = ExtResource("1_script")
 npc_id = "ember_ember"
-display_name = "Ember"
-realm = "ember_hollow"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_mesh")
@@ -26,13 +22,13 @@ mesh = SubResource("CapsuleMesh_mesh")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_player")
 
-[node name="InteractionArea" type="Area3D" parent="."]
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+[node name="ProximityZone" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProximityZone"]
 shape = SubResource("SphereShape3D_prox")
 
 [node name="NameLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
-text = "Ember"
+text = "ember_ember"
 
 [node name="InteractPrompt" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)

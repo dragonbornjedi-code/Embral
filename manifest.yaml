@@ -1,8 +1,8 @@
-# EMBRAL — Manifest v2.0
+# Embral — Manifest v2.0
 # RULE: Register here BEFORE creating any file.
 # RULE: Every script, scene, data file, and asset gets an entry.
 # RULE: If it's not here, it doesn't belong in the repo.
-# Last updated: 2026-04-20
+# Last updated: 2026-04-23
 
 project:
   name: Embral
@@ -96,11 +96,6 @@ plugins:
       DialogicGameHandler loadable at runtime. dialogic_stub.gd bridges to real
       timelines when available, falls back to JSON when not.
 
-  # REMOVED — do not re-add
-  # godot_sqlite was added by Windsurf without authorization.
-  # Embral uses Godot's built-in JSON + FileAccess for all persistence.
-  # Removing it fixed the startup GDExtension errors.
-
 # ═══════════════════════════════════════════
 # AUTOLOADS — registered in project.godot
 # ═══════════════════════════════════════════
@@ -148,8 +143,10 @@ autoloads:
       Never fails silently — always returns SOME dialogue.
     status: active
 
-  # REMOVED — do not re-add
-  # sqlite_stub was added by Windsurf. SQLite is not part of Embral.
+  transition_manager:
+    path: scripts/autoloads/transition_manager.gd
+    purpose: Global scene transition controller with fade effects.
+    status: active
 
 # ═══════════════════════════════════════════
 # BOOT SYSTEM
@@ -176,18 +173,18 @@ player_system:
   player_profile:
     path: scripts/models/player_profile.gd
     purpose: Data class. Player stats, XP, level, gold, quest completion.
-    status: planned
+    status: active
 
   party_manager:
     path: scripts/player/party_manager.gd
     purpose: >
       Manages traveling party. Max 6 slots: player + companion + 3 player wisps
       + 3 companion wisps. World renders max 4 entities simultaneously.
-    status: planned
+    status: active
 
-  party_manager:
-    path: scripts/player/party_manager.gd
-    purpose: Manages the player's traveling party (Wisps/Companion).
+  player_controller:
+    path: scripts/player/player_controller.gd
+    purpose: Input handling. Reads from HardwareManager. Never detects hardware directly.
     status: active
 
 # ═══════════════════════════════════════════
@@ -198,27 +195,29 @@ creature_system:
   wisp_data:
     path: scripts/models/wisp_data.gd
     purpose: Data class for a single Wisp instance. Level, element, abilities, XP.
-    status: planned
+    status: active
 
   pet_data:
     path: scripts/models/pet_data.gd
     purpose: Data class for a single Pet instance. Happiness, level, bonuses.
-    status: planned
+    status: active
 
   companion_data:
     path: scripts/models/companion_data.gd
     purpose: Data class for a Companion (second avatar). Name, appearance, wisps.
-    status: planned
+    status: active
 
   wisp_entity:
-    path: scripts/npcs/wisp_entity.gd
-    purpose: In-world Wisp visual entity. Follows player slot 1 in overworld.
-    status: planned
+    path: scenes/npcs/wisp_entity.tscn
+    script: scripts/npcs/wisp_entity.gd
+    purpose: Visual representation of a Wisp in the overworld.
+    status: active
 
   pet_minigame:
-    path: scripts/ui/pet_minigame.gd
-    purpose: Interactive pet area at Player's House. Feed, play, groom interactions.
-    status: planned
+    path: scenes/ui/pet_minigame.tscn
+    script: scripts/ui/pet_minigame.gd
+    purpose: Interactive pet care area.
+    status: active
 
   wisp_types:
     ember:   {element: fire,     realm: ember_hollow,  visual_color: "#FF6B1A"}
@@ -255,80 +254,16 @@ quest_system:
     purpose: Handles XP grants, gold grants, wisp egg drops, item unlocks.
     status: planned
 
-  quest_data_files:
-    base_path: data/quests/{realm}/
-    naming: "{realm_prefix}_{category}_{###}.json"
-    example: "EH_EMO_001.json"
-    status: tutorial_active
-    files:
-      - hearthveil/hv_ignavarr_tutorial_01.json
-      - ember_hollow/EH_EMO_001.json
-      - ember_hollow/EH_EMO_002.json
-      - ember_hollow/EH_REG_001.json
-      - ember_hollow/EH_REG_002.json
-      - ember_hollow/EH_EMP_001.json
-      - ember_hollow/EH_EMP_002.json
-      - ember_hollow/EH_KIN_001.json
-      - ember_hollow/EH_KIN_002.json
-      - tidemark/TM_LET_001.json
-      - tidemark/TM_LET_002.json
-      - tidemark/TM_PHO_001.json
-      - tidemark/TM_PHO_002.json
-      - tidemark/TM_SIG_001.json
-      - tidemark/TM_SIG_002.json
-      - tidemark/TM_STR_001.json
-      - tidemark/TM_STR_002.json
-      - forge_run/FR_BAL_001.json
-      - forge_run/FR_BAL_002.json
-      - forge_run/FR_THR_001.json
-      - forge_run/FR_THR_002.json
-      - forge_run/FR_BLD_001.json
-      - forge_run/FR_BLD_002.json
-      - forge_run/FR_DAN_001.json
-      - forge_run/FR_DAN_002.json
-      - rootstead/RS_HYG_001.json
-      - rootstead/RS_HYG_002.json
-      - rootstead/RS_FOO_001.json
-      - rootstead/RS_FOO_002.json
-      - rootstead/RS_CHO_001.json
-      - rootstead/RS_CHO_002.json
-      - rootstead/RS_TIM_001.json
-      - rootstead/RS_TIM_002.json
-      - the_spire/SP_NUM_001.json
-      - the_spire/SP_NUM_002.json
-      - the_spire/SP_MAT_001.json
-      - the_spire/SP_MAT_002.json
-      - the_spire/SP_PLT_001.json
-      - the_spire/SP_PLT_002.json
-      - the_spire/SP_WEA_001.json
-      - the_spire/SP_WEA_002.json
-      - the_drift/DR_ART_001.json
-      - the_drift/DR_ART_002.json
-      - the_drift/DR_MUS_001.json
-      - the_drift/DR_MUS_002.json
-      - the_drift/DR_STR_001.json
-      - the_drift/DR_STR_002.json
-      - the_drift/DR_BLD_001.json
-      - the_drift/DR_BLD_002.json
-
   world_scripts:
     coin: {path: scripts/world/coin.gd, status: active}
 
 # ═══════════════════════════════════════════
 # DUNGEON SYSTEM
-# 2D platformer — separate from 3D overworld
 # ═══════════════════════════════════════════
 dungeon_system:
   dungeon_base:
     path: scripts/dungeon/dungeon_base.gd
     status: active
-  dungeons:
-    mirror_maze: {path: scenes/dungeons/mirror_maze.tscn, status: active}
-    word_caverns: {path: scenes/dungeons/word_caverns.tscn, status: active}
-    obstacle_forge: {path: scenes/dungeons/obstacle_forge.tscn, status: active}
-    daily_tower: {path: scenes/dungeons/daily_tower.tscn, status: active}
-    gear_gauntlet: {path: scenes/dungeons/gear_gauntlet.tscn, status: active}
-    curiosity_cave: {path: scenes/dungeons/curiosity_cave.tscn, status: active}
   dungeon_manager:
     path: scripts/dungeon/dungeon_manager.gd
     purpose: 2D dungeon scene controller. Handles room transitions, enemy spawns.
@@ -337,27 +272,22 @@ dungeon_system:
   wisp_battle:
     path: scripts/dungeon/wisp_battle.gd
     purpose: Turn-based Wisp Crystal battle system. Educational check per encounter.
-    status: planned
+    status: active
 
   crystal_system:
     path: scripts/dungeon/crystal_system.gd
     purpose: Crystal types, type effectiveness table, combo calculations.
-    status: planned
+    status: active
 
-  dungeon_enemy:
-    path: scripts/dungeon/dungeon_enemy.gd
-    purpose: Base enemy class for dungeon encounters. Extends for each wisp type.
-    status: planned
+  wisp_roster:
+    path: scripts/dungeon/wisp_roster.gd
+    purpose: Utility class to manage Wisp roster persistence.
+    status: active
 
-  mini_boss:
-    path: scripts/dungeon/mini_boss.gd
-    purpose: Stronger encounter. 1-2 per dungeon run. Random placement.
-    status: planned
-
-  dungeon_boss:
-    path: scripts/dungeon/dungeon_boss.gd
-    purpose: End-of-dungeon boss. Multi-phase. Phase 1 battle, Phase 2 puzzle.
-    status: planned
+  wisp_encounter:
+    path: scripts/dungeon/wisp_encounter.gd
+    purpose: Handles trigger logic for Wisp battles.
+    status: active
 
 # ═══════════════════════════════════════════
 # NPC SYSTEM
@@ -384,214 +314,49 @@ npc_system:
     realm: hearthveil
     status: active
 
-  wisp_roster:
-    path: scripts/dungeon/wisp_roster.gd
-    purpose: Utility class to manage Wisp roster persistence.
-    status: active
-
-  models:
-    player_profile: {path: scripts/models/player_profile.gd, status: active}
-    wisp_data: {path: scripts/models/wisp_data.gd, status: active}
-    pet_data: {path: scripts/models/pet_data.gd, status: active}
-    companion_data: {path: scripts/models/companion_data.gd, status: active}
-    npc_home_data: {path: scripts/models/npc_home_data.gd, status: active}
-    quest_data: {path: scripts/models/quest_data.gd, status: planned}
-
-  dialogue_fallbacks:
-    path: data/dialogue/{npc_id}_fallback.json
-    purpose: Fallback dialogue when Dialogic unavailable or timeline missing.
-    format: '{"npc_id":"...","lines":["..."],"no_quest_line":"..."}'
-    status: active
-    files:
-      - data/dialogue/ember_ember_fallback.json
-      - data/dialogue/ember_soothe_fallback.json
-      - data/dialogue/ember_mirror_fallback.json
-      - data/dialogue/ember_kind_fallback.json
-      - data/dialogue/tide_letter_fallback.json
-      - data/dialogue/tide_sound_fallback.json
-      - data/dialogue/tide_word_fallback.json
-      - data/dialogue/tide_story_fallback.json
-      - data/dialogue/forge_balance_fallback.json
-      - data/dialogue/forge_throw_fallback.json
-      - data/dialogue/forge_build_fallback.json
-      - data/dialogue/forge_dance_fallback.json
-      - data/dialogue/root_hygiene_fallback.json
-      - data/dialogue/root_food_fallback.json
-      - data/dialogue/root_chores_fallback.json
-      - data/dialogue/root_time_fallback.json
-      - data/dialogue/spire_numbers_fallback.json
-      - data/dialogue/spire_math_fallback.json
-      - data/dialogue/spire_plants_fallback.json
-      - data/dialogue/spire_weather_fallback.json
-      - data/dialogue/drift_draw_fallback.json
-      - data/dialogue/drift_music_fallback.json
-      - data/dialogue/drift_story_fallback.json
-      - data/dialogue/drift_build_fallback.json
-      - data/dialogue/ignavarr_fallback.json
-
-  wisp_encounter:
-    path: scripts/dungeon/wisp_encounter.gd
-    purpose: Handles trigger logic for Wisp battles.
-    status: active
-
-  wisp_entity:
-    path: scenes/npcs/wisp_entity.tscn
-    script: scripts/npcs/wisp_entity.gd
-    purpose: Visual representation of a Wisp in the overworld.
-    status: active
-
   builders_guild_npc:
     path: scenes/npcs/builders_guild_npc.tscn
     script: scripts/npcs/builders_guild_npc.gd
     purpose: Guides player to fulfill NPC home preferences.
     status: active
 
-  teachers:
-    hearthveil:
-      ignavarr: {status: planned, subcategory: narrator_mayor}
-
-    ember_hollow:
-      subcategories: [emotion_identification, empathy_perspective,
-                      self_regulation, conflict_resolution, kindness_cooperation,
-                      emotional_expression, sensory_awareness, sensory_toolkit,
-                      friendship_social, boundaries_consent, mindfulness, big_feelings]
-      npc_count: 12
-      starter_npcs: 4
-      status: design_phase
-
-    tidemark:
-      subcategories: [letter_recognition, phonics_letter_sound, phonological_rhyming,
-                      sight_words, reading_comprehension, vocabulary, storytelling,
-                      listening_directions, expressive_language, spelling, handwriting,
-                      social_language]
-      npc_count: 12
-      starter_npcs: 4
-      status: design_phase
-
-    forge_run:
-      subcategories: [gross_motor_balance, gross_motor_throwing, gross_motor_climbing,
-                      fine_motor_pencil, fine_motor_cutting, fine_motor_building,
-                      body_awareness, exercise_habits, yoga_stretch,
-                      sports_teamwork, dance_movement, bilateral_coordination]
-      npc_count: 12
-      starter_npcs: 4
-      status: design_phase
-
-    rootstead:
-      subcategories: [personal_hygiene, dressing_independence, nutrition_food,
-                      cooking_preparation, household_chores, basic_safety,
-                      money_economics, time_routines, organization_responsibility,
-                      community_helpers, environment_navigation,
-                      pet_plant_care, multi_step_directions]
-      npc_count: 13
-      starter_npcs: 4
-      status: design_phase
-
-    the_spire:
-      subcategories: [scientific_method, plants_botany, animals_biology,
-                      weather_earth_science, simple_physics, number_sense,
-                      addition_subtraction, patterns_sequences, shapes_geometry,
-                      time_calendar, multiplication_division_intro, geography,
-                      technology_how_things_work, environmental_science,
-                      logic_cause_effect]
-      npc_count: 15
-      starter_npcs: 4
-      status: design_phase
-
-    the_drift:
-      subcategories: [visual_art_drawing, painting_color_theory, music_rhythm_beat,
-                      singing_vocal, storytelling_comics, building_construction,
-                      drama_roleplay, dance_expression, crafting_making,
-                      invention_problem_solving, growth_mindset, flexible_thinking]
-      npc_count: 12
-      starter_npcs: 4
-      status: design_phase
-
-  npc_definitions:
-    ember_hollow:
-      - data/npcs/ember_ember.yaml
-      - data/npcs/ember_soothe.yaml
-      - data/npcs/ember_mirror.yaml
-      - data/npcs/ember_kind.yaml
-
-# ═══════════════════════════════════════════
-# FAMILY SYSTEMS
-# ═══════════════════════════════════════════
-family_systems:
-  nightly_review:
-    path: scripts/ui/nightly_review.gd
-    purpose: Parent + Ezra evening review portal. Ignavarr hosts. Raid Point mechanic.
-    status: planned
-
-  weekend_family_raid:
-    path: scripts/family/family_raid_manager.gd
-    purpose: Weekend family activity system. Triggered at 3 Raid Points/week.
-    status: planned
-
-  family_raid_shop:
-    path: scripts/ui/family_raid_shop.gd
-    purpose: Exclusive shop. Only accessible after Family Raid completion.
-    status: planned
-
-  mini_game_manager:
-    path: scripts/family/mini_game_manager.gd
-    purpose: Manages local multiplayer mini-games. 1-4 players. Play Points.
-    status: planned
-
-  mini_games:
-    wisp_match:    {path: scripts/minigames/wisp_match.gd,    status: planned}
-    word_catch:    {path: scripts/minigames/word_catch.gd,    status: planned}
-    number_race:   {path: scripts/minigames/number_race.gd,   status: planned}
-    emotion_sort:  {path: scripts/minigames/emotion_sort.gd,  status: planned}
-    balance_trial: {path: scripts/minigames/balance_trial.gd, status: planned, requires: wii_balance_board}
-    letter_bounce: {path: scripts/minigames/letter_bounce.gd, status: planned}
-
-# ═══════════════════════════════════════════
-# HARDWARE SYSTEM
-# ═══════════════════════════════════════════
-hardware_system:
-  hardware_manager:
-    path: scripts/autoloads/hardware_manager.gd
-    note: Autoload above. Hardware detection only. One file, cached at startup.
+  npc_home_data:
+    path: scripts/models/npc_home_data.gd
+    purpose: NPC home preference data. terrain, facing, proximity preferences.
     status: active
 
-  ps5_input:
-    path: scripts/hardware/ps5_input.gd
-    purpose: DualSense haptic, motion, LED bar, adaptive triggers.
-    detection: Input.get_connected_joypads() name contains "dualsense"
-    status: planned
+  dialogue_fallbacks:
+    path: data/dialogue/{npc_id}_fallback.json
+    purpose: Fallback dialogue when Dialogic unavailable or timeline missing.
+    format: '{"npc_id":"...","lines":["..."],"no_quest_line":"..."}'
+    status: active
 
-  wii_input:
-    path: scripts/hardware/wii_input.gd
-    purpose: xwiimote — Wiimote, Nunchuck, Balance Board, IR Camera.
-    detection: scan /proc/bus/input/devices for "Nintendo Wii"
-    status: planned
-
-  esp32_client:
-    path: scripts/hardware/esp32_client.gd
-    purpose: HTTP or serial for ESP32 gadgets.
-    status: planned
-
-  arduino_client:
-    path: scripts/hardware/arduino_client.gd
-    purpose: Serial interface for Arduino.
-    status: planned
-
-  pi_client:
-    path: scripts/hardware/pi_client.gd
-    purpose: HTTP interface for Raspberry Pi integrations.
-    status: planned
-
-# ═══════════════════════════════════════════
-# HARDWARE TESTS
-# ═══════════════════════════════════════════
-hardware_tests:
-  rp2040_oled:
-    path: scripts/hardware/rp2040_oled/
-    files:
-      - ssd1306.py: "MicroPython driver for SSD1306 OLED displays."
-      - main.py: "Ezra's Quest test script for RP2040-Zero."
-    status: development
+  npcs:
+    ignavarr: {path: scenes/npcs/ignavarr.tscn, status: active}
+    drift_build: {path: scenes/npcs/drift_build.tscn, status: active}
+    drift_draw: {path: scenes/npcs/drift_draw.tscn, status: active}
+    drift_music: {path: scenes/npcs/drift_music.tscn, status: active}
+    drift_story: {path: scenes/npcs/drift_story.tscn, status: active}
+    ember_ember: {path: scenes/npcs/ember_ember.tscn, status: active}
+    ember_kind: {path: scenes/npcs/ember_kind.tscn, status: active}
+    ember_mirror: {path: scenes/npcs/ember_mirror.tscn, status: active}
+    ember_soothe: {path: scenes/npcs/ember_soothe.tscn, status: active}
+    forge_balance: {path: scenes/npcs/forge_balance.tscn, status: active}
+    forge_build: {path: scenes/npcs/forge_build.tscn, status: active}
+    forge_dance: {path: scenes/npcs/forge_dance.tscn, status: active}
+    forge_throw: {path: scenes/npcs/forge_throw.tscn, status: active}
+    root_chores: {path: scenes/npcs/root_chores.tscn, status: active}
+    root_food: {path: scenes/npcs/root_food.tscn, status: active}
+    root_hygiene: {path: scenes/npcs/root_hygiene.tscn, status: active}
+    root_time: {path: scenes/npcs/root_time.tscn, status: active}
+    spire_math: {path: scenes/npcs/spire_math.tscn, status: active}
+    spire_numbers: {path: scenes/npcs/spire_numbers.tscn, status: active}
+    spire_plants: {path: scenes/npcs/spire_plants.tscn, status: active}
+    spire_weather: {path: scenes/npcs/spire_weather.tscn, status: active}
+    tide_letter: {path: scenes/npcs/tide_letter.tscn, status: active}
+    tide_sound: {path: scenes/npcs/tide_sound.tscn, status: active}
+    tide_story: {path: scenes/npcs/tide_story.tscn, status: active}
+    tide_word: {path: scenes/npcs/tide_word.tscn, status: active}
 
 # ═══════════════════════════════════════════
 # UI SYSTEM
@@ -629,10 +394,10 @@ ui_system:
     path: scenes/ui/MobileControls.tscn
     status: active
 
-  pet_minigame:
-    path: scenes/ui/pet_minigame.tscn
-    script: scripts/ui/pet_minigame.gd
-    purpose: Interactive pet care area.
+  settings_menu:
+    path: scenes/ui/settings_menu.tscn
+    script: scripts/ui/settings_menu.gd
+    purpose: Global settings (audio, display, hardware overrides).
     status: active
 
   parent_dashboard:
@@ -644,16 +409,15 @@ ui_system:
                teaching_style_effectiveness, session_timeline]
     status: active
 
-  pet_minigame:
-    path: scenes/ui/pet_minigame.tscn
-    script: scripts/ui/pet_minigame.gd
-    purpose: Interactive pet care area.
+  portal_marker:
+    path: scripts/ui/portal_marker.gd
+    purpose: Manages realm portal interaction and transition logic.
     status: active
 
-  pet_sanctuary:
-    path: scenes/overworld/hearthveil/pet_sanctuary.tscn
-    script: scripts/npcs/pet_sanctuary.gd
-    purpose: Pet care hub.
+  emotional_checkin:
+    path: scenes/ui/emotional_checkin.tscn
+    script: scripts/ui/emotional_checkin.gd
+    purpose: Periodic emotional self-reflection popup.
     status: active
 
   quest_list_panel:
@@ -705,33 +469,6 @@ scenes:
     path: scenes/player/Player.tscn
     status: active
 
-  npcs:
-    ignavarr: {path: scenes/npcs/ignavarr.tscn, status: active}
-    drift_build: {path: scenes/npcs/drift_build.tscn, status: active}
-    drift_draw: {path: scenes/npcs/drift_draw.tscn, status: active}
-    drift_music: {path: scenes/npcs/drift_music.tscn, status: active}
-    drift_story: {path: scenes/npcs/drift_story.tscn, status: active}
-    ember_ember: {path: scenes/npcs/ember_ember.tscn, status: active}
-    ember_kind: {path: scenes/npcs/ember_kind.tscn, status: active}
-    ember_mirror: {path: scenes/npcs/ember_mirror.tscn, status: active}
-    ember_soothe: {path: scenes/npcs/ember_soothe.tscn, status: active}
-    forge_balance: {path: scenes/npcs/forge_balance.tscn, status: active}
-    forge_build: {path: scenes/npcs/forge_build.tscn, status: active}
-    forge_dance: {path: scenes/npcs/forge_dance.tscn, status: active}
-    forge_throw: {path: scenes/npcs/forge_throw.tscn, status: active}
-    root_chores: {path: scenes/npcs/root_chores.tscn, status: active}
-    root_food: {path: scenes/npcs/root_food.tscn, status: active}
-    root_hygiene: {path: scenes/npcs/root_hygiene.tscn, status: active}
-    root_time: {path: scenes/npcs/root_time.tscn, status: active}
-    spire_math: {path: scenes/npcs/spire_math.tscn, status: active}
-    spire_numbers: {path: scenes/npcs/spire_numbers.tscn, status: active}
-    spire_plants: {path: scenes/npcs/spire_plants.tscn, status: active}
-    spire_weather: {path: scenes/npcs/spire_weather.tscn, status: active}
-    tide_letter: {path: scenes/npcs/tide_letter.tscn, status: active}
-    tide_sound: {path: scenes/npcs/tide_sound.tscn, status: active}
-    tide_story: {path: scenes/npcs/tide_story.tscn, status: active}
-    tide_word: {path: scenes/npcs/tide_word.tscn, status: active}
-
   entities:
     coin:
       path: scenes/entities/Coin.tscn
@@ -757,28 +494,6 @@ scenes:
     hearthveil:
       path: scenes/overworld/hearthveil/hearthveil.tscn
       status: planned
-      hub_buildings:
-        - ArtAcademy.tscn
-        - ClockTower.tscn
-        - CraftCorner.tscn
-        - FeelingsForest.tscn
-        - FitnessArena.tscn
-        - FriendshipFort.tscn
-        - HelperHouse.tscn
-        - HistoryMuseum.tscn
-        - HubWorld.tscn
-        - LanguageLodge.tscn
-        - LiteracyTower.tscn
-        - MathTemple.tscn
-        - MeditationMountain.tscn
-        - MoneyMountain.tscn
-        - MotorMountain.tscn
-        - MusicHall.tscn
-        - SafetyStation.tscn
-        - ScienceLab.tscn
-        - SparkleSpa.tscn
-        - TechHub.tscn
-        - YogaGarden.tscn
     ember_hollow:     {path: scenes/overworld/ember_hollow/ember_hollow.tscn, status: planned}
     tidemark:         {path: scenes/overworld/tidemark/tidemark.tscn,         status: planned}
     forge_run:        {path: scenes/overworld/forge_run/forge_run.tscn,       status: planned}
@@ -798,182 +513,17 @@ scenes:
       status: active
 
   dungeons:
-    mirror_maze:     {path: scenes/dungeons/mirror_maze.tscn,    realm: ember_hollow, status: planned}
-    word_caverns:    {path: scenes/dungeons/word_caverns.tscn,   realm: tidemark,     status: planned}
-    obstacle_forge:  {path: scenes/dungeons/obstacle_forge.tscn, realm: forge_run,    status: planned}
-    daily_tower:     {path: scenes/dungeons/daily_tower.tscn,    realm: rootstead,    status: planned}
-    gear_gauntlet:   {path: scenes/dungeons/gear_gauntlet.tscn,  realm: the_spire,    status: planned}
-    curiosity_cave:  {path: scenes/dungeons/curiosity_cave.tscn, realm: the_drift,    status: planned}
+    mirror_maze:     {path: scenes/dungeons/mirror_maze.tscn,    realm: ember_hollow, status: active}
+    word_caverns:    {path: scenes/dungeons/word_caverns.tscn,   realm: tidemark,     status: active}
+    obstacle_forge:  {path: scenes/dungeons/obstacle_forge.tscn, realm: forge_run,    status: active}
+    daily_tower:     {path: scenes/dungeons/daily_tower.tscn,    realm: rootstead,    status: active}
+    gear_gauntlet:   {path: scenes/dungeons/gear_gauntlet.tscn,  realm: the_spire,    status: active}
+    curiosity_cave:  {path: scenes/dungeons/curiosity_cave.tscn, realm: the_drift,    status: active}
 
   embral_trials:
-    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
-    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
-    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
-    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
-    word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
     heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
-    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
-    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
-    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
-    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
     word_surge: {path: scenes/trials/word_surge.tscn, realm: tidemark, status: active}
-    heart_trial: {path: scenes/trials/heart_trial.tscn, realm: ember_hollow, status: active}
-    heart_trial:      {path: scenes/trials/heart_trial.tscn,     realm: ember_hollow, status: planned}
-    word_surge:       {path: scenes/trials/word_surge.tscn,       realm: tidemark,     status: planned}
-    forge_gauntlet:   {path: scenes/trials/forge_gauntlet.tscn,   realm: forge_run,    status: planned}
-    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead,    status: planned}
-    vault_challenge:  {path: scenes/trials/vault_challenge.tscn,  realm: the_spire,    status: planned}
-    creation_crucible:{path: scenes/trials/creation_crucible.tscn,realm: the_drift,    status: planned}
-
-# ═══════════════════════════════════════════
-# DATA FILES
-# ═══════════════════════════════════════════
-data_files:
-  rewards:
-    path: data/items/rewards.json
-    version: "3.0.0"
-    status: active
-
-  gold_standard_quests:
-    path: data/quests/hearthveil/gold-standard-quests.json
-    status: active
-
-  quest_prefix_map:
-    EH: ember_hollow
-    TM: tidemark
-    FR: forge_run
-    RS: rootstead
-    SP: the_spire
-    DR: the_drift
-    HV: hearthveil
-
-# ═══════════════════════════════════════════
-# SAVE SYSTEM
-# ═══════════════════════════════════════════
-save_system:
-  files:
-    player_save:   user://save/player_profile.json
-    world_state:   user://save/world_state.json
-    pet_roster:    user://save/pet_roster.json
-    wisp_roster:   user://save/wisp_roster.json
-    party:         user://save/party.json
-    npc_mastery:   user://save/npc_mastery.json
-    parent_data:   user://save/parent_dashboard.json
-    config:        user://config.json
-  cloud_sync: false
-  analytics: false
-  external_backup: false
-  schema_version: 1
-
-# ═══════════════════════════════════════════
-# ASSETS — Raw binary files (textures, models, audio)
-# ═══════════════════════════════════════════
-assets:
-  audio:
-    path: assets/audio/
-    files:
-      - arm_yourself_enchanted_paste.m4a
-      - brush_with_honor.m4a
-      - cleansing_fight.m4a
-      - gingivitis_stirs.m4a
-      - morning_adventures.m4a
-      - move_with_purpose.m4a
-      - night_falls.m4a
-      - stretch_those_limbs.m4a
-      - the_realm_awaits.m4a
-      - time_for_bed.m4a
-
-  models:
-    path: assets/models/
-    files:
-      - baby_dragon_ghibli.glb
-      - baby_dragon_v1_creepy.glb
-      - christmas_tree.glb
-      - dragon_blood.glb
-      - dragon_celestial.glb
-      - dragon_crystal.glb
-      - dragon_fire.glb
-      - dragon_gold.glb
-      - dragon_ice.glb
-      - dragon_nature.glb
-      - dragon_poison.glb
-      - dragon_shadow.glb
-      - dragon_storm.glb
-      - dragon.glb
-      - fantasy_tower.glb
-      - grim_reaper.glb
-      - medieval_building.glb
-      - potion_black.glb
-      - potion_blue.glb
-      - potion_cyan.glb
-      - potion_fire.glb
-      - potion_gold.glb
-      - potion_green.glb
-      - potion_health.glb
-      - potion_ice.glb
-      - potion_lime.glb
-      - potion_magenta.glb
-      - potion_mana.glb
-      - potion_orange.glb
-      - potion_pink.glb
-      - potion_poison.glb
-      - potion_purple.glb
-      - potion_rainbow.glb
-      - potion_red.glb
-      - potion_silver.glb
-      - potion_white.glb
-      - professor_wisdom_owl.glb
-
-  textures:
-    path: assets/textures/
-    files:
-      - baby_dragon_ghibli_0.jpg
-      - baby_dragon_v1_creepy_0.jpg
-      - fantasy_tower_texture_pbr_20250901.png
-      - fantasy_tower_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
-      - fantasy_tower_texture_pbr_20250901_normal.png
-      - grim_reaper_texture_pbr_20250901.png
-      - grim_reaper_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
-      - grim_reaper_texture_pbr_20250901_normal.png
-      - medieval_building_texture_pbr_20250901.png
-      - medieval_building_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
-      - medieval_building_texture_pbr_20250901_normal.png
-      - potion_red_Mushroom.png
-      - professor_wisdom_owl_0.jpg
-      - professor_wisdom_owl_1.jpg
-      - professor_wisdom_owl_2.jpg
-
-  shaders:
-    path: assets/textures/
-    files:
-      - character_tint.gdshader
-      - environment_effects.gdshader
-      - magic_aura.gdshader
-      - magic_glow.gdshader
-      - potion_liquid.gdshader
-
-# ═══════════════════════════════════════════
-# PROGRESSION MILESTONES
-# ═══════════════════════════════════════════
-level_milestones:
-  1:    tutorial_complete_hearthveil_open
-  5:    wisps_unlocked
-  10:   companions_unlocked
-  25:   ground_mounts_unlocked, companion_home_slot_plus_1
-  50:   new_content_layer, companion_home_slot_plus_1
-  75:   new_content_layer, companion_home_slot_plus_1
-  100:  ascension_milestone, flying_mounts_unlocked, new_ignavarr_chapter
-  every_25_after_100: companion_home_slot_plus_1
-
-npc_dungeon_unlock: 3_npcs_discovered_per_realm
-companion_home_capacity:
-  formula: "1 + floor(player_level / 25)"
-  level_1: 1
-  level_25: 2
-  level_50: 3
-  level_100: 5
-/ 25)"
-  level_1: 1
-  level_25: 2
-  level_50: 3
-  level_100: 5
+    forge_gauntlet: {path: scenes/trials/forge_gauntlet.tscn, realm: forge_run, status: active}
+    life_lodge_trial: {path: scenes/trials/life_lodge_trial.tscn, realm: rootstead, status: active}
+    vault_challenge: {path: scenes/trials/vault_challenge.tscn, realm: the_spire, status: active}
+    creation_crucible: {path: scenes/trials/creation_crucible.tscn, realm: the_drift, status: active}
