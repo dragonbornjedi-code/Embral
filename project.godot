@@ -65,4 +65,3 @@ interact={
 }
 ErrorLogger="*res://scripts/autoloads/error_logger.gd"
 Telemetry="*res://scripts/autoloads/telemetry.gd"
-Telemetry="*res://scripts/autoloads/telemetry.gd"
