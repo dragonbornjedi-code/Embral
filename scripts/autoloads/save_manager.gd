@@ -153,15 +153,15 @@ func mark_quest_complete(quest_id: String, score: float) -> void:
 
 
 func get_raid_points() -> int:
-    if active_profile:
-        return active_profile.raid_points
-    return 0
+	if active_profile:
+		return active_profile.raid_points
+	return 0
 
 func add_raid_point() -> void:
-    if active_profile:
-        # Limit to 3 per week (stubbed: just add)
-        active_profile.raid_points += 1
-        save_current_profile()
+	if active_profile:
+		# Limit to 3 per week (stubbed: just add)
+		active_profile.raid_points += 1
+		save_current_profile()
 
 
 # ───────────────────────────────────────────

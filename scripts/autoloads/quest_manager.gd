@@ -238,7 +238,6 @@ func _get_npc_realm(npc_id: String) -> String:
 			return line.split(":")[1].strip_edges()
 	return ""
 
-
 func _load_npc_mastery() -> void:
 	if not FileAccess.file_exists(NPC_MASTERY_SAVE):
 		return
