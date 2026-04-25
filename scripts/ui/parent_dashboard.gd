@@ -137,23 +137,19 @@ func _display_realm_xp(realm_data: Dictionary) -> void:
 		text += "%s: %d quests\n" % [realm, realm_data[realm]]
 	label.text = text
 
-func _get_session_timeline() -> Array:
-	var timeline = []
-	var history = _load_emotional_history()
-	for entry in history:
-		timeline.append({
-			"time": _format_timestamp(entry.get("timestamp", 0)),
-			"event": "Emotional check-in: %s" % entry.get("emotion", "unknown")
-		})
-	var completion = {}
-	if SaveManager.active_profile != null:
-		completion = SaveManager.active_profile.quest_completion
-	for quest_id in completion.keys():
-		timeline.append({
-			"time": "session",
-			"event": "Quest completed: %s" % quest_id
-		})
-	return timeline
+func _display_npc_mastery(mastery: Dictionary) -> void:
+	var panel = find_child("MasteryPanel", true, false)
+	if panel == null: return
+	var label = panel.find_child("*", true, false)
+	if label == null: return
+	if mastery.is_empty():
+		label.text = "No NPC mastery data yet."
+		return
+	var text = "NPC Mastery levels:\n"
+	for npc_id in mastery.keys():
+		var level = mastery[npc_id].get("level", 1)
+		text += "%s: Level %d\n" % [npc_id, level]
+	label.text = text
 
 
 func _load_emotional_checkins() -> void:
