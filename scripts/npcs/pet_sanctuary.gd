@@ -1,5 +1,5 @@
 extends Node3D
-## PetSanctuary — Interactive home for Ezra's pets.
+## PetSanctuary — Interactive home for Player's pets.
 
 func _ready() -> void:
 	$SanctuaryEntrance.body_entered.connect(_on_player_entered)

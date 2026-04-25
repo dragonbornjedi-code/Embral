@@ -77,7 +77,7 @@ func _on_profile_selected(profile_id: String):
 func _on_create_new_pressed():
     # Simple prompt for white-box phase
     # In a real build, this would be a proper LineEdit popup
-    var player_name = "Ezra" # Default for now
+    var player_name = "Player" # Default for now
     var id = get_node("/root/SaveManager").create_profile(player_name)
     _on_profile_selected(id)
 

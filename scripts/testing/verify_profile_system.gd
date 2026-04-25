@@ -17,7 +17,7 @@ func _init() -> void:
 		sm.delete_profile(p["id"])
 		
 	print("Testing profile creation...")
-	var id1 = sm.create_profile("Ezra")
+	var id1 = sm.create_profile("Player")
 	var id2 = sm.create_profile("Lyra")
 	
 	profiles = sm.get_profile_list()
@@ -30,7 +30,7 @@ func _init() -> void:
 	print("Testing profile selection...")
 	if sm.select_profile(id1):
 		print("VERIFIED: Profile selected: ", sm.active_profile.player_name)
-		if sm.active_profile.player_name == "Ezra":
+		if sm.active_profile.player_name == "Player":
 			print("VERIFIED: Correct profile data loaded.")
 		else:
 			print("FAILED: Wrong profile data loaded.")

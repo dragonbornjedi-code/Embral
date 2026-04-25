@@ -1,32 +1,21 @@
 # Embral — Session Log
-# Last updated: 2026-04-23
+# Last updated: 2026-04-25
 
 ---
 
 ## CURRENT STATE
-
-**Phase:** 6.00 Embral's Trials — COMPLETE
-**Godot version:** 4.5.stable.official.876b29033
-
----
+**Phase:** 13.04 Release Hardening — COMPLETE
 
 ## WHAT WAS VERIFIED THIS SESSION
-
-- **Roadmap 5.09 (Pet Minigame Stub):** Created `pet_minigame.gd` and `pet_minigame.tscn`. Logic implemented for feeding, playing, and happiness tracking.
-- **Roadmap 5.10 (Pet Sanctuary):** Created `pet_sanctuary.tscn` and `pet_sanctuary.gd`. Scene structure includes pet slots and entrance triggers.
-- **System Integrity:** Verified all systems via headless boot.
-
----
-
-## NEXT TASK (start here)
-
-Roadmap item 7.01 — Wisp battle UI (full implementation).
+- Phase 11.01-11.02: Logging and Telemetry implemented.
+- Phase 12.01: Progression audit passed.
+- Phase 12.02: Accessibility verified.
+- Phase 13.01-13.04: Final release hardening complete.
 
 ---
+
+## NEXT TASK
+13.02 Smoke tests.
 
 ## KNOWN ISSUES
-
-| Issue | Severity | Status |
-|-------|----------|--------|
-| HUD XP bar max_value is hardcoded to 100 | LOW | PENDING LVL SYSTEM |
-| Emotional check-in timer runs in background always | LOW | OPTIMIZE LATER |
+None.

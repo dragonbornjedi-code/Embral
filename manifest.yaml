@@ -110,9 +110,12 @@ autoloads:
     purpose: Wii hardware detection and input processing.
     status: active
 
-  ha_bridge:
-    path: scripts/autoloads/ha_bridge.gd
-    purpose: ONLY file that communicates with Home Assistant. Circuit breaker built in.
+  error_logger:
+    path: scripts/autoloads/error_logger.gd
+    status: active
+
+  telemetry:
+    path: scripts/autoloads/telemetry.gd
     status: active
 
   quest_manager:

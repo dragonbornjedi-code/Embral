@@ -69,7 +69,7 @@
       "id": "play_points",
       "name": "Play Points",
       "icon": "star_token",
-      "description": "Earned from local mini-games. Ezra can play against his companion (AI) or with up to 3 family members. Spent at the Play Shop for exclusive items.",
+      "description": "Earned from local mini-games. Player can play against his companion (AI) or with up to 3 family members. Spent at the Play Shop for exclusive items.",
       "earn_rates": {
         "participation_any_game": 3,
         "win_vs_companion_ai": 5,
@@ -146,10 +146,10 @@
     },
     "level_benefits": {
       "1": "Base quests available. NPC greets normally.",
-      "2": "Harder quest variants appear. NPC acknowledges Ezra's growth.",
+      "2": "Harder quest variants appear. NPC acknowledges Player's growth.",
       "3": "NPC shares personal lore and backstory. Bonus dialogue unlocks.",
       "4": "Advanced quest tier unlocks. NPC relationship feels deep and personal.",
-      "5": "Mastery reward granted. Unique item or pet exclusive to this NPC. NPC calls Ezra by a special title."
+      "5": "Mastery reward granted. Unique item or pet exclusive to this NPC. NPC calls Player by a special title."
     },
     "mastery_reward_types": [
       "Unique pet species only available from this NPC at mastery 5",
@@ -195,7 +195,7 @@
   },
 
   "nightly_review": {
-    "description": "Josh and Ezra review the day together through the game's Review Portal in Hearthveil. Ignavarr hosts. Short, calm, bonding-first. Not a quiz.",
+    "description": "Josh and Player review the day together through the game's Review Portal in Hearthveil. Ignavarr hosts. Short, calm, bonding-first. Not a quiz.",
     "access": "Parent opens Review Portal from Hearthveil. Evening or bedtime recommended.",
     "duration": "5-10 minutes. Sustainable nightly.",
     "questions": [
@@ -204,40 +204,40 @@
       "Did you help someone, or did someone help you?",
       "What's one thing you want to try or learn tomorrow?"
     ],
-    "question_format": "Visual icons accompany each question. Ezra can tap an image, speak, or have parent read aloud. No wrong answers. Parent guides.",
+    "question_format": "Visual icons accompany each question. Player can tap an image, speak, or have parent read aloud. No wrong answers. Parent guides.",
     "raid_point_system": {
       "max_per_session": 1,
       "how_awarded": "Parent taps the Raid Point orb when a meaningful moment happens. Parent judgment only. Never automated.",
       "qualifying_moments": [
-        "Ezra named a feeling without being prompted",
-        "Ezra described a moment of trying again after something was hard",
-        "Ezra mentioned helping someone or an act of kindness",
-        "Ezra expressed curiosity or asked a question about the world",
-        "Ezra acknowledged something difficult without shutting down",
+        "Player named a feeling without being prompted",
+        "Player described a moment of trying again after something was hard",
+        "Player mentioned helping someone or an act of kindness",
+        "Player expressed curiosity or asked a question about the world",
+        "Player acknowledged something difficult without shutting down",
         "A genuine moment of connection or shared laughter happened"
       ],
       "philosophy": "These moments cannot be gamed or rushed. They happen or they don't. The system trusts the parent."
     },
     "weekly_review": {
-      "description": "Optional longer session on Sunday. Ezra and parent look back at the whole week's quests, achievements, and moments together in-game.",
+      "description": "Optional longer session on Sunday. Player and parent look back at the whole week's quests, achievements, and moments together in-game.",
       "bonus": "Automatically awards 2 Raid Points on completion. No threshold moment needed.",
       "format": "Same four questions but expanded. Ignavarr shows the week's highlights as a short storybook."
     },
     "rewards": {
       "gold": 30,
       "xp":   10,
-      "notes": "Small reward for doing the review. Same every time. Ezra knows it's coming."
+      "notes": "Small reward for doing the review. Same every time. Player knows it's coming."
     }
   },
 
   "weekend_family_raid": {
-    "description": "Unlocked when Ezra earns 3+ Raid Points in a week. Triggered Saturday or Sunday — family chooses when.",
+    "description": "Unlocked when Player earns 3+ Raid Points in a week. Triggered Saturday or Sunday — family chooses when.",
     "unlock_notification": "Friday evening: Ignavarr delivers a message — 'A great challenge stirs in the realm. Return this weekend to face it together.'",
-    "core_rule": "At least one parent must participate alongside Ezra. This is a together activity, not a solo challenge.",
+    "core_rule": "At least one parent must participate alongside Player. This is a together activity, not a solo challenge.",
     "raid_pool": {
       "knowledge_raid": {
         "name": "The Scholar's Challenge",
-        "description": "Trivia and learning game. Parent and Ezra on the same team. Ignavarr asks questions mixing the week's quests with fun family topics.",
+        "description": "Trivia and learning game. Parent and Player on the same team. Ignavarr asks questions mixing the week's quests with fun family topics.",
         "educational_tie": "Spaced repetition — revisits the week's learning domains in a celebration context"
       },
       "physical_raid": {
@@ -259,12 +259,12 @@
       },
       "cooking_raid": {
         "name": "The Rootstead Feast",
-        "description": "Prepare or cook something together as a family. Ezra measures, pours, mixes. Parent supervises and participates.",
+        "description": "Prepare or cook something together as a family. Player measures, pours, mixes. Parent supervises and participates.",
         "educational_tie": "Life skills, measurement and math, nutrition awareness, multi-step sequencing"
       },
       "story_raid": {
         "name": "The Tidemark Epic",
-        "description": "Collaborative story. Ignavarr gives the opening line. Ezra and parent alternate sentences. Ends with an illustrated page for the Trophy Room.",
+        "description": "Collaborative story. Ignavarr gives the opening line. Player and parent alternate sentences. Ends with an illustrated page for the Trophy Room.",
         "educational_tie": "Narrative structure, vocabulary, listening, expressive language"
       },
       "nature_raid": {
@@ -308,7 +308,7 @@
         "id": "ignavarr_ember_lantern",
         "name": "Ignavarr's Ember Lantern",
         "type": "house_decoration",
-        "description": "A small floating flame that drifts through Ezra's room in-game. Only Ignavarr can give these.",
+        "description": "A small floating flame that drifts through Player's room in-game. Only Ignavarr can give these.",
         "rarity": "rare"
       },
       {
@@ -359,7 +359,7 @@
   },
 
   "mini_games": {
-    "description": "Local multiplayer games. Ezra vs AI companion (default) or up to 4 human family players on the same screen.",
+    "description": "Local multiplayer games. Player vs AI companion (default) or up to 4 human family players on the same screen.",
     "player_slots": [1, 2, 3, 4],
     "hardware_support": {
       "base":          "Keyboard, mouse, or any standard gamepad",
@@ -453,7 +453,7 @@
         "name": "The Heart Trial",
         "realm": "ember_hollow",
         "boss": "The Mirror Guardian",
-        "description": "A being made of reflected emotions. To weaken it, Ezra must correctly identify the emotions it projects.",
+        "description": "A being made of reflected emotions. To weaken it, Player must correctly identify the emotions it projects.",
         "mechanic_base":     "Multiple choice emotion identification. Wrong answers strengthen the Guardian. Correct answers weaken it.",
         "mechanic_wii":      "Balance board sways reflect the Guardian's emotional instability. Hold center = Guardian weakens faster.",
         "mechanic_ps5":      "Haptic pulses match the Guardian's heartbeat. Feel when it's about to attack.",
@@ -484,7 +484,7 @@
         "name": "The Life Lodge Trial",
         "realm": "rootstead",
         "boss": "The Elder Keeper",
-        "description": "The Elder tests whether Ezra has truly learned to care for the Lodge. Complete a multi-step life skill sequence correctly.",
+        "description": "The Elder tests whether Player has truly learned to care for the Lodge. Complete a multi-step life skill sequence correctly.",
         "mechanic_base":     "Order-of-operations puzzle. Place the steps in the correct sequence.",
         "mechanic_wii":      "Gesture-based actions match each life skill step. Wipe, fold, pour, measure.",
         "mechanic_ps5":      "Haptic confirms correct sequence steps. Vibrates distinctly on errors.",
@@ -494,7 +494,7 @@
         "name": "The Vault Challenge",
         "realm": "the_spire",
         "boss": "The Thought Titan",
-        "description": "A being of pure logic. It presents math and science challenges that grow harder as Ezra succeeds.",
+        "description": "A being of pure logic. It presents math and science challenges that grow harder as Player succeeds.",
         "mechanic_base":     "Math and logic puzzles with visual scaffolding. Difficulty adapts based on NPC mastery level.",
         "mechanic_ps5":      "Haptic pulses on correct answers. Adaptive triggers add weight to 'thinking' moments.",
         "educational_tie":   "Math, logic, cause-and-effect, problem solving under adaptive challenge"
@@ -503,7 +503,7 @@
         "name": "The Creation Crucible",
         "realm": "the_drift",
         "boss": "The Muse",
-        "description": "The Muse challenges Ezra to create something matching a feeling or theme — before the timer runs.",
+        "description": "The Muse challenges Player to create something matching a feeling or theme — before the timer runs.",
         "mechanic_base":     "Drawing or selection-based creative challenge. Choose elements that match the theme.",
         "mechanic_wii":      "Motion drawing with Wiimote. Draw in the air to create.",
         "educational_tie":   "Creative expression, fine motor, emotional vocabulary through art"
@@ -638,13 +638,13 @@
       "day_6": { "gold": 175 },
       "day_7": { "gold": 250, "wisp_treat_quantity": 1, "wisp_treat_effect": "Grants 50 XP to any Wisp" }
     },
-    "after_day_7": "Resets to day 1. No penalty for gaps in play. The schedule picks up from where Ezra left off if absent."
+    "after_day_7": "Resets to day 1. No penalty for gaps in play. The schedule picks up from where Player left off if absent."
   },
 
   "emotional_checkin_reward": {
     "xp":   10,
     "gold":  5,
-    "critical_design_note": "Reward is IDENTICAL regardless of what mood Ezra reports. There is no incentive to report a happy mood to get a bigger reward. This is essential — the check-in must feel safe and honest."
+    "critical_design_note": "Reward is IDENTICAL regardless of what mood Player reports. There is no incentive to report a happy mood to get a bigger reward. This is essential — the check-in must feel safe and honest."
   },
 
   "ascension": {
@@ -653,7 +653,7 @@
     "what_changes": {
       "world": "All realms gain new visual layers — deeper areas, new biome sections visible that were previously locked.",
       "quests": "New NPC quest tiers available across all realms. Harder content but same scaffolding support.",
-      "npc_dialogue": "All NPCs have new dialogue trees acknowledging Ezra's ascension. They remember his journey.",
+      "npc_dialogue": "All NPCs have new dialogue trees acknowledging Player's ascension. They remember his journey.",
       "ignavarr": "New story chapter from Ignavarr unlocks. The narrative advances meaningfully.",
       "flying_mounts": "Flying mounts unlocked. New way to navigate the overworld.",
       "visual": "Player character gains a subtle ascension aura effect — cosmetic, not pay-to-show."
@@ -666,7 +666,7 @@
     "no_catch_all_items":     "No item that automatically captures any Wisp. Earning a capture is part of the experience.",
     "no_online_pvp":          "No competition against unknown players. Local family multiplayer only.",
     "no_real_money_power":    "Gold, essence, and Play Points cannot be purchased. All earned through play.",
-    "no_streak_punishment":   "Missing days never destroys progress. The game waits for Ezra.",
+    "no_streak_punishment":   "Missing days never destroys progress. The game waits for Player.",
     "no_generated_quests":    "No AI generates quest content at runtime. Every quest is hand-authored with research basis.",
     "no_negative_feedback_loop": "No mechanic that makes doing poorly feel like losing something. Try again is always free."
   }
