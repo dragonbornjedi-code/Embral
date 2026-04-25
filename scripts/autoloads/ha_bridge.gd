@@ -12,42 +12,42 @@ var _consecutive_failures: int = 0
 const FAILURE_THRESHOLD: int = 3
 
 func set_realm_lights(realm_id: String) -> void:
-    if not HardwareManager.has_ha():
-        return
-    var colors = {
-        "realm_1": {"r": 255, "g": 80, "b": 25},
-        "realm_2": {"r": 25, "g": 130, "b": 255},
-        "realm_3": {"r": 180, "g": 200, "b": 255},
-        "realm_4": {"r": 50, "g": 180, "b": 50},
-        "realm_5": {"r": 255, "g": 230, "b": 25},
-        "realm_6": {"r": 200, "g": 100, "b": 255}
-    }
-    var color = colors.get(realm_id, {"r": 255, "g": 255, "b": 255})
-    _call_ha("light.turn_on", {"entity_id": "light.game_room", "rgb_color": [color.r, color.g, color.b]})
+	if not HardwareManager.has_ha():
+		return
+	var colors = {
+		"realm_1": {"r": 255, "g": 80, "b": 25},
+		"realm_2": {"r": 25, "g": 130, "b": 255},
+		"realm_3": {"r": 180, "g": 200, "b": 255},
+		"realm_4": {"r": 50, "g": 180, "b": 50},
+		"realm_5": {"r": 255, "g": 230, "b": 25},
+		"realm_6": {"r": 200, "g": 100, "b": 255}
+	}
+	var color = colors.get(realm_id, {"r": 255, "g": 255, "b": 255})
+	_call_ha("light.turn_on", {"entity_id": "light.game_room", "rgb_color": [color.r, color.g, color.b]})
 
 func _call_ha(service: String, data: Dictionary) -> void:
-    if _safe_mode or not HardwareManager.has_ha():
-        return
-    var ha_url = OS.get_environment("HASS_SERVER")
-    var ha_token = OS.get_environment("HASS_TOKEN")
-    if ha_url == "" or ha_token == "":
-        push_warning("[HABridge] HA credentials not set")
-        return
-    var http = HTTPRequest.new()
-    add_child(http)
-    var parts = service.split(".")
-    var url = "%s/api/services/%s/%s" % [ha_url, parts[0], parts[1]]
-    var headers = ["Authorization: Bearer %s" % ha_token, "Content-Type: application/json"]
-    http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
+	if _safe_mode or not HardwareManager.has_ha():
+		return
+	var ha_url = OS.get_environment("HASS_SERVER")
+	var ha_token = OS.get_environment("HASS_TOKEN")
+	if ha_url == "" or ha_token == "":
+		push_warning("[HABridge] HA credentials not set")
+		return
+	var http = HTTPRequest.new()
+	add_child(http)
+	var parts = service.split(".")
+	var url = "%s/api/services/%s/%s" % [ha_url, parts[0], parts[1]]
+	var headers = ["Authorization: Bearer %s" % ha_token, "Content-Type: application/json"]
+	http.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 
 func _ready() -> void:
-    EventBus.ha_online.connect(_on_ha_online)
-    EventBus.ha_offline.connect(_on_ha_offline)
-    if EventBus.has_signal("realm_unlocked"):
-        EventBus.realm_unlocked.connect(set_realm_lights)
-    _safe_mode = ConfigLoader.get_value("ha_safe_mode", false)
-    if _safe_mode:
-        push_warning("[HABridge] Safe Mode active — all Home Assistant calls disabled.")
+	EventBus.ha_online.connect(_on_ha_online)
+	EventBus.ha_offline.connect(_on_ha_offline)
+	if EventBus.has_signal("realm_unlocked"):
+		EventBus.realm_unlocked.connect(set_realm_lights)
+	_safe_mode = ConfigLoader.get_value("ha_safe_mode", false)
+	if _safe_mode:
+		push_warning("[HABridge] Safe Mode active — all Home Assistant calls disabled.")
 
 
 # ───────────────────────────────────────────
