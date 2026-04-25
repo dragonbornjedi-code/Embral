@@ -35,7 +35,7 @@ func _on_xp_gained(_amount: int, _source: String) -> void:
 func set_led_color(color: Color) -> void:
     if not HardwareManager.has_ps5():
         return
-    Input.set_joy_led(0, color)
+    pass # set_joy_led not available in Godot 4
 
 ## Maps realm identifier to controller LED color
 func set_realm_color(realm_id: String) -> void:

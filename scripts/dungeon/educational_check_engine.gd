@@ -15,4 +15,3 @@ func check_answer(question_id: String, player_answer: String) -> bool:
 func _verify_against_data(q_id: String, answer: String) -> bool:
     # Integration with QuestManager/Data would go here
     return answer == "correct_answer"
-EOF

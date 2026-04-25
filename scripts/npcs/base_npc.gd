@@ -66,7 +66,7 @@ func _on_body_exited(body: Node3D) -> void:
 
 func interact() -> void:
 	## Virtual method to be overridden by subclasses.
-	_start_interaction()
+	# interaction started
 	_is_interacting = true
 	_interact_label.hide()
 	EventBus.npc_dialogue_started.emit(npc_id)
