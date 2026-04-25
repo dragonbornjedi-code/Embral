@@ -41,10 +41,9 @@ func _clear_pin() -> void:
 
 
 func _on_pin_input_text_submitted(new_text: String) -> void:
-	var pin_hash = ConfigLoader.get_value("parent_pin_hash", "")
+	var stored_hash = ConfigLoader.get_value("parent_pin_hash", "")
 	
-	# Simple direct match for white-box (should use hashing in real build)
-	if pin_hash == "" or new_text == pin_hash:
+	if stored_hash == "" or new_text.sha256_text() == stored_hash:
 		_show_dashboard()
 	else:
 		error_label.text = "Incorrect PIN. Try again."
@@ -65,6 +64,96 @@ func _show_dashboard() -> void:
 
 func _refresh_data() -> void:
 	_load_emotional_checkins()
+	_display_emotional_history(_load_emotional_history())
+	_display_realm_xp(_get_realm_xp())
+	_display_npc_mastery(_get_npc_mastery_summary())
+
+
+func _load_emotional_history() -> Array:
+	var history = []
+	var path = "user://save/parent_dashboard.json"
+	if not FileAccess.file_exists(path):
+		return history
+	var f = FileAccess.open(path, FileAccess.READ)
+	var data = JSON.parse_string(f.get_as_text())
+	f.close()
+	if data is Array:
+		history = data
+	return history
+
+func _format_timestamp(unix_time: int) -> String:
+	var dt = Time.get_datetime_dict_from_unix_time(unix_time)
+	return "%02d/%02d %02d:%02d" % [dt.month, dt.day, dt.hour, dt.minute]
+
+func _get_realm_xp() -> Dictionary:
+	if SaveManager.active_profile == null:
+		return {}
+	var result = {}
+	var completion = SaveManager.active_profile.quest_completion
+	for quest_id in completion.keys():
+		var parts = quest_id.split("_")
+		if parts.size() >= 2:
+			var realm = parts[0]
+			result[realm] = result.get(realm, 0) + 1
+	return result
+
+func _get_npc_mastery_summary() -> Dictionary:
+	var path = "user://save/npc_mastery.json"
+	if not FileAccess.file_exists(path):
+		return {}
+	var f = FileAccess.open(path, FileAccess.READ)
+	var data = JSON.parse_string(f.get_as_text())
+	f.close()
+	if data is Dictionary:
+		return data
+	return {}
+
+func _display_emotional_history(history: Array) -> void:
+	var panel = find_child("EmotionalPanel", true, false)
+	if panel == null: return
+	var label = panel.find_child("*", true, false)
+	if label == null: return
+	if history.is_empty():
+		label.text = "No check-ins recorded yet."
+		return
+	var text = "Last 5 check-ins:\n"
+	var recent = history.slice(max(0, history.size()-5), history.size())
+	for entry in recent:
+		var ts = _format_timestamp(entry.get("timestamp", 0))
+		var emotion = entry.get("emotion", "unknown")
+		text += "%s — %s\n" % [ts, emotion]
+	label.text = text
+
+func _display_realm_xp(realm_data: Dictionary) -> void:
+	var panel = find_child("RealmXPPanel", true, false)
+	if panel == null: return
+	var label = panel.find_child("*", true, false)
+	if label == null: return
+	if realm_data.is_empty():
+		label.text = "No realm progress yet."
+		return
+	var text = "Quests completed per realm:\n"
+	for realm in realm_data.keys():
+		text += "%s: %d quests\n" % [realm, realm_data[realm]]
+	label.text = text
+
+func _get_session_timeline() -> Array:
+	var timeline = []
+	var history = _load_emotional_history()
+	for entry in history:
+		timeline.append({
+			"time": _format_timestamp(entry.get("timestamp", 0)),
+			"event": "Emotional check-in: %s" % entry.get("emotion", "unknown")
+		})
+	var completion = {}
+	if SaveManager.active_profile != null:
+		completion = SaveManager.active_profile.quest_completion
+	for quest_id in completion.keys():
+		timeline.append({
+			"time": "session",
+			"event": "Quest completed: %s" % quest_id
+		})
+	return timeline
 
 
 func _load_emotional_checkins() -> void:

@@ -86,10 +86,14 @@ func _on_frequency_dropdown_item_selected(index: int) -> void:
 	ConfigLoader.set_value("checkin_frequency", freq)
 
 
+func _hash_pin(pin: String) -> String:
+	return pin.sha256_text()
+
 func _on_set_pin_button_pressed() -> void:
-	# For white-box: simple placeholder for PIN input
-	# In real implementation, this would open a sub-popup
-	print("[Settings] Parent PIN entry requested.")
+	# For white-box: simulate PIN setting
+	var pin_value = "1234" # Dummy for testing
+	ConfigLoader.set_value("parent_pin_hash", _hash_pin(pin_value))
+	print("[Settings] Parent PIN updated and hashed.")
 
 
 func _set_initial_focus() -> void:
