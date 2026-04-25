@@ -105,11 +105,9 @@ autoloads:
     purpose: Cross-system signal bus. ALL inter-system events go through here.
     status: active
 
-  hardware_manager:
-    path: scripts/autoloads/hardware_manager.gd
-    purpose: Detects all hardware at startup. Results cached. Never re-polled.
-    detects: [keyboard_mouse, ps5_dualsense, wii_hardware, ha_green,
-              esp32, arduino, raspberry_pi]
+  wii_input:
+    path: scripts/hardware/wii_input.gd
+    purpose: Wii hardware detection and input processing.
     status: active
 
   ha_bridge:
