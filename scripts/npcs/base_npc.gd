@@ -52,6 +52,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = true
 		_interact_label.show()
+		body.set_meta("interact_target", self)
 		# Discovery event
 		EventBus.npc_discovered.emit(npc_id)
 
@@ -60,6 +61,8 @@ func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = false
 		_interact_label.hide()
+		if body.has_meta("interact_target") and body.get_meta("interact_target") == self:
+			body.remove_meta("interact_target")
 		if _is_interacting:
 			_end_interaction()
 

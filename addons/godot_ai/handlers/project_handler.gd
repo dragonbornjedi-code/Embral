@@ -1,23 +1,28 @@
 @tool
-class_name ProjectHandler
 extends RefCounted
+
+const ErrorCodes := preload("res://addons/godot_ai/utils/error_codes.gd")
 
 ## Handles project settings and filesystem search commands.
 
-var _connection: Connection
+const NodeHandler := preload("res://addons/godot_ai/handlers/node_handler.gd")
+
+var _connection: McpConnection
+var _debugger_plugin
 
 
-func _init(connection: Connection = null) -> void:
+func _init(connection: McpConnection = null, debugger_plugin = null) -> void:
 	_connection = connection
+	_debugger_plugin = debugger_plugin
 
 
 func get_project_setting(params: Dictionary) -> Dictionary:
 	var key: String = params.get("key", "")
 	if key.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: key")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: key")
 
 	if not ProjectSettings.has_setting(key):
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Setting not found: %s" % key)
+		return ErrorCodes.make(ErrorCodes.VALUE_OUT_OF_RANGE, "Setting not found: %s" % key)
 
 	var value = ProjectSettings.get_setting(key)
 	return {
@@ -32,10 +37,10 @@ func get_project_setting(params: Dictionary) -> Dictionary:
 func set_project_setting(params: Dictionary) -> Dictionary:
 	var key: String = params.get("key", "")
 	if key.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: key")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: key")
 
 	if not params.has("value"):
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: value")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: value")
 
 	var value = params.get("value")
 	var had_setting := ProjectSettings.has_setting(key)
@@ -53,7 +58,7 @@ func set_project_setting(params: Dictionary) -> Dictionary:
 			ProjectSettings.set_setting(key, old_value)
 		else:
 			ProjectSettings.clear(key)
-		return McpErrorCodes.make(McpErrorCodes.INTERNAL_ERROR, "Failed to save project settings (error %d)" % err)
+		return ErrorCodes.make(ErrorCodes.INTERNAL_ERROR, "Failed to save project settings (error %d)" % err)
 
 	return {
 		"data": {
@@ -69,8 +74,19 @@ func set_project_setting(params: Dictionary) -> Dictionary:
 
 func run_project(params: Dictionary) -> Dictionary:
 	var mode: String = params.get("mode", "main")
+	var autosave: bool = params.get("autosave", true)
 	if EditorInterface.is_playing_scene():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Project is already running")
+		return ErrorCodes.make(ErrorCodes.INVALID_PARAMS, "Project is already running")
+
+	var validation_error: Variant = null
+	if mode == "custom":
+		var custom_scene: String = params.get("scene", "")
+		if custom_scene.is_empty():
+			validation_error = ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: scene (required when mode='custom')")
+	elif mode != "main" and mode != "current":
+		validation_error = ErrorCodes.make(ErrorCodes.VALUE_OUT_OF_RANGE, "Invalid mode '%s' — use 'main', 'current', or 'custom'" % mode)
+	if validation_error != null:
+		return validation_error
 
 	# play_*_scene internally triggers try_autosave() → _save_scene_with_preview()
 	# which renders a preview thumbnail and calls frame processing. If our
@@ -79,7 +95,24 @@ func run_project(params: Dictionary) -> Dictionary:
 	# around the play call — same pattern as SceneHandler.save_scene.
 	if _connection:
 		_connection.pause_processing = true
-	var validation_error: Variant = null
+
+	# try_autosave() reads run/auto_save/save_before_running every call, so
+	# toggling it off around the play call suppresses the save without
+	# touching the user's persisted preference. Issue #81.
+	var autosave_key := "run/auto_save/save_before_running"
+	var editor_settings: EditorSettings = null
+	if not autosave:
+		editor_settings = EditorInterface.get_editor_settings()
+	var prior_autosave: bool = true
+	var restore_setting := false
+	if editor_settings != null and editor_settings.has_setting(autosave_key):
+		prior_autosave = bool(editor_settings.get_setting(autosave_key))
+		editor_settings.set_setting(autosave_key, false)
+		restore_setting = true
+
+	if _debugger_plugin != null:
+		_debugger_plugin.begin_game_run()
+
 	match mode:
 		"main":
 			EditorInterface.play_main_scene()
@@ -87,33 +120,44 @@ func run_project(params: Dictionary) -> Dictionary:
 			EditorInterface.play_current_scene()
 		"custom":
 			var scene_path: String = params.get("scene", "")
-			if scene_path.is_empty():
-				validation_error = McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: scene (required when mode='custom')")
-			else:
-				EditorInterface.play_custom_scene(scene_path)
-		_:
-			validation_error = McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Invalid mode '%s' — use 'main', 'current', or 'custom'" % mode)
+			EditorInterface.play_custom_scene(scene_path)
+
+	if restore_setting:
+		editor_settings.set_setting(autosave_key, prior_autosave)
+
 	if _connection:
 		_connection.pause_processing = false
-
-	if validation_error != null:
-		return validation_error
 
 	return {
 		"data": {
 			"mode": mode,
 			"scene": params.get("scene", ""),
+			"autosave": autosave,
 			"undoable": false,
 			"reason": "Play/stop is a runtime action",
 		}
 	}
 
 
-func stop_project(_params: Dictionary) -> Dictionary:
+func stop_project(params: Dictionary) -> Dictionary:
 	if not EditorInterface.is_playing_scene():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Project is not running")
+		return ErrorCodes.make(ErrorCodes.INVALID_PARAMS, "Project is not running")
 
+	if _debugger_plugin != null:
+		_debugger_plugin.end_game_run()
 	EditorInterface.stop_playing_scene()
+
+	# stop_playing_scene() is async — is_playing_scene() only flips to false on
+	# the next frame, and readiness_changed follows in _process. Defer the
+	# response so we can reply with authoritative readiness instead of letting
+	# the server poll for the event. Issue #29.
+	var request_id: String = params.get("_request_id", "")
+	if _connection != null and not request_id.is_empty():
+		_finish_stop_project_deferred(request_id)
+		return McpDispatcher.DEFERRED_RESPONSE
+
+	# Fallback for contexts without a connection (e.g. batch_execute via
+	# dispatch_direct, or unit tests that instantiate the handler with null).
 	return {
 		"data": {
 			"stopped": true,
@@ -123,17 +167,38 @@ func stop_project(_params: Dictionary) -> Dictionary:
 	}
 
 
+func _finish_stop_project_deferred(request_id: String) -> void:
+	# Wait two frames so Godot can tick the stop-play state change. After this
+	# is_playing_scene() reflects truth and get_readiness() is authoritative.
+	# If the plugin tears down (_exit_tree frees _connection) during the await,
+	# is_instance_valid() goes false and we drop the response silently — the
+	# server's 5s request timeout will surface the failure to the caller.
+	var tree := _connection.get_tree()
+	await tree.process_frame
+	await tree.process_frame
+	if not is_instance_valid(_connection):
+		return
+	_connection.send_deferred_response(request_id, {
+		"data": {
+			"stopped": true,
+			"undoable": false,
+			"reason": "Play/stop is a runtime action",
+			"readiness_after": McpConnection.get_readiness(),
+		}
+	})
+
+
 func search_filesystem(params: Dictionary) -> Dictionary:
 	var name_filter: String = params.get("name", "")
 	var type_filter: String = params.get("type", "")
 	var path_filter: String = params.get("path", "")
 
 	if name_filter.is_empty() and type_filter.is_empty() and path_filter.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "At least one filter (name, type, path) is required")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "At least one filter (name, type, path) is required")
 
 	var efs := EditorInterface.get_resource_filesystem()
 	if efs == null:
-		return McpErrorCodes.make(McpErrorCodes.EDITOR_NOT_READY, "EditorFileSystem not available")
+		return ErrorCodes.make(ErrorCodes.EDITOR_NOT_READY, "EditorFileSystem not available")
 
 	var results: Array[Dictionary] = []
 	_scan_directory(efs.get_filesystem(), name_filter, type_filter, path_filter, results)

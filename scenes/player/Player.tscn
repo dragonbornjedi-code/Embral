@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqxqwc6nxvxs6"]
+[gd_scene load_steps=7 format=3 uid="uid://bqxqwc6nxvxs6"]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_controller"]
+[ext_resource type="PackedScene" path="res://assets/models/kaykit_adventurers/Knight.glb" id="2_knight"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
@@ -13,12 +14,17 @@ height = 1.8
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_player"]
 albedo_color = Color(0.2, 0.6, 1, 1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_interact"]
+radius = 1.5
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 1
 script = ExtResource("1_controller")
 camera_rig = NodePath("CameraRig")
 mesh = NodePath("Mesh")
+interact_radius = NodePath("InteractRadius")
+interact_prompt = NodePath("InteractPrompt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -31,15 +37,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 mesh = SubResource("CapsuleMesh_player")
 surface_material_override/0 = SubResource("StandardMaterial3D_player")
 
+[node name="AvatarModel" parent="Mesh" instance=ExtResource("2_knight")]
+scale = Vector3(0.9, 0.9, 0.9)
+
 [node name="CameraRig" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0)
-spring_length = 5.0
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+spring_length = 4.0
 margin = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 current = true
 fov = 70.0
+
+[node name="InteractRadius" type="Area3D" parent="."]
+collision_layer = 1
+collision_mask = 1
+monitoring = true
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractRadius"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("SphereShape3D_interact")
+
+[node name="InteractPrompt" type="Label3D" parent="."]
+visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "[X] Talk"
+font_size = 48
+outline_size = 8

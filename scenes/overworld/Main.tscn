@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3vxpwqq1t8l"]
+[gd_scene load_steps=14 format=3 uid="uid://c3vxpwqq1t8l"]
 
 [ext_resource type="PackedScene" uid="uid://bqxqwc6nxvxs6" path="res://scenes/player/Player.tscn" id="1_player"]
-[ext_resource type="PackedScene" uid="uid://cignavarrnpc" path="res://scenes/npcs/Ignavarr.tscn" id="2_ignavarr"]
+[ext_resource type="PackedScene" uid="uid://ignavarr" path="res://scenes/npcs/ignavarr.tscn" id="2_ignavarr"]
 [ext_resource type="PackedScene" uid="uid://coin_collectible" path="res://scenes/entities/Coin.tscn" id="3_coin"]
 [ext_resource type="PackedScene" uid="uid://playerhud" path="res://scenes/ui/player_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" uid="uid://emotionalcheckin" path="res://scenes/ui/emotional_checkin.tscn" id="5_checkin"]
+[ext_resource type="PackedScene" uid="uid://buildersguild" path="res://scenes/npcs/builders_guild_npc.tscn" id="6_builder"]
+[ext_resource type="PackedScene" path="res://scenes/npcs/hub_patrol_npc.tscn" id="7_patrol"]
+[ext_resource type="Script" path="res://scripts/world/tutorial_manager.gd" id="8_tutorial"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(50, 1, 50)
@@ -25,6 +28,7 @@ size = Vector3(5, 0.5, 5)
 albedo_color = Color(0.6, 0.4, 0.2, 1)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("8_tutorial")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, -0.75, 0.433, 10, 20, 10)
@@ -78,14 +82,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
 [node name="Ignavarr" parent="." instance=ExtResource("2_ignavarr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
-[ext_resource type="PackedScene" uid="uid://buildersguild" path="res://scenes/npcs/builders_guild_npc.tscn" id="6_builder"]
-
-...
 [node name="TutorialCoin" parent="." instance=ExtResource("3_coin")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, 0)
 
 [node name="BuildersGuildNPC" parent="." instance=ExtResource("6_builder")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="HubPatrolNPC" parent="." instance=ExtResource("7_patrol")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -8)
 
 [node name="PlayerHUD" parent="." instance=ExtResource("4_hud")]
 

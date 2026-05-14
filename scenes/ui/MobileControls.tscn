@@ -1,7 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://cg7km3hqj2s1p"]
+[gd_scene load_steps=8 format=3 uid="uid://cg7km3hqj2s1p"]
 
 [ext_resource type="Script" path="res://scripts/ui/MobileControls.gd" id="1_mobile"]
 [ext_resource type="Script" path="res://scripts/ui/VirtualJoystick.gd" id="2_joystick"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jump"]
+radius = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aim"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mount"]
+radius = 44.0
 
 [node name="MobileControls" type="CanvasLayer"]
 layer = 10

@@ -9,7 +9,7 @@ You are working on **Embral** — a local-first, open-source educational RPG for
 
 **Repo:** https://github.com/dragonbornjedi-code/Embral
 **Local path:** /var/lib/phoenix-ai/workspace/embral/
-**Engine:** Godot 4.5.stable.official.876b29033
+**Engine:** Godot 4.6.2.stable.official.71f334935
 
 ---
 

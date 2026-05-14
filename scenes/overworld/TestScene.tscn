@@ -1,6 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://testscene123"]
+[gd_scene format=3 uid="uid://testscene123"]
 
-[ext_resource type="Script" path="res://scripts/player/SimplePlayer.gd" id="1_simple"]
+[ext_resource type="PackedScene" uid="uid://bqxqwc6nxvxs6" path="res://scenes/player/Player.tscn" id="1_player"]
+
+[sub_resource type="Environment" id="Environment_test"]
+background_mode = 1
+background_color = Color(0.5, 0.75, 1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
 size = Vector3(30, 1, 30)
@@ -8,42 +15,37 @@ size = Vector3(30, 1, 30)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
 size = Vector3(30, 1, 30)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
-radius = 0.4
-height = 1.8
+[sub_resource type="BoxMesh" id="BoxMesh_interactable"]
+size = Vector3(1, 1, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
-radius = 0.4
-height = 1.8
+[sub_resource type="BoxShape3D" id="BoxShape3D_interactable"]
+size = Vector3(1, 1, 1)
 
-[node name="TestScene" type="Node3D"]
+[node name="TestScene" type="Node3D" unique_id=2048865912]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 10, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2121971825]
+environment = SubResource("Environment_test")
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=341855255]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+light_energy = 1.2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1892215629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=867173223]
 mesh = SubResource("BoxMesh_ground")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1470131324]
 shape = SubResource("BoxShape3D_ground")
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-script = ExtResource("1_simple")
+[node name="Player" parent="." unique_id=1946705560 instance=ExtResource("1_player")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("CapsuleMesh_player")
+[node name="Interactable" type="StaticBody3D" parent="." unique_id=31518698 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-shape = SubResource("CapsuleShape3D_player")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactable" unique_id=477017029]
+mesh = SubResource("BoxMesh_interactable")
 
-[node name="CameraPivot" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
-current = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable" unique_id=1221278748]
+shape = SubResource("BoxShape3D_interactable")

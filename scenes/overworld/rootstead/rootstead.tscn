@@ -1,6 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://rootstead"]
+[gd_scene load_steps=4 format=3 uid="uid://rootstead"]
+
+[ext_resource type="Script" path="res://scripts/world/realm_scene.gd" id="1_realm_scene"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.3, 0.5, 0.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(100, 1, 100)
 
 [node name="rootstead" type="Node3D"]
+script = ExtResource("1_realm_scene")
+realm_id = "rootstead"
+display_name = "The Rootstead"
+realm_color = Color(0.28, 0.54, 0.24, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -32,12 +47,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 5)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 8, 12)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
-size = Vector2(100, 100)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
-albedo_color = Color(0.3, 0.5, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
-size = Vector3(100, 1, 100)

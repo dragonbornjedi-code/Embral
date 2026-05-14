@@ -88,13 +88,13 @@ func _detect_controllers() -> void:
 
 
 func _detect_wii() -> void:
-	# Check /proc/bus/input/devices for Nintendo Wii Remote
+	# Check /proc/bus/input/devices for supported Wii-family controllers.
 	var file := FileAccess.open("/proc/bus/input/devices", FileAccess.READ)
 	if file == null:
 		return
 	var content := file.get_as_text()
 	file.close()
-	if "Nintendo" in content and ("Wii" in content or "RVL" in content):
+	if "Wii" in content or "RVL" in content:
 		_has_wii = true
 		EventBus.wii_connected.emit()
 		print("[HardwareManager] Wii hardware detected.")

@@ -1,5 +1,4 @@
 extends Node
-class_name ErrorLogger
 
 const LOG_PATH = "user://logs/error_log.txt"
 

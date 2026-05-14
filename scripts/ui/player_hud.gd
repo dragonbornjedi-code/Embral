@@ -91,3 +91,8 @@ func _on_quest_step_completed(quest_id: String, step_index: int) -> void:
 		var steps = quest.get("steps", [])
 		if step_index + 1 < steps.size():
 			quest_objective.text = steps[step_index + 1].get("instruction", "")
+
+
+func set_tutorial_objective(title: String, objective: String) -> void:
+	quest_title.text = title
+	quest_objective.text = objective

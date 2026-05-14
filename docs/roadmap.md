@@ -4,7 +4,7 @@
 > Status labels: DONE | PARTIAL | PLANNED | DEFERRED | BROKEN
 
 **Current Phase:** 13.00 Release Hardening
-**Godot Version:** 4.5.stable.official.876b29033
+**Godot Version:** 4.6.2.stable.official.71f334935
 **Last Sync:** 2026-04-25
 
 ---
@@ -19,7 +19,7 @@
 ---
 
 ## 0.00 Foundation
-- [x] **0.01** Record verified Godot 4.5.x runtime build. `4.5.stable.official.876b29033`
+- [x] **0.01** Record verified Godot 4.6.x runtime build. `4.6.2.stable.official.71f334935`
 - [x] **0.02** Create Git backup and restore point.
 - [x] **0.03** Define source-of-truth hierarchy.
 - [x] **0.04** Create docs/compatibility.md.
@@ -59,7 +59,7 @@
 - [x] **2.06** PlayerController input and camera.
 - [x] **2.07** Hearthveil white-box scene.
 - [x] **2.08** Ignavarr NPC script and interact.
-- [x] **2.09** Tutorial sequence complete.
+- [~] **2.09** Tutorial sequence MVP route runtime-verified — intro controls, Ignavarr, portal/dungeon tour, one starter guide quest from each of six realms, return to Hearthveil, house unlock, level 2 unlock, and first pet unlock. Keep PARTIAL if the target is literally 21 quests per realm; the repo currently has 8 authored quests per realm.
 - [x] **2.10** Player's House stub.
 - [x] **2.11** Hearthveil portal markers.
 - [x] **2.12** QuestManager end-to-end test.

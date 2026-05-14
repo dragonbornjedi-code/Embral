@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://wispbattleui"]
+[gd_scene format=3 uid="uid://wispbattleui"]
 
-[ext_resource type="Script" path="res://scripts/dungeon/wisp_battle_ui.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cselknruf7nqc" path="res://scripts/dungeon/wisp_battle_ui.gd" id="1_script"]
 
-[node name="WispBattleUI" type="CanvasLayer"]
+[node name="WispBattleUI" type="CanvasLayer" unique_id=44994120]
 script = ExtResource("1_script")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1537565792]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerHP" type="ProgressBar" parent="Control"]
+[node name="PlayerHP" type="ProgressBar" parent="Control" unique_id=1382860862]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 50.0
@@ -22,7 +22,7 @@ offset_right = 250.0
 offset_bottom = 80.0
 value = 100.0
 
-[node name="EnemyHP" type="ProgressBar" parent="Control"]
+[node name="EnemyHP" type="ProgressBar" parent="Control" unique_id=1559451117]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1030.0
@@ -31,7 +31,7 @@ offset_right = 1230.0
 offset_bottom = 80.0
 value = 100.0
 
-[node name="FeedbackLabel" type="Label" parent="Control"]
+[node name="FeedbackLabel" type="Label" parent="Control" unique_id=1177245628]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -47,7 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
 
-[node name="ActionGrid" type="HBoxContainer" parent="Control"]
+[node name="ActionGrid" type="HBoxContainer" parent="Control" unique_id=1565600642]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
@@ -63,6 +63,6 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="AttackButton" type="Button" parent="Control/ActionGrid"]
+[node name="AttackButton" type="Button" parent="Control/ActionGrid" unique_id=1857747372]
 layout_mode = 2
 text = "Attack"

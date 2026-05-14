@@ -11,7 +11,7 @@ Embral is a local-first, open-source, neuroscience-backed educational RPG
 for children ages 4–8. Single device. No internet required after install.
 No cloud. No accounts. No subscriptions.
 
-Built with Godot 4.5.x. MIT licensed. Public repo. Family-friendly.
+Built with Godot 4.6.x. MIT licensed. Public repo. Family-friendly.
 Repo: https://github.com/dragonbornjedi-code/Embral
 Local: /var/lib/phoenix-ai/workspace/embral/
 

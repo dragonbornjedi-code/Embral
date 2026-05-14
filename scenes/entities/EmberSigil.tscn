@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ember_sigil_collectible"]
+
+[ext_resource type="Script" path="res://scripts/world/ember_sigil.gd" id="1_script"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_sigil"]
+radius = 0.35
+height = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Material_sigil"]
+albedo_color = Color(1.0, 0.82, 0.2, 1)
+metallic = 0.45
+roughness = 0.35
+emission_enabled = true
+emission = Color(1.0, 0.36, 0.08, 1)
+emission_energy_multiplier = 0.45
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_collect"]
+radius = 0.45
+
+[node name="EmberSigil" type="Area3D" groups=["collectibles", "ember_sigils"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+mesh = SubResource("SphereMesh_sigil")
+surface_material_override/0 = SubResource("Material_sigil")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("SphereShape3D_collect")

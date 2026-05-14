@@ -50,7 +50,7 @@ theme_override_constants/separation = 5
 [node name="GoldIcon" type="Label" parent="TopBar/GoldPanel"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "💰"
+text = "Gold"
 
 [node name="GoldLabel" type="Label" parent="TopBar/GoldPanel"]
 layout_mode = 2
@@ -70,4 +70,20 @@ grow_vertical = 0
 [node name="QuestLabel" type="Label" parent="ActiveQuest"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "No active quest"
+text = "First Steps"
+
+[node name="FirstSteps" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -430.0
+offset_top = 70.0
+offset_right = -10.0
+offset_bottom = 150.0
+grow_horizontal = 0
+
+[node name="HintLabel" type="Label" parent="FirstSteps"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Collect 3 spark coins, then talk to Ignavarr."
+autowrap_mode = 2

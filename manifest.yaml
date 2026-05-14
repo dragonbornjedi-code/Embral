@@ -7,7 +7,7 @@
 project:
   name: Embral
   version: 0.2.0-phase1-complete
-  engine: godot-4.5.stable.official.876b29033
+  engine: godot-4.6.2.stable.official.71f334935
   license: MIT
   repo: https://github.com/dragonbornjedi-code/Embral
   single_device: true
@@ -74,6 +74,32 @@ plugins:
     type: editor_plugin
     status: active
     note: MCP plugin. Server runs on port 8000.
+
+  godot_mcp_pro:
+    path: addons/godot_mcp/plugin.cfg
+    version: "1.13.1"
+    type: editor_plugin
+    status: active
+    note: Local editor MCP bridge. Uses localhost only.
+
+  logic_bricks:
+    path: addons/logic_bricks/plugin.cfg
+    version: "2.1.2"
+    type: editor_plugin
+    status: active
+    note: Visual logic authoring addon.
+
+  rider_plugin:
+    path: addons/rider-plugin/plugin.cfg
+    type: editor_plugin
+    status: active
+    note: Editor convenience plugin for Rider settings.
+
+  terrain_3d:
+    path: addons/terrain_3d/plugin.cfg
+    type: editor_plugin
+    status: active
+    note: Terrain authoring addon.
 
   limboai:
     path: addons/limboai/bin/limboai.gdextension
@@ -257,6 +283,11 @@ quest_system:
 
   world_scripts:
     coin: {path: scripts/world/coin.gd, status: active}
+    ember_sigil: {path: scripts/world/ember_sigil.gd, status: active}
+    hub_world_manager: {path: scripts/world/HubWorldManager.gd, status: active}
+    weather_system: {path: scripts/world/WeatherSystem.gd, status: active}
+    world_environment: {path: scripts/world/WorldEnvironment.gd, status: active}
+    realm_scene: {path: scripts/world/realm_scene.gd, status: active}
 
 # ═══════════════════════════════════════════
 # DUNGEON SYSTEM
@@ -287,7 +318,7 @@ dungeon_system:
     status: active
 
   wisp_roster:
-    path: scripts/dungeon/wisp_roster.gd
+    path: scripts/autoloads/wisp_roster.gd
     purpose: Utility class to manage Wisp roster persistence.
     status: active
 
@@ -339,6 +370,14 @@ npc_system:
     status: active
 
   npcs:
+    quest_giver_base:
+      path: scenes/npcs/QuestGiverBase.tscn
+      script: scripts/npc/QuestGiver.gd
+      status: active
+    shopkeeper:
+      path: scenes/npcs/Shopkeeper.tscn
+      script: scripts/npc/Shopkeeper.gd
+      status: active
     ignavarr: {path: scenes/npcs/ignavarr.tscn, status: active}
     drift_build: {path: scenes/npcs/drift_build.tscn, status: active}
     drift_draw: {path: scenes/npcs/drift_draw.tscn, status: active}
@@ -377,14 +416,17 @@ ui_system:
 
   achievement_popup:
     path: scenes/ui/AchievementPopup.tscn
+    script: scripts/ui/AchievementPopup.gd
     status: active
 
   avatar_creator:
     path: scenes/ui/AvatarCreator.tscn
+    script: scripts/ui/AvatarCreator.gd
     status: active
 
   daily_progress_tracker:
     path: scenes/ui/DailyProgressTracker.tscn
+    script: scripts/ui/DailyProgressTracker.gd
     status: active
 
   dialogue_panel:
@@ -399,6 +441,8 @@ ui_system:
 
   mobile_controls:
     path: scenes/ui/MobileControls.tscn
+    script: scripts/ui/MobileControls.gd
+    helper_script: scripts/ui/VirtualJoystick.gd
     status: active
 
   settings_menu:
@@ -418,6 +462,8 @@ ui_system:
 
   portal_marker:
     path: scripts/ui/portal_marker.gd
+    purpose: Interactable Hearthveil portal marker for realm travel.
+    status: active
     pet_minigame:
       path: scenes/ui/pet_minigame.tscn
       script: scripts/ui/pet_minigame.gd
@@ -437,11 +483,12 @@ ui_system:
 
   quest_timer:
     path: scenes/ui/QuestTimer.tscn
+    script: scripts/ui/QuestTimer.gd
     status: active
 
   quest_ui:
     path: scenes/ui/QuestUI.tscn
-    script: scripts/ui/quest_ui.gd
+    script: scripts/ui/QuestUI.gd
     contains: [quest_objective, step_display, scaffold_hint_button, completion_overlay]
     status: active
 
@@ -451,10 +498,21 @@ ui_system:
 
   shop_ui:
     path: scenes/ui/ShopUI.tscn
+    script: scripts/shop/ShopUI.gd
     status: active
 
   testing_level_ui:
     path: scenes/ui/TestingLevelUI.tscn
+    status: active
+
+  player_hud_hub:
+    path: scenes/ui/PlayerHUD.tscn
+    script: scripts/ui/PlayerHUD.gd
+    status: active
+
+  parent_dashboard_hub:
+    path: scenes/ui/ParentDashboard.tscn
+    script: scripts/ui/ParentDashboard.gd
     status: active
 
 # ═══════════════════════════════════════════
@@ -471,6 +529,7 @@ scenes:
       status: active
     quest_complete_dialog:
       path: scenes/effects/QuestCompleteDialog.tscn
+      script: scripts/ui/QuestCompleteDialog.gd
       status: active
     transition_overlay:
       path: scenes/effects/transition_overlay.tscn
@@ -483,6 +542,9 @@ scenes:
   entities:
     coin:
       path: scenes/entities/Coin.tscn
+      status: active
+    ember_sigil:
+      path: scenes/entities/EmberSigil.tscn
       status: active
     dragon_mount:
       path: scenes/entities/DragonMount.tscn
@@ -502,6 +564,9 @@ scenes:
     status: active
 
   overworld_realms:
+    hubworld:
+      path: scenes/overworld/hearthveil/HubWorld.tscn
+      status: active
     hearthveil:
       path: scenes/overworld/hearthveil/hearthveil.tscn
       status: planned
@@ -512,10 +577,75 @@ scenes:
     the_spire:        {path: scenes/overworld/the_spire/the_spire.tscn,       status: planned}
     the_drift:        {path: scenes/overworld/the_drift/the_drift.tscn,       status: planned}
 
+  model_assets:
+    kaykit_adventurers_license:
+      path: assets/models/kaykit_adventurers/LICENSE.txt
+      purpose: CC0 license for KayKit Adventurers character models.
+      status: active
+      license: CC0
+      source: KayKit Adventurers Character Pack 1.0 by Kay Lousberg
+    kaykit_adventurer_barbarian:
+      path: assets/models/kaykit_adventurers/Barbarian.glb
+      purpose: CC0 player/avatar character model.
+      status: active
+      license: CC0
+    kaykit_adventurer_knight:
+      path: assets/models/kaykit_adventurers/Knight.glb
+      purpose: CC0 player/avatar character model.
+      status: active
+      license: CC0
+    kaykit_adventurer_mage:
+      path: assets/models/kaykit_adventurers/Mage.glb
+      purpose: CC0 player/avatar character model.
+      status: active
+      license: CC0
+    kaykit_adventurer_rogue:
+      path: assets/models/kaykit_adventurers/Rogue.glb
+      purpose: CC0 player/avatar character model.
+      status: active
+      license: CC0
+    kaykit_adventurer_rogue_hooded:
+      path: assets/models/kaykit_adventurers/Rogue_Hooded.glb
+      purpose: CC0 player/avatar character model.
+      status: active
+      license: CC0
+    kaykit_adventurers_items:
+      path: assets/models/kaykit_adventurers/items/
+      purpose: >
+        CC0 KayKit Adventurers item source assets from Assets/gltf:
+        arrows, axes, crossbows, dagger, mugs, quiver, shields, smoke bomb,
+        spellbooks, staff, swords, wand, and shared character textures.
+        Duplicate texture-only folders from the zip are intentionally not copied.
+      status: active
+      license: CC0
+      source: KayKit Adventurers Character Pack 1.0 by Kay Lousberg
+    ignavarr_dragon:
+      path: assets/models/dragon.glb
+      purpose: Generic dragon model used for Ignavarr set dressing.
+      status: active
+    hearthveil_tower:
+      path: assets/models/fantasy_tower.glb
+      purpose: Hearthveil landmark tower model.
+      status: active
+    hearthveil_house:
+      path: assets/models/medieval_building.glb
+      purpose: Hearthveil building model.
+      status: active
+    owl_guide:
+      path: assets/models/professor_wisdom_owl.glb
+      purpose: Hearthveil guide NPC visual model.
+      status: active
+    portal_crystal:
+      path: assets/models/potion_rainbow.glb
+      purpose: Realm portal crystal visual.
+      status: active
+
   world:
     main:
       path: scenes/overworld/Main.tscn
       status: active
+      script: scripts/world/tutorial_manager.gd
+      purpose: First playable tutorial scene after avatar creation.
     test_scene:
       path: scenes/overworld/TestScene.tscn
       status: active

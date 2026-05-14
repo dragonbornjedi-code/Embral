@@ -1,0 +1,10 @@
+{
+  "npc_id": "hub_patrol_guide",
+  "lines": [
+    "Oh, hello {player}! I was just walking my rounds.",
+    "The plaza is quiet today — perfect for practice.",
+    "If you see Ignavarr, tell him the lanterns are all lit.",
+    "Stay curious, {player}. Every corner here has a story."
+  ],
+  "no_quest_line": "No quests from me today — just keeping the paths clear for you, {player}."
+}

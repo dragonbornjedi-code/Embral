@@ -16,7 +16,7 @@ func _detect_devices() -> void:
         var f = FileAccess.open("/proc/bus/input/devices", FileAccess.READ)
         var content = f.get_as_text()
         f.close()
-        wiimote_connected = "Nintendo Wii" in content
+        wiimote_connected = "Wii" in content or "RVL" in content
         balance_board_connected = "Balance Board" in content
     
     print("[WiiInput] Wiimote: %s | Balance Board: %s" % [wiimote_connected, balance_board_connected])

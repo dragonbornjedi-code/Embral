@@ -1,6 +1,7 @@
 @tool
-class_name InputHandler
 extends RefCounted
+
+const ErrorCodes := preload("res://addons/godot_ai/utils/error_codes.gd")
 
 ## Handles input action listing, creation, removal, and event binding.
 ## Actions are persisted via ProjectSettings so they survive editor restarts.
@@ -8,11 +9,19 @@ extends RefCounted
 
 func list_actions(params: Dictionary) -> Dictionary:
 	var include_builtin: bool = params.get("include_builtin", false)
+	## Authoritative source for user-authored actions is the ``[input]``
+	## section of ``project.godot``. ``ProjectSettings.has_setting`` is not
+	## reliable here because Godot registers ``ui_*`` defaults via
+	## ``GLOBAL_DEF_BASIC``, which makes ``has_setting`` return true for
+	## them. Reading the file via ``ConfigFile`` distinguishes the user's
+	## entries from engine-registered defaults regardless of namespace.
+	## See #213.
+	var user_authored := _read_user_authored_actions()
 	var actions: Array[Dictionary] = []
 	for action_name in InputMap.get_actions():
 		var name_str := str(action_name)
-		var is_builtin := name_str.begins_with("ui_")
-		if is_builtin and not include_builtin:
+		var is_user_action := user_authored.has(name_str)
+		if not include_builtin and not is_user_action:
 			continue
 		var events: Array[Dictionary] = []
 		for event in InputMap.action_get_events(action_name):
@@ -21,9 +30,21 @@ func list_actions(params: Dictionary) -> Dictionary:
 			"name": name_str,
 			"events": events,
 			"event_count": events.size(),
-			"is_builtin": is_builtin,
+			"is_builtin": not is_user_action,
 		})
 	return {"data": {"actions": actions, "count": actions.size()}}
+
+
+func _read_user_authored_actions() -> Dictionary:
+	var cfg := ConfigFile.new()
+	if cfg.load("res://project.godot") != OK:
+		return {}
+	if not cfg.has_section("input"):
+		return {}
+	var result: Dictionary = {}
+	for key in cfg.get_section_keys("input"):
+		result[key] = true
+	return result
 
 
 func add_action(params: Dictionary) -> Dictionary:
@@ -31,10 +52,10 @@ func add_action(params: Dictionary) -> Dictionary:
 	var deadzone: float = params.get("deadzone", 0.5)
 
 	if action.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: action")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: action")
 
 	if InputMap.has_action(action):
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Action '%s' already exists" % action)
+		return ErrorCodes.make(ErrorCodes.INVALID_PARAMS, "Action '%s' already exists" % action)
 
 	InputMap.add_action(action, deadzone)
 
@@ -47,7 +68,7 @@ func add_action(params: Dictionary) -> Dictionary:
 	if err != OK:
 		InputMap.erase_action(action)
 		ProjectSettings.clear(key)
-		return McpErrorCodes.make(McpErrorCodes.INTERNAL_ERROR,
+		return ErrorCodes.make(ErrorCodes.INTERNAL_ERROR,
 			"Failed to save project settings while adding action '%s': %s (error %d)" % [action, error_string(err), err])
 
 	return {
@@ -63,10 +84,10 @@ func add_action(params: Dictionary) -> Dictionary:
 func remove_action(params: Dictionary) -> Dictionary:
 	var action: String = params.get("action", "")
 	if action.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: action")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: action")
 
 	if not InputMap.has_action(action):
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Action '%s' not found" % action)
+		return ErrorCodes.make(ErrorCodes.VALUE_OUT_OF_RANGE, "Action '%s' not found" % action)
 
 	var key := "input/%s" % action
 	var old_setting = ProjectSettings.get_setting(key) if ProjectSettings.has_setting(key) else null
@@ -83,7 +104,7 @@ func remove_action(params: Dictionary) -> Dictionary:
 					if ev is InputEvent:
 						InputMap.action_add_event(action, ev)
 			ProjectSettings.set_setting(key, old_setting)
-			return McpErrorCodes.make(McpErrorCodes.INTERNAL_ERROR,
+			return ErrorCodes.make(ErrorCodes.INTERNAL_ERROR,
 				"Failed to save project settings while removing action '%s': %s (error %d)" % [action, error_string(err), err])
 
 	return {
@@ -101,23 +122,23 @@ func bind_event(params: Dictionary) -> Dictionary:
 	var event_type: String = params.get("event_type", "")
 
 	if action.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: action")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: action")
 	if event_type.is_empty():
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Missing required param: event_type")
+		return ErrorCodes.make(ErrorCodes.MISSING_REQUIRED_PARAM, "Missing required param: event_type")
 
 	if not InputMap.has_action(action):
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Action '%s' not found" % action)
+		return ErrorCodes.make(ErrorCodes.VALUE_OUT_OF_RANGE, "Action '%s' not found" % action)
 
 	var event: InputEvent = _create_event(event_type, params)
 	if event == null:
-		return McpErrorCodes.make(McpErrorCodes.INVALID_PARAMS, "Unsupported event_type: %s (use key, mouse_button, or joy_button)" % event_type)
+		return ErrorCodes.make(ErrorCodes.VALUE_OUT_OF_RANGE, "Unsupported event_type: %s (use key, mouse_button, or joy_button)" % event_type)
 
 	InputMap.action_add_event(action, event)
 
 	var err := _save_action_events(action)
 	if err != OK:
 		InputMap.action_erase_event(action, event)
-		return McpErrorCodes.make(McpErrorCodes.INTERNAL_ERROR,
+		return ErrorCodes.make(ErrorCodes.INTERNAL_ERROR,
 			"Failed to save project settings while binding event to action '%s': %s (error %d)" % [action, error_string(err), err])
 
 	return {

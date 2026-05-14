@@ -1,0 +1,222 @@
+# EMBRAL RESOURCE INDEX
+# Updated by: humans manually + forge-mark-done script
+# READ THIS BEFORE CREATING ANYTHING.
+# If what you need is here, use it. If it's nearby, adapt it. Only build from scratch if nothing applies.
+
+version: "1.0.0"
+last_updated: "2026-05-14"
+
+# ═══════════════════════════════════════════════════════
+# 3D ASSETS — ON DISK RIGHT NOW
+# ═══════════════════════════════════════════════════════
+models_3d:
+  dragons:
+    path: assets/models/dragons/
+    count: 13
+    files:
+      - baby_dragon_ghibli.glb       # Ghibli-style, cute, age-appropriate
+      - baby_dragon_v1_creepy.glb    # more angular/menacing version
+      - dragon_blood.glb
+      - dragon_celestial.glb         # good for light/holy realm
+      - dragon_crystal.glb           # good for Spire realm
+      - dragon_fire.glb              # primary Ignavarr candidate
+      - dragon_gold.glb
+      - dragon_ice.glb
+      - dragon_nature.glb            # good for Rootstead
+      - dragon_poison.glb
+      - dragon_shadow.glb            # good for dungeon/Shade wisp
+      - dragon_storm.glb             # good for Spire/Breeze wisp
+      - dragon.glb                   # generic base dragon
+
+  potions:
+    path: assets/models/potions/
+    count: 19
+    note: All colors covered. Use for inventory, rewards, quest items.
+    files:
+      - potion_health.glb, potion_mana.glb, potion_fire.glb, potion_ice.glb
+      - potion_poison.glb, potion_rainbow.glb, potion_gold.glb
+      - potion_black.glb, potion_blue.glb, potion_cyan.glb, potion_green.glb
+      - potion_lime.glb, potion_magenta.glb, potion_orange.glb, potion_pink.glb
+      - potion_purple.glb, potion_red.glb, potion_silver.glb, potion_white.glb
+
+  props:
+    path: assets/models/props/
+    count: 5
+    files:
+      - christmas_tree.glb
+      - fantasy_tower.glb           # good for Spire/Hearthveil
+      - grim_reaper.glb             # use carefully (age-appropriate check)
+      - medieval_building.glb       # good for Hearthveil
+      - professor_wisdom_owl.glb    # potential NPC/teacher character
+
+# ═══════════════════════════════════════════════════════
+# AUDIO — ON DISK RIGHT NOW
+# ═══════════════════════════════════════════════════════
+audio:
+  path: assets/audio/
+  count: 10
+  format: m4a
+  files:
+    - arm_yourself_enchanted_paste.m4a   # combat/action feel
+    - brush_with_honor.m4a              # hygiene/life skills feel
+    - cleansing_fight.m4a
+    - gingivitis_stirs.m4a
+    - morning_adventures.m4a            # exploration/wake-up
+    - move_with_purpose.m4a             # physical activity/Forge Run
+    - night_falls.m4a                   # evening/Nightly Review
+    - stretch_those_limbs.m4a           # yoga/stretch/Forge Run
+    - the_realm_awaits.m4a              # main theme candidate
+    - time_for_bed.m4a                  # sleep/routine/Rootstead
+
+# ═══════════════════════════════════════════════════════
+# SHADERS — ON DISK RIGHT NOW
+# ═══════════════════════════════════════════════════════
+shaders:
+  path: assets/shaders/
+  files:
+    - character_tint.gdshader      # tinting characters by element/team
+    - environment_effects.gdshader # weather, fog, realm ambiance
+    - magic_aura.gdshader          # ability/spell visual effects
+    - magic_glow.gdshader          # glowing items/portals/NPCs
+    - potion_liquid.gdshader       # liquid shader for inventory items
+
+# ═══════════════════════════════════════════════════════
+# GODOT SYSTEMS — WHAT'S ALREADY BUILT
+# ═══════════════════════════════════════════════════════
+godot_systems:
+  autoloads:
+    event_bus:
+      path: scripts/autoloads/event_bus.gd
+      status: VERIFIED
+      purpose: "ALL inter-system signals. Never bypass."
+
+    save_manager:
+      path: scripts/autoloads/save_manager.gd
+      status: VERIFIED
+      purpose: "ALL persistence. Schema v1. No SQLite. user:// only."
+
+    quest_manager:
+      path: scripts/autoloads/quest_manager.gd
+      status: ACTIVE
+      purpose: "ALL quest state. Only autoload allowed to manage quests."
+
+    ha_bridge:
+      path: scripts/autoloads/ha_bridge.gd
+      status: ACTIVE
+      purpose: "ONLY file that calls Home Assistant. Circuit breaker built in."
+
+    hardware_manager:
+      path: scripts/autoloads/hardware_manager.gd
+      status: ACTIVE
+      purpose: "ONLY file that detects hardware. Cached at startup."
+
+    dialogic_stub:
+      path: scripts/autoloads/dialogic_stub.gd
+      status: ACTIVE
+      purpose: "Bridges Dialogic 2 timelines. Falls back to JSON."
+
+    config_loader:
+      path: scripts/autoloads/config_loader.gd
+      status: ACTIVE
+      purpose: "Loads user://config.json. Player settings."
+
+  npc_bases:
+    base_npc:
+      path: scripts/npcs/base_npc.gd
+      status: ACTIVE
+      purpose: "All NPCs extend this. Proximity + dialogue dispatch."
+
+    base_teacher_npc:
+      path: scripts/npcs/base_teacher_npc.gd
+      status: ACTIVE
+      purpose: "All teacher NPCs extend this. Quest dispatch + mastery."
+
+    companion_npc:
+      path: scripts/npcs/companion_npc.gd
+      status: ACTIVE
+      purpose: "Second avatar logic. Co-op handoff."
+
+  quest:
+    quest_loader:
+      path: scripts/quest/quest_loader.gd
+      status: ACTIVE
+      purpose: "Validates 8 required fields. Rejects invalid quests."
+
+  scenes:
+    boot:
+      path: scenes/boot.tscn
+      status: VERIFIED
+    test_sandbox:
+      path: scenes/overworld/hearthveil/test_sandbox.tscn
+      status: VERIFIED
+    test_house:
+      path: scenes/overworld/hearthveil/test_house.tscn
+      status: VERIFIED
+    main_menu:
+      path: scenes/ui/main_menu.tscn
+      status: STUB
+
+# ═══════════════════════════════════════════════════════
+# EXTERNAL INTEGRATIONS
+# ═══════════════════════════════════════════════════════
+integrations:
+  ha_green:
+    type: Home Assistant
+    runs_on: HA Green (separate device on mesh)
+    capabilities:
+      - Wyoming STT (speech-to-text)
+      - Wyoming TTS (text-to-speech)
+      - Smart home automations
+      - MQTT broker
+      - Node-RED flows
+    godot_bridge: scripts/autoloads/ha_bridge.gd
+    do_not_duplicate: true
+    note: "Voice bridge = this. Do not build another voice system."
+
+  tailscale_mesh:
+    devices:
+      crucible: "Ryzen 7 — Ollama, LiteLLM, forge-guardian service"
+      librarian_tower: "i7-4790 DDR3 — ChromaDB, indexing (RAM-sensitive)"
+      ha_green: "Home Assistant — STT/TTS/automations"
+    note: "Never hardcode Tailscale IPs. Load from secret-tool/config at runtime."
+
+  addons_installed:
+    - name: LimboAI
+      version: "1.6.0"
+      status: runtime_verified
+      use_for: NPC behavior trees, state machines
+    - name: Dialogic 2
+      version: "2.0-Alpha-19"
+      status: active
+      use_for: NPC dialogue timelines
+    - name: godot_ai_mcp
+      version: "1.1.0"
+      status: active
+      use_for: MCP plugin, port 8000
+
+# ═══════════════════════════════════════════════════════
+# FREE RESOURCE SOURCES (for when you need more)
+# ═══════════════════════════════════════════════════════
+free_resource_sources:
+  models_3d:
+    - url: https://kenney.nl
+      license: CC0
+      quality: game_ready_low_poly
+    - url: https://quaternius.com
+      license: CC0
+      quality: character_packs
+    - url: https://sketchfab.com (filter: CC0 / free)
+      quality: varies
+    - url: https://opengameart.org
+      license: varies (check each)
+    - url: https://polyhaven.com
+      license: CC0
+      quality: high_quality_environments
+
+  audio:
+    - url: https://freesound.org
+      license: varies (CC0 available)
+    - url: https://opengameart.org (audio section)
+      license: varies
+
+  note: "ALL new downloads must be added to this file immediately."

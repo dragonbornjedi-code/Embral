@@ -1,5 +1,4 @@
 extends Node
-class_name Telemetry
 
 const TELEMETRY_PATH = "user://logs/telemetry.json"
 var _session_start: int = 0

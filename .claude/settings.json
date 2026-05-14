@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "forge-guardian": {
+      "command": "python3",
+      "args": ["/home/joshuar/phoenix-forge-ops/forge-guardian/mcp_tool.py"],
+      "description": "Forge Guardian — call forge_check before EVERY task. Non-negotiable."
+    }
+  }
+}

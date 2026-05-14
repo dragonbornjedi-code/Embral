@@ -17,6 +17,11 @@
       "instruction": "Pick up the glowing coin!",
       "target_node": "Coin",
       "timer": 0
+    },
+    {
+      "instruction": "Return to Ignavarr and press E, Space, or the controller confirm button.",
+      "target_node": "Ignavarr",
+      "timer": 0
     }
   ],
   "scaffolding": "If stuck, a golden trail will appear leading to the coin. Ignavarr will whistle if you're going the wrong way.",

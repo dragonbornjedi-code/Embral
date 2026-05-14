@@ -59,10 +59,10 @@ When the print finishes, it will feel like a solid block. **This is normal.**
 ---
 
 ## 🎛 Klipper Pad 8 Integration
-I attempted to reach your Klipper Pad at `http://192.168.1.174/`, but since it is on your local private network, I cannot access it directly from my cloud environment.
+I attempted to reach your Klipper Pad at `<printer-local-url>`, but since it is on your local private network, I cannot access it directly from my cloud environment.
 
 **How to start the print:**
-1. Open your browser and go to `http://192.168.1.174/`.
+1. Open your browser and go to `<printer-local-url>`.
 2. Navigate to the **"Jobs"** or **"Files"** tab.
 3. Drag and drop the `infinity_cube_M.stl` from your computer into the Klipper interface.
 4. Slice it using your preferred slicer first (if you haven't) or use the built-in slicer if your Pad 7 has one.

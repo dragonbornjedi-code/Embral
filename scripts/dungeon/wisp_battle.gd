@@ -12,7 +12,9 @@ var enemy_hp: int = 100
 var player_wisp_id: String = ""
 var enemy_wisp_id: String = ""
 
-func start_battle() -> void:
+func start_battle(player_wisp: String = "", enemy_wisp: String = "") -> void:
+	player_wisp_id = player_wisp
+	enemy_wisp_id = enemy_wisp
 	current_state = BattleState.PLAYER_TURN
 	if EventBus.has_signal("battle_started"):
 		EventBus.battle_started.emit(player_wisp_id, enemy_wisp_id)

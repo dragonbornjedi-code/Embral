@@ -15,13 +15,17 @@ var PlayerProfileScript = load("res://scripts/models/player_profile.gd")
 signal profiles_updated
 signal active_profile_changed(profile_id)
 
-var active_profile: Resource = null
+var active_profile: PlayerProfile = null
 var _profiles: Array = [] # List of {id: String, name: String, last_played: int}
 
 
 func _ready() -> void:
 	_ensure_save_dir()
 	_load_profile_list()
+	if EventBus.has_signal("gold_gained"):
+		EventBus.gold_gained.connect(_on_gold_gained)
+	if EventBus.has_signal("xp_gained"):
+		EventBus.xp_gained.connect(_on_xp_gained)
 
 
 func _ensure_save_dir() -> void:
@@ -38,7 +42,7 @@ func get_profile_list() -> Array:
 	return _profiles
 
 
-func create_profile(player_name: String) -> String:
+func create_profile(player_name: String, avatar_data: Dictionary = {}) -> String:
 	var id = _generate_profile_id(player_name)
 	var profile_dir = PROFILES_DIR + id + "/"
 	
@@ -48,13 +52,18 @@ func create_profile(player_name: String) -> String:
 	var profile = PlayerProfileScript.new()
 	profile.profile_id = id
 	profile.player_name = player_name
+	profile.avatar_color = str(avatar_data.get("avatar_color", "blue"))
+	profile.avatar_style = str(avatar_data.get("avatar_style", "explorer"))
+	var now := int(Time.get_unix_time_from_system())
+	profile.created_timestamp = now
+	profile.last_played_timestamp = now
 	
 	_save_profile_file(profile)
 	
 	_profiles.append({
 		"id": id,
 		"name": player_name,
-		"last_played": profile.last_played_at
+		"last_played": profile.last_played_timestamp
 	})
 	_save_profile_list()
 	
@@ -77,13 +86,13 @@ func select_profile(profile_id: String) -> bool:
 		return false
 		
 	active_profile = PlayerProfileScript.from_dict(parsed)
-	active_profile.last_played_at = int(Time.get_unix_time_from_system())
+	active_profile.last_played_timestamp = int(Time.get_unix_time_from_system())
 	_save_profile_file(active_profile)
 	
 	# Update last_played in profile list
 	for p in _profiles:
 		if p["id"] == profile_id:
-			p["last_played"] = active_profile.last_played_at
+			p["last_played"] = active_profile.last_played_timestamp
 			break
 	_save_profile_list()
 	
@@ -162,6 +171,20 @@ func add_raid_point() -> void:
 		# Limit to 3 per week (stubbed: just add)
 		active_profile.raid_points += 1
 		save_current_profile()
+
+
+func _on_gold_gained(amount: int, _source: String) -> void:
+	if active_profile == null:
+		return
+	active_profile.gold += amount
+	save_current_profile()
+
+
+func _on_xp_gained(amount: int, _source: String) -> void:
+	if active_profile == null:
+		return
+	active_profile.gain_xp(amount)
+	save_current_profile()
 
 
 # ───────────────────────────────────────────

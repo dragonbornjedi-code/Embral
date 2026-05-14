@@ -4,7 +4,7 @@
 
 | Dependency | Version | Status | Notes |
 |------------|---------|--------|-------|
-| Godot Engine | 4.5.stable.official.876b29033 | **Verified Runtime** | Verified with `godot --version` and headless project boot on 2026-04-20. |
+| Godot Engine | 4.6.2.stable.official.71f334935 | **Verified Runtime** | Verified with `godot --version` and headless project boot on 2026-05-13. |
 | godot-ai (MCP) | 1.1.0 | **Installed** | Editor plugin present in `addons/godot_ai/` and enabled in `project.godot`. |
 | LimboAI | 1.6.0 | **Runtime-Verified** | `addons/limboai/` present; probe confirms `BehaviorTree`, `LimboState`, and `LimboHSM` are registered. |
 | Dialogic 2 | 2.0-Alpha-19 (Godot 4.4+) | **Active** | Plugin present and enabled. `DialogicStub` correctly detects the plugin and uses fallback dialogue when needed. Timeline integration pending. |

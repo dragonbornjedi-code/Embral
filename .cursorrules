@@ -1,9 +1,321 @@
-Read AGENTS.md before every action.
-Read manifest.yaml before creating any file.
-Read docs/SESSION.md to understand current state.
-Never install dependencies not in manifest.yaml.
-Never add SQLite, Ollama, ChromaDB, or any backend AI. SQLite broke the project.
-Edit existing files. Never create _fixed _v2 _clean *(1) variants.
-Register in manifest.yaml BEFORE creating any file.
-Update docs/SESSION.md at end of every session.
-Check git status and last 3 commits before writing any code.
+# .cursorrules — EMBRAL GAME PROJECT
+# Drop this file at the Godot project root as `.cursorrules`
+# These rules apply to every Cursor Composer session in this workspace.
+
+## WHO YOU ARE
+You are a senior Godot 4 GDScript developer building a real, playable 3D children's RPG called Embral for a young player named Ezra. The game runs on Godot 4.6.2. The repo owner is Josh. You are NOT a documentation writer. You are NOT a test author. You are a game builder.
+
+## THE CARDINAL RULE
+**A task is NOT complete until it is visually present and interactable in a running Godot session.** "Headless passes" do not count as done. "Script exists" does not count as done. "Logic wired" does not count as done. DONE means: open the scene in the Godot editor, press Play, and the thing works with a controller or keyboard.
+
+## WHAT ALREADY EXISTS — READ THESE BEFORE TOUCHING ANYTHING
+
+### Autoloads (always available, never re-create)
+- `SaveManager` — profile CRUD, `active_profile`, `save_current_profile()`
+- `EventBus` — signals: `gold_gained`, `xp_gained`, `level_up`, `npc_dialogue_started`, `quest_completed`
+- `QuestManager` — `load_realm_quests(realm_id)`, `start_quest(id)`, `complete_step()`
+- `TransitionManager` — `change_scene(path: String)`
+- `DialogicStub` — Dialogic 2 bridge, real timeline support active
+
+### Scene paths (confirmed loading headless)
+- `res://scenes/boot.tscn` — boots to main menu
+- `res://scenes/overworld/Main.tscn` — tutorial intro scene
+- `res://scenes/overworld/hearthveil/HubWorld.tscn` — main hub world
+- `res://scenes/overworld/ember_hollow/ember_hollow.tscn`
+- `res://scenes/overworld/tidemark/tidemark.tscn`
+- `res://scenes/overworld/forge_run/forge_run.tscn`
+- `res://scenes/overworld/rootstead/rootstead.tscn`
+- `res://scenes/overworld/the_spire/the_spire.tscn`
+- `res://scenes/overworld/the_drift/the_drift.tscn`
+
+### Key scripts (read before editing)
+- `scripts/world/HubWorldManager.gd`
+- `scripts/world/realm_scene.gd`
+- `scripts/world/tutorial_manager.gd`
+- `scripts/models/player_profile.gd`
+- `scripts/player/player_controller.gd`
+- `scripts/npc/QuestGiver.gd`
+- `scripts/ui/PlayerHUD.gd`
+
+### Assets available
+- KayKit Adventurers CC0 models: `assets/models/kaykit_adventurers/` — USE THESE for player and NPCs
+- KayKit building reference already in HubWorld.tscn as `ExtResource("23_building_model")`
+- Godot 4 built-in primitives (BoxMesh, CylinderMesh, SphereMesh, PlaneMesh) are ALWAYS valid for geometry
+
+### Quest data (JSON, do not recreate)
+- `data/quests/ember_hollow/EH_EMO_001.json`
+- `data/quests/tidemark/TM_LET_001.json`
+- `data/quests/forge_run/FR_BAL_001.json`
+- `data/quests/rootstead/RS_CHO_001.json`
+- `data/quests/the_spire/SP_NUM_001.json`
+- `data/quests/the_drift/DR_ART_001.json`
+
+### Input Map (do not redefine these actions)
+- Movement: `move_forward`, `move_back`, `move_left`, `move_right`
+- Interaction: `interact`
+- Pause: `pause`
+- Controller: PS5 DualSense confirmed as joypad 0
+
+## WHAT IS MISSING — THIS IS YOUR BUILD TARGET
+
+The scenes load but contain no real world. They are mostly flat planes with Label3D nodes and spawned cubes. The player can technically move but there is nothing to see, nothing to interact with, and nothing that feels like a game. Build the following, in order, one scene at a time, verifying each before moving on.
+
+---
+
+## PROHIBITED BEHAVIORS
+
+1. **Do NOT create new documentation files** unless modifying an existing one to reflect completed work. No new .md files, no new SESSION notes, no new roadmap entries until the actual feature is working.
+2. **Do NOT write headless verification scripts** as a substitute for building the actual scene.
+3. **Do NOT add `# TODO` stubs and call that done.** Stubs are only acceptable inside a scene that is otherwise functional.
+4. **Do NOT re-architect the autoload system.** SaveManager, EventBus, QuestManager, TransitionManager, and Dialogic are fixed.
+5. **Do NOT use Docker, ESM modules, Java, SQLite, Electron, or any non-Godot dependency.**
+6. **Do NOT hardcode IPs, file paths outside `user://` or `res://`, or Tailscale addresses.**
+7. **Do NOT copy any file from `/var/lib/phoenix-ai/workspace/legacy_quarantine_questaria` directly.** Concepts only, clean-room rewrite required, no banned IP or AI runtime references.
+8. **Do NOT use copyrighted character models, Dragon Ball, Ghibli, Nintendo, Marvel, Disney, or any licensed IP.**
+9. **Every time you say a feature is complete, open that scene in the Godot editor and confirm it visually before writing the summary.**
+
+---
+
+## BUILD ORDER AND ACCEPTANCE CRITERIA
+
+Work through these phases in sequence. Do not start Phase 2 until Phase 1 is verifiably playable.
+
+---
+
+### PHASE 1 — PLAYER CONTROLLER (do this first, everything else depends on it)
+
+**File:** `scripts/player/player_controller.gd` + `scenes/player/Player.tscn`
+
+**What to build:**
+- `CharacterBody3D` with a `CollisionShape3D` (CapsuleShape3D, height 1.8, radius 0.4)
+- `MeshInstance3D` using a KayKit adventurer GLB from `assets/models/kaykit_adventurers/` — pick one that looks like a child protagonist
+- `AnimationPlayer` or `AnimationTree` with at minimum: `idle`, `walk`, `run` states pulled from the GLB's existing animations
+- `Camera3D` as a SpringArm3D child — third-person follow camera, 4m arm length, 30° pitch down
+- `Area3D` named `InteractRadius` with a `SphereShape3D` radius 1.5 — detects NPCs and interactables
+- `Label3D` named `InteractPrompt` positioned above the player, billboard mode, hidden by default, shows `"[X] Talk"` or `"[X] Pick Up"` when `InteractRadius` overlaps an interactable
+
+**GDScript requirements:**
+- WASD + left stick move relative to camera facing, not world axes
+- Left stick deadzone 0.15
+- Walk speed 4.0, run speed 8.0 (hold left trigger or shift)
+- `interact` input action triggers interaction with the nearest body in `InteractRadius`
+- Gravity uses `ProjectSettings.get_setting("physics/3d/default_gravity")`
+- `_process` drives animation state transitions based on velocity magnitude
+
+**Acceptance criteria:**
+1. Open `scenes/player/Player.tscn` in the editor — the KayKit model is visible, capsule collider is sized correctly around it
+2. Press Play on a flat-plane test scene containing just Player + a `WorldEnvironment` + a `DirectionalLight3D`
+3. WASD moves the player, camera follows, model faces direction of travel
+4. Player idle animation plays when still, walk animation plays when moving
+5. Standing next to a `StaticBody3D` labeled `Interactable` (add one for the test) makes the prompt appear; pressing X/Enter triggers a print statement
+6. **Only then is Phase 1 done.**
+
+---
+
+### PHASE 2 — HEARTHVEIL HUB WORLD (the main scene Ezra sees every session)
+
+**File:** `scenes/overworld/hearthveil/HubWorld.tscn`
+**Script:** `scripts/world/HubWorldManager.gd` (already exists, extend it)
+
+**What to build — terrain and environment:**
+- Replace the existing flat plane with a `GridMap` or terrain made of `StaticBody3D` mesh chunks: a central circular plaza ~30×30u, 6 stone paths radiating outward toward portals, gentle elevation using ramp meshes
+- Add `WorldEnvironment` with a `Sky` resource: daytime, warm ambient, `DirectionalLight3D` at 45° for soft shadows
+- Add ambient lighting: point lights near portals (warm orange glow), torches using `OmniLight3D`
+
+**Portal structures (6 total — one per realm):**
+Each portal must be:
+- A `Node3D` named `Portal_[realm_id]` (e.g., `Portal_ember_hollow`)
+- A visual arch: `MeshInstance3D` using a `TorusMesh` or stacked `CylinderMesh` rings scaled to ~2.5h × 1.5w
+- Colored by realm: ember_hollow=deep orange, tidemark=teal, forge_run=iron grey, rootstead=forest green, the_spire=purple, the_drift=sky blue
+- `OmniLight3D` child matching the realm color, energy 2.0, range 4.0
+- `Area3D` named `PortalTrigger` with `CollisionShape3D` (BoxShape3D 2×3×1) — when player body enters, call `TransitionManager.change_scene()` to the realm scene path
+- `Label3D` above the arch showing the realm display name, billboard mode, font size 48
+
+**Dungeon entrance:**
+- Placed at `Vector3(22, 0, 22)` (already referenced in HubWorldManager)
+- Iron gate mesh using 2 tall `BoxMesh` pillars + horizontal `BoxMesh` bar, dark grey `StandardMaterial3D`
+- `Label3D` on the gate: `"Dungeon Entrance\n⚙ Under Maintenance"`, billboard, font size 36, orange color
+- `Area3D` with `CollisionShape3D` — if player enters, show a `PopupLabel` on HUD saying "The dungeon is under construction. Come back later!"
+- No portal transition — it is a dead end visually explained
+
+**Ignavarr NPC:**
+- Place at `Vector3(0, 0, -8)` facing the player spawn
+- Use the largest KayKit model available as a stand-in (or a `MeshInstance3D` using stacked `CylinderMesh` + `SphereMesh` to form a rough dragon silhouette if no dragon model exists in assets)
+- `Label3D` above: `"Ignavarr"`, billboard, gold color
+- `Area3D` named `IgnavarrInteract` — when player enters and presses `interact`, emit `EventBus.npc_dialogue_started.emit("ignavarr_the_dragon")`
+- `AnimationPlayer` with a simple idle bob (y oscillation ±0.1 over 2s loop) so he feels alive
+
+**Player house:**
+- At `Vector3(-22, 0, -22)` (already in HubWorld.tscn)
+- Use `ExtResource("23_building_model")` already in the scene — confirm it is positioned at the correct transform
+- `CollisionShape3D` around it so the player can't walk through it
+- `Label3D`: `"Your House"`, billboard, warm white
+- `Area3D` door trigger: if `profile.house_unlocked == true`, enter triggers scene change to `res://scenes/overworld/hearthveil/player_house.tscn` (stub that scene with a single room if it doesn't exist); if false, show HUD message `"Ignavarr will unlock your house when you finish the tutorial."`
+
+**Spark coins (tutorial prerequisite):**
+- 3 `RigidBody3D` coin objects placed on the 3 nearest paths from player spawn
+- Each coin: `MeshInstance3D` (flat `CylinderMesh` 0.3r × 0.1h), gold `StandardMaterial3D` with emission enabled
+- `AnimationPlayer` slow Y rotation + gentle bob
+- `Area3D` named `Pickup` — on body entered, if body is in group `"player"`: play pickup sound (if audio exists, else just suppress), emit `EventBus.gold_gained.emit(1, "collection")`, queue_free()
+
+**Player spawn:**
+- `Marker3D` named `PlayerSpawn` at `Vector3(0, 0, 5)` — HubWorldManager instantiates Player scene here on `_ready` if not already present
+
+**HUD:**
+- `PlayerHUD.tscn` must be present as a CanvasLayer child of HubWorld (or instantiated by HubWorldManager)
+- It must show: current quest objective text (top left), gold count (top right), level badge (top right corner)
+- `set_hub_objective(text: String)` method must update the objective label visually
+
+**Acceptance criteria:**
+1. Open HubWorld.tscn in the editor — you can see the plaza, 6 colored portals, dungeon gate, Ignavarr, player house, 3 coins
+2. Press Play — player spawns, can walk to each portal, portal glow animates, labels are readable
+3. Walk into a portal trigger — scene transitions to that realm scene
+4. Walk to Ignavarr, press interact — dialogue event fires, HUD objective updates
+5. Collect all 3 coins — gold counter on HUD increments to 3
+6. Walk to dungeon gate — maintenance message appears
+7. **Only then is Phase 2 done.**
+
+---
+
+### PHASE 3 — SIX REALM SCENES (build all 6 using the same base pattern)
+
+**Files:** the 6 realm `.tscn` files listed above
+**Script:** `scripts/world/realm_scene.gd` (already exists, extend it)
+
+Each realm scene MUST be distinct in visual theme. Use Godot's `StandardMaterial3D` with different albedo colors + `WorldEnvironment` sky variations to differentiate them cheaply without external assets. The realm geometry pattern is identical, only the skin changes.
+
+**Base pattern for every realm (build once, duplicate, reskin):**
+
+Terrain:
+- `StaticBody3D` ground plane 40×40u with realm-themed texture/color
+- 4–6 `StaticBody3D` platform chunks at varying heights (0.5u–2u) giving the space visual depth
+- Bounding walls: 4 invisible `StaticBody3D` at edges so player can't fall off
+- `WorldEnvironment` sky color and ambient light themed to the realm
+
+Realm NPC (the tutorial starter guide):
+- At `Vector3(0, 0, -6)` relative to player spawn
+- `Node3D` named `StarterNPC` with the NPC's `npc_id` set in `QuestGiver.gd`
+- KayKit model (any adventurer variant)
+- `Label3D` with the NPC display name
+- `Area3D` for interaction — pressing `interact` emits `EventBus.npc_dialogue_started.emit(npc_id)`
+- After interaction, a `PopupLabel` shows 2 lines of the NPC's greeting text from `realm_scene.gd`'s `_npcs_by_realm` dict
+
+Return portal:
+- `Portal_Return` node at `Vector3(0, 0, 8)` (behind spawn)
+- Same arch structure as hub portals but colored white/silver
+- `Label3D`: `"Return to Hearthveil"`
+- `Area3D` trigger → `TransitionManager.change_scene("res://scenes/overworld/hearthveil/HubWorld.tscn")`
+
+Realm-specific themes (use `StandardMaterial3D` albedo color + `WorldEnvironment` sky):
+
+| Realm | Ground color | Sky color | Accent |
+|---|---|---|---|
+| ember_hollow | #C85A2A warm brown-orange | deep amber sunset | OmniLights orange |
+| tidemark | #2A6B8A ocean blue | pale cyan | faint fog using WorldEnvironment fog |
+| forge_run | #4A4A4A iron grey | overcast grey | sparks: simple `CPUParticles3D` orange |
+| rootstead | #3A6B2A forest green | clear pale blue | CPUParticles3D leaf-fall green |
+| the_spire | #6B3A8A deep purple | midnight purple | stars: CPUParticles3D white tiny |
+| the_drift | #87CEEB sky blue | light dawn | CPUParticles3D white wisp drift |
+
+**Acceptance criteria for each realm:**
+1. Open the realm scene in the editor — distinct color environment, platforms visible, NPC visible at -Z
+2. Press Play — player spawns, can reach the NPC
+3. Walk to NPC, press interact — NPC greeting text appears, EventBus fires
+4. Walk to return portal, enter — transitions back to HubWorld
+5. **All 6 must pass before Phase 3 is done.**
+
+---
+
+### PHASE 4 — TUTORIAL FLOW (in-world, not headless)
+
+The tutorial_manager.gd logic already exists. Phase 4 makes it visible and legible in-world.
+
+**Main.tscn (tutorial intro scene):**
+- Must contain: Player spawn at origin, Ignavarr positioned at `Vector3(0, 0, -6)`, `Platform1` at `Vector3(4, 0, 4)`, 1 gold coin on the platform
+- `TutorialManager` autoload or Node with `tutorial_manager.gd` attached
+- On scene load: HUD objective shows `"Meet Ignavarr and learn movement. Use WASD/left stick to walk to the brown platform."`
+- Step progression:
+  1. Player walks within 2u of Platform1 → objective updates to `"Pick up the glowing coin!"`
+  2. Player picks up the coin (gold_gained emitted) → objective updates to `"Return to Ignavarr and talk to him."`
+  3. Player interacts with Ignavarr → `tutorial_intro_completed = true` saved, scene transitions to HubWorld
+- Each step change: brief camera zoom-in toward objective marker, then return (use `Tween`)
+
+**Acceptance criteria:**
+1. Press Play on Main.tscn from the Godot editor
+2. Walk to the platform — HUD text changes
+3. Pick up the coin — HUD text changes
+4. Walk to Ignavarr, press interact — transitions to HubWorld
+5. Open HubWorld, check that `SaveManager.active_profile.tutorial_intro_completed == true`
+6. **Only then is Phase 4 done.**
+
+---
+
+### PHASE 5 — QUEST UI AND PROGRESS TRACKING
+
+**Files:** `scenes/ui/PlayerHUD.tscn`, `scripts/ui/PlayerHUD.gd`
+
+Build a persistent HUD overlay as a `CanvasLayer` with:
+
+- **Objective panel** (top-left, 300×80px): `PanelContainer` with semi-transparent dark background, `Label` for objective text, updates via `set_hub_objective(text)`
+- **Resource bar** (top-right): gold icon (a `TextureRect` using a simple circle, or emoji fallback) + `Label` for count; XP bar as `ProgressBar` 200px wide; level badge as `Label` in a colored circle `StyleBoxFlat`
+- **Quest complete flash** (center screen): when `EventBus.quest_completed` fires, a `Label` slides in from top for 2 seconds showing `"Quest Complete! ✓"` then fades out via `Tween`
+- **Realm tour progress** (bottom-left, visible only during tutorial): 6 small colored dots, one per realm; each dot fills solid when that realm is in `tutorial_realms_completed`; shows `"Realm Tour: 3/6"` count
+
+**Acceptance criteria:**
+1. Run HubWorld — HUD is visible immediately, all panels render
+2. Collect a coin — gold counter updates instantly
+3. Emit a fake `quest_completed` signal from a test button — flash animation plays and fades
+4. Manually set 3 realms complete in SaveManager and reload — 3 dots filled in the realm tracker
+5. **Only then is Phase 5 done.**
+
+---
+
+### PHASE 6 — TUTORIAL COMPLETION UNLOCK (house, pet, level 2)
+
+**This phase wires what HubWorldManager already computes into visual events Ezra can see and feel.**
+
+When `_finish_full_tutorial()` fires in HubWorldManager:
+
+1. **Level-up sequence:**
+   - HUD flashes a full-screen golden overlay for 0.5s (semi-transparent `ColorRect` via `Tween`)
+   - A `Label` center screen: `"LEVEL 2!"` with font size 96, bounces in via `Tween` scale 0→1.2→1.0
+   - Plays a short particle burst: `CPUParticles3D` at player position, gold color, 60 particles, 0.5s lifetime
+
+2. **Pet spawn:**
+   - A small `Node3D` named `EmberSprout` appears near the player (hop animation: Tween y 0→0.5→0 over 0.3s, repeat 3)
+   - `MeshInstance3D`: `SphereMesh` radius 0.25, albedo `#FF6B35` (ember orange), emission enabled
+   - `Label3D` above: `"Ember Sprout"`, billboard, small font
+   - Pet follows the player at 1.5u distance using a simple `_process` lerp on global_position
+
+3. **House door unlock:**
+   - The `Area3D` door trigger in HubWorld now allows entry
+   - A brief sparkle `CPUParticles3D` on the house model when tutorial completes
+
+**Acceptance criteria:**
+1. In a test session, manually call `_finish_full_tutorial()` from the Godot editor Remote debugger or add a debug keypress
+2. Level-up overlay animates and fades
+3. Ember Sprout appears and hops
+4. Walking to player house no longer shows the locked message
+5. **Only then is Phase 6 done.**
+
+---
+
+## GENERAL CODE STANDARDS
+
+- All GDScript must pass `godot --headless --path . --check-only` with zero errors
+- No `_ready` function longer than 30 lines — split into helpers
+- All `Area3D` signal connections must use `connect()` in `_ready`, not `@onready` inline lambdas, for Godot 4.6 compatibility
+- Use `@export` for any value a designer might want to tweak from the editor (NPC names, portal destinations, speeds)
+- Player must always be in group `"player"` — add via `add_to_group("player")` in `_ready`
+- All scene transitions must go through `TransitionManager.change_scene()` — never `get_tree().change_scene_to_file()` directly
+- Never call `SaveManager.active_profile` without a null check first
+
+## VERIFICATION BEFORE MARKING DONE
+
+Before telling Josh something is complete, you must:
+1. Run `godot --headless --path . --check-only` — zero errors
+2. Open the relevant `.tscn` file in the Godot editor — no pink/missing resource icons
+3. Press Play on that scene — the thing you built is visually present and functional
+4. If it involves a transition or quest progression — play through the transition manually
+
+If any of these steps fail, the task is not done. Fix it first.

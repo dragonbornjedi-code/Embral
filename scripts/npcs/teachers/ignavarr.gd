@@ -12,17 +12,6 @@ func _ready() -> void:
 	available_quests = ["hv_ignavarr_tutorial_01"]
 
 
-func interact() -> void:
-	super.interact()
-	if not QuestManager.is_quest_completed("hv_ignavarr_tutorial_01"):
-		# Start tutorial if not done
-		QuestManager.start_quest("hv_ignavarr_tutorial_01")
-		_launch_dialogue(greeting_dialogue, true, "hv_ignavarr_tutorial_01")
-	else:
-		# Random encouraging line
-		_launch_dialogue(greeting_dialogue, false)
-
-
 func _on_tutorial_complete() -> void:
 	# Unlock all realm portals
 	var realm_ids = ["realm_1","realm_2","realm_3","realm_4","realm_5","realm_6"]

@@ -71,15 +71,14 @@ func _refresh_profile_list():
 
 func _on_profile_selected(profile_id: String):
     if get_node("/root/SaveManager").select_profile(profile_id):
-        # Transition to Hearthveil (Roadmap 2.07)
-        get_node("/root/TransitionManager").change_scene("res://scenes/overworld/Main.tscn")
+        var profile = get_node("/root/SaveManager").active_profile
+        if profile != null and not profile.tutorial_completed:
+            get_node("/root/TransitionManager").change_scene("res://scenes/overworld/Main.tscn")
+        else:
+            get_node("/root/TransitionManager").change_scene("res://scenes/overworld/hearthveil/HubWorld.tscn")
 
 func _on_create_new_pressed():
-    # Simple prompt for white-box phase
-    # In a real build, this would be a proper LineEdit popup
-    var player_name = "Player" # Default for now
-    var id = get_node("/root/SaveManager").create_profile(player_name)
-    _on_profile_selected(id)
+    get_node("/root/TransitionManager").change_scene("res://scenes/ui/AvatarCreator.tscn")
 
 func _create_whitebox_profile_ui():
     profile_container = PanelContainer.new()
