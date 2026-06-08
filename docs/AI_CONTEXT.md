@@ -61,8 +61,18 @@ Base game (keyboard + mouse) is always 100% complete without any hardware.
 
 ## CURRENT STATUS (check SESSION.md for latest)
 
-Phase 0 and 1 complete (except 1.11-1.14 need verification).
-Phase 2 starting: core game systems, main menu, player controller, Hearthveil whitebox.
+Phase 12 complete (Progression loop audit, hardcoded name removal, accessibility pass).
+Phase 13 starting: Release hardening, smoke tests, full loop walkthrough.
+
+---
+
+## ENGINEERING STANDARDS
+
+Refer to `docs/GOD_TIER_MASTERCLASS.md` for Embral-specific "God-tier" patterns:
+- Sensory-Regulated Orchestration (3D Worlds)
+- Educational Scaffolding (LimboAI Hybrid AI)
+- The Island Method (Modular Realm Streaming)
+- Multi-Agent Orchestration (The Embral Council)
 
 ---
 
